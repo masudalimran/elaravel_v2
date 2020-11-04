@@ -18,8 +18,13 @@
 {{--Font Awsome --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
-{{-- sweetalert --}}
+{{-- Sweetalert --}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
+{{-- contact form --}}
+<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/contact_styles.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/contact_responsive.css')}}">
+
 </head>
 
 <body>
@@ -102,7 +107,7 @@
 													<li><a class="clc" href="#">All Categories</a></li>
 													@foreach($category as $v_category)
 														<li><a class="clc" href="#">{{ $v_category->category_name }}</a></li>
-													@endforeach 
+													@endforeach
 												</ul>
 											</div>
 										</div>
