@@ -16,7 +16,7 @@
 
             <div class="card pd-20 pd-sm-40">
                 <h6 class="card-body-title">Here you can find all sort of Post listrings</h6>
-                <a style="position:absolute; right:5%;" href="{{route('add.product')}}" class="btn btn-sm btn-success"
+                <a style="position:absolute; right:5%;" href="{{route('add.blogpost')}}" class="btn btn-sm btn-success"
                     >Add NEW</a>
                 <p class="mg-b-20 mg-sm-b-30">Searching, ordering and paging goodness will be immediately added to the
                     table, as shown in this example.</p>
@@ -43,8 +43,8 @@
                                 <td>{{$v_all_post->category_name_bn}}</td>
                                 <td><img src="{{URL::to($v_all_post->post_image)}}" height="50px" width="80px"></td>
                                 <td style="white-space: nowrap;">
-                                    <a href="{{URL::to('edit/post/'.$v_all_post->id)}}" class="btn btn-sm btn-info">Edit</a>
-                                    <a href="{{URL::to('delete/post/'.$v_all_post->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
+                                    <a href="{{URL::to('edit/post/'.$v_all_post->id)}}" class="btn btn-sm btn-info" title="Edit Posts"><i class="fa fa-edit"></i></a>
+                                    <a href="{{URL::to('delete/post/'.$v_all_post->id)}}" class="btn btn-sm btn-danger" title="Delete Posts" id="delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach

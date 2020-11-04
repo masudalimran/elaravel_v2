@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>OneTech</title>
+<title>BISMIB FASHION</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="OneTech shop project">
@@ -14,6 +14,9 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/slick-1.8.0/slick.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/main_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/responsive.css')}}">
+
+{{--Font Awsome --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
 {{-- sweetalert --}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
@@ -33,23 +36,23 @@
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('public/frontend/images/phone.png')}}" alt=""></div>+38 068 005 3570</div>
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('public/frontend/images/mail.png')}}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('public/frontend/images/phone.png')}}" alt=""></div>+880 1315686147</div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('public/frontend/images/mail.png')}}" alt=""></div><a href="mailto:masudalimran92@gmail.com">masudalimran92@gmail.com</a></div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_menu">
 								<ul class="standard_dropdown top_bar_dropdown">
 									<li>
 										<a href="#">English<i class="fas fa-chevron-down"></i></a>
 										<ul>
-											<li><a href="#">Italian</a></li>
-											<li><a href="#">Spanish</a></li>
-											<li><a href="#">Japanese</a></li>
+											<li><a href="#">Bangla</a></li>
+											<li><a href="#">Chinese</a></li>
+											<li><a href="#">Russian</a></li>
 										</ul>
 									</li>
 									<li>
 										<a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
 										<ul>
-											<li><a href="#">EUR Euro</a></li>
+											<li><a href="#">Taka</a></li>
 											<li><a href="#">GBP British Pound</a></li>
 											<li><a href="#">JPY Japanese Yen</a></li>
 										</ul>
@@ -76,9 +79,13 @@
 					<!-- Logo -->
 					<div class="col-lg-2 col-sm-3 col-3 order-1">
 						<div class="logo_container">
-							<div class="logo"><a href="{{url('/')}}">BISMIB</a></div>
+							<div class="logo"><a href="{{url('/')}}">BISMIB FASHION</a></div>
 						</div>
 					</div>
+
+					@php
+						$category=DB::table('categories')->get();
+					@endphp
 
 					<!-- Search -->
 					<div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
@@ -93,11 +100,9 @@
 												<i class="fas fa-chevron-down"></i>
 												<ul class="custom_list clc">
 													<li><a class="clc" href="#">All Categories</a></li>
-													<li><a class="clc" href="#">Computers</a></li>
-													<li><a class="clc" href="#">Laptops</a></li>
-													<li><a class="clc" href="#">Cameras</a></li>
-													<li><a class="clc" href="#">Hardware</a></li>
-													<li><a class="clc" href="#">Smartphones</a></li>
+													@foreach($category as $v_category)
+														<li><a class="clc" href="#">{{ $v_category->category_name }}</a></li>
+													@endforeach 
 												</ul>
 											</div>
 										</div>

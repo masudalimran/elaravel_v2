@@ -82,10 +82,10 @@ class PostController extends Controller
     }
 
     public function update_post(Request $request,$id){
-        $validatedData = $request->validate([
-            'post_title_en' => 'unique:posts',
-            'post_title_bn' => 'unique:posts',
-        ]);
+        // $validatedData = $request->validate([
+        //     'post_title_en' => 'unique:posts',
+        //     'post_title_bn' => 'unique:posts',
+        // ]);
 
         $old_post_image=$request->old_post_image;
         $data=array();
@@ -96,7 +96,7 @@ class PostController extends Controller
         $data['details_bn']=$request->details_bn;
         $data['post_image']=$request->post_image;
 
-        $post_image=$request->post_image;
+        $post_image=$request->file('post_image');
         if($post_image){
             unlink($old_post_image);
             $post_image_name = hexdec(uniqid()).'.'.$post_image->getClientOriginalExtension();
@@ -107,15 +107,16 @@ class PostController extends Controller
                 'messege'=>'Post Updated successfully',
                 'alert-type'=>'success'
                 );
+            return Redirect()->route('all.blogpost')->with($notification);
         }else{
             $data['post_image']=$old_post_image;
             DB::table('posts')->where('id',$id)->update($data);
             $notification=array(
-                'messege'=>'post updated without image ',
+                'messege'=>'Post Updated Without Image ',
                 'alert-type'=>'warning'
                 );
+            return Redirect()->route('all.blogpost')->with($notification);
         }
-        return Redirect()->route('all.blogpost')->with($notification);
     }
 
 }
