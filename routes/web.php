@@ -1,8 +1,27 @@
 <?php
 
+// use Illuminate\Foundation\Auth\EmailVerificationRequest;
+// use Illuminate\Http\Request;
+
 Route::get('/', function () {return view('pages.index');});
 //auth & user
-Auth::routes();
+// Route::get('/email/verify', function () {
+//     return view('auth.verify-email');
+// })->middleware(['auth'])->name('verification.notice');
+
+// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfill();
+
+//     return redirect('/home');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
+
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
+
+//     return back()->with('status', 'verification-link-sent');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
@@ -82,7 +101,7 @@ Route::get('delete/newsletter/{id}', 'Admin\NewsletterController@delete_newslett
 //Frontend
 Route::post('store/newsletter','FrontController@store_newsletter')->name('store.newsletter');
 
-
+//customer profile related routes
 
 
 
