@@ -52,20 +52,37 @@
 											<li><a href="#">Russian</a></li>
 										</ul>
 									</li>
-									<li>
+									{{-- <li>
 										<a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
 										<ul>
 											<li><a href="#">Taka</a></li>
 											<li><a href="#">GBP British Pound</a></li>
 											<li><a href="#">JPY Japanese Yen</a></li>
 										</ul>
-									</li>
+									</li> --}}
 								</ul>
 							</div>
 							<div class="top_bar_user">
-								<div class="user_icon"><img src="images/user.svg" alt=""></div>
-								<div><a href="{{route('register')}}">Register</a></div>
-								<div><a href="{{route('login')}}">Sign in</a></div>
+								<div class="user_icon"><img src="{{asset('public/frontend/images/user.svg')}}" alt=""></div>
+                                {{-- guest start --}}
+                                @guest
+								    <div><a href="{{route('login')}}">Log in | Register</a></div>
+                                @else
+                                    <div class="top_bar_menu">
+                                        <ul class="standard_dropdown top_bar_dropdown">
+                                            <li>
+                                                <div><a href="{{route('home')}}">Profile</a></div>
+                                                <ul>
+                                                    <li><a href="#">Checkout</a></li>
+                                                    <li><a href="#">Wishlist</a></li>
+                                                    <li><a href="#">Cart</a></li>
+                                                    <li><a href="{{route('user.logout')}}">Logout</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endguest
+                                    {{-- guest end --}}
 							</div>
 						</div>
 					</div>

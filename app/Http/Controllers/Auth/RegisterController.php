@@ -49,21 +49,21 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            // 'password' => [
-            //     'required',
-            //     'string',
-            //     'min:8',             // must be at least 10 characters in length
-            //     'regex:/[a-z]/',      // must contain at least one lowercase letter
-            //     'regex:/[A-Z]/',      // must contain at least one uppercase letter
-            //     'regex:/[0-9]/',      // must contain at least one digit
-            //     // 'regex:/[@$!%*#?&]/', // must contain a special character
-            //     'confirmed'
-            // ],
+            // 'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password' => [
+                  'required',
+                  'string',
+                  'min:6',             // must be at least 10 characters in length
+                  'regex:/[a-z]/',      // must contain at least one lowercase letter
+                  'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                  'regex:/[0-9]/',      // must contain at least one digit
+                  //'regex:/[@$!%*#?&]/', // must contain a special character
+                  'confirmed'
+             ],
             'phone' => ['required', 'string', 'max:255', 'unique:users'],
-            // 'password_confirm' => 'required|same:password'
+            //'password_confirm' => 'required|same:password'
         ]);
     }
 
@@ -76,7 +76,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'name' => $data['username'],
             'phone' => $data['phone'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

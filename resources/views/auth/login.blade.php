@@ -12,19 +12,30 @@
 					<div class="contact_form_container">
 						<div class="contact_form_title text-center">Sign In</div>
 
-						<form action="#" method="post">
+                        <form action="{{route('login')}}" method="post" id="contact_form">
+                            @csrf
                             <div class="form-group">
-                              <label for="exampleInputEmail1">Enter your email or phone number</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email or Phone">
-                            </div>
+                                <label for="exampleInputEmail1">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email Address" required>
+                                @if ($errors->has('email'))
+                                        <strong style="color: red">{{$errors->first('email')}}</strong>
+                                @endif
+                              </div>
 
                             <div class="form-group">
-                              <label for="exampleInputPassword1">Password</label>
-                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="*************">
+                                <label for="exampleInputEmail1">Password</label>
+                                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                @if ($errors->has('password'))
+                                {{-- {{dd($errors->first('password'))}} --}}
+                                <strong style="color: red">{{$errors->first('password')}}</strong>
+                                @endif
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
-                          </form><br><br>
+                        </form>
+                        <a href="{{route('password.request')}}">Forgot password</a>
+                        <br><br>
+
                           <button type="submit" class="btn btn-info btn-block">Login With Facebook</button>
                           <button type="submit" class="btn btn-danger btn-block">Login With google</button>
 
@@ -39,31 +50,46 @@
 
                             <div class="form-group">
                               <label for="exampleInputEmail1">Username</label>
-                              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Username" name="username" required>
+                              <input type="text" class="form-control" placeholder="Username" name="username" required>
                             </div>
 
                             <div class="form-group">
                               <label for="exampleInputEmail1">Phone Number</label>
-                              <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('email') }}" placeholder="Phone" name="phone" required>
+                              <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" placeholder="Phone" name="phone" required>
+                              @if ($errors->has('phone'))
+                                        <strong style="color: red">{{$errors->first('phone')}}</strong>
+                              @endif
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="exampleInputEmail1" placeholder="Email Address" required>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email Address" required>
+                                @if ($errors->has('email'))
+                                        <strong style="color: red">{{$errors->first('email')}}</strong>
+                                @endif
                               </div>
+
+
 
                             <div class="form-group">
                               <label for="exampleInputEmail1">Password</label>
-                              <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Password" name="password" required>
+                              <input type="password" class="form-control" placeholder="Password" name="password" required>
+                              @if ($errors->has('password'))
+                              {{-- {{dd($errors->first('password'))}} --}}
+                              <strong style="color: red">{{$errors->first('password')}}</strong>
+                              @endif
                             </div>
 
                             <div class="form-group">
                               <label for="exampleInputEmail1">Confirm Password</label>
-                              <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Re-type Password" name="password_confirmation" required>
+                              <input type="password" class="form-control" placeholder="Re-type Password" name="password_confirmation" required>
+                              @if ($errors->has('password_confirmation'))
+                              <strong style="color: red">{{$errors->first('password_confirmation')}}</strong>
+                              @endif
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
-                          </form>
+                        </form>
 
 
 					</div>

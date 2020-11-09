@@ -5,22 +5,6 @@
 
 Route::get('/', function () {return view('pages.index');});
 //auth & user
-// Route::get('/email/verify', function () {
-//     return view('auth.verify-email');
-// })->middleware(['auth'])->name('verification.notice');
-
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();
-
-//     return redirect('/home');
-// })->middleware(['auth', 'signed'])->name('verification.verify');
-
-// Route::post('/email/verification-notification', function (Request $request) {
-//     $request->user()->sendEmailVerificationNotification();
-
-//     return back()->with('status', 'verification-link-sent');
-// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
 Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
