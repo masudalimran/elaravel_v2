@@ -2,7 +2,9 @@
   @section('content')
 
   @include('layouts.menubar')
-
+    {{-- sweetalert2 css --}}
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    {{-- sweetalert2 css --}}
 
   <!-- Characteristics -->
   @php
@@ -216,7 +218,16 @@
                                                   <button class="product_cart_button">Add to Cart</button>
                                               </div>
                                           </div>
-                                          <div class="product_fav"><i class="fas fa-heart"></i></div>
+
+
+                                            <a onclick="addwishlist({{$row->id}})" >
+                                                @if(Auth::check())
+                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                @else
+                                                <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                                @endif
+                                            </a>
+
                                           <ul class="product_marks">
                                               @if($row->discount_price == NULL)
                                               @else
@@ -270,7 +281,16 @@
                                                   <button class="product_cart_button">Add to Cart</button>
                                               </div>
                                           </div>
-                                          <div class="product_fav"><i class="fas fa-heart"></i></div>
+
+                                            <a onclick="addwishlist({{$row->id}})" >
+                                                @if(Auth::check())
+                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                @else
+                                                <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                                @endif
+                                            </a>
+
+
                                           <ul class="product_marks">
                                               @if($row->discount_price == NULL)
 
@@ -321,7 +341,18 @@
                                                   <button class="product_cart_button">Add to Cart</button>
                                               </div>
                                           </div>
-                                          <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                          {{-- <a href="{{URL::to('add/wishlist/'.$row->id)}}"> --}}
+                                            {{-- <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                            </a> --}}
+
+                                            <a onclick="addwishlist({{$row->id}})" >
+                                                @if(Auth::check())
+                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                @else
+                                                <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                                @endif
+                                            </a>
+
                                           <ul class="product_marks">
                                               @if($row->discount_price == NULL)
 
@@ -3545,4 +3576,69 @@
           </div>
       </div>
   </div>
-  @endsection
+
+{{-- sweetalert2 --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+{{-- sweetalert2 --}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+    function addwishlist(id) {
+        console.log(id);
+        if(id) {
+               $.ajax({
+                   url: "{{  url('/add/wishlist/') }}/"+id,
+                   type:"GET",
+                   dataType:"json",
+                   success:function(data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'success',
+                        title: data.msg
+                        })
+                   },
+
+                   error:function(data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'error',
+                        title: data.responseJSON.msg
+                        })
+                   },
+               });
+        } else {
+            alert('danger');
+           }
+    }
+</script>
+
+
+
+
+
+
+    @endsection

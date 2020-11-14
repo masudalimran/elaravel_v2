@@ -6,6 +6,7 @@
 Route::get('/', function () {return view('pages.index');});
 //auth & user
 Auth::routes(['verify' => true]);
+Route::get('/welcome', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
@@ -75,6 +76,8 @@ Route::get('edit/post/{id}','Admin\PostController@edit_post');
 Route::post('update/post/{id}','Admin\PostController@update_post');
 
 
+
+
     //Get Sub Category By Ajax
 Route::get('get/subcategory/{category_id}','Admin\ProductController@get_subcategory');
 
@@ -84,6 +87,7 @@ Route::get('delete/newsletter/{id}', 'Admin\NewsletterController@delete_newslett
 
 //Frontend
 Route::post('store/newsletter','FrontController@store_newsletter')->name('store.newsletter');
+Route::get('add/wishlist/{id}','wishlistController@add_wishlist');
 
 //customer profile related routes
 

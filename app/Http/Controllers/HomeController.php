@@ -31,6 +31,11 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function welcome()
+    {
+        return view('pages.index');
+    }
+
     public function changePassword(){
         return view('auth.changepassword');
     }

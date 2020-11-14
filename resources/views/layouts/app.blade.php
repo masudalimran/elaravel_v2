@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <title>BISMIB FASHION</title>
+<meta name="csrf" value="{{ csrf_token() }}">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="OneTech shop project">
@@ -14,6 +15,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/slick-1.8.0/slick.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/main_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/responsive.css')}}">
+
+
 
 {{--Font Awsome --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
@@ -284,6 +287,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+
+
 <script>
     @if(Session::has('messege'))
       var type="{{Session::get('alert-type','info')}}"
@@ -303,6 +309,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       }
     @endif
  </script>
+
+
+
+
+
 
 </body>
 

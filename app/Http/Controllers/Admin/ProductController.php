@@ -56,6 +56,7 @@ class ProductController extends Controller
         $data['hot_new']=$request->hot_new;
         $data['best_rated']=$request->best_rated;
         $data['trend']=$request->trend;
+        $data['buy_1_get_1']=$request->buy_1_get_1;
         $data['publication_status']=1;
 
         $image_1=$request->image_1;
@@ -197,6 +198,7 @@ class ProductController extends Controller
         $data['hot_new']=$request->hot_new;
         $data['best_rated']=$request->best_rated;
         $data['trend']=$request->trend;
+        $data['buy_1_get_1']=$request->buy_1_get_1;
 
         $update=DB::table('products')->where('id',$id)->update($data);
         if($update){
