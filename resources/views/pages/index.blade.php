@@ -37,7 +37,36 @@
   ->orderBy('id','desc')
   ->limit(4)
   ->get();
+
+  $hot_best_sellers=DB::table('products')
+  ->where('publication_status',1)
+  ->get();
+
+  $hot_new_arrivals=DB::table('products')
+  ->leftjoin('brands','products.brand_id','=','brands.id')
+  ->leftjoin('categories','products.category_id','=','categories.id')
+  ->select('brands.brand_name','categories.category_name','products.*')
+  ->where('publication_status',1)
+  ->where('hot_new',1)
+  ->orderBy('id','desc')
+  ->limit(16)
+  ->get();
+
+  $b1g1=DB::table('products')
+  ->leftjoin('brands','products.brand_id','=','brands.id')
+  ->leftjoin('categories','products.category_id','=','categories.id')
+  ->select('brands.brand_name','categories.category_name','products.*')
+  ->where('publication_status',1)
+  ->where('buy_1_get_1',1)
+  ->orderBy('id','desc')
+  ->limit(12)
+  ->get();
+
+
+  $category=DB::table('categories')
+  ->get();
   @endphp
+
   <div class="characteristics">
       <div class="container">
           <div class="row">
@@ -60,8 +89,8 @@
                   <div class="char_item d-flex flex-row align-items-center justify-content-start">
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_2.png')}}" alt=""></div>
                       <div class="char_content">
-                          <div class="char_title">Free Delivery</div>
-                          <div class="char_subtitle">from $50</div>
+                          <div class="char_title">Easy Refund</div>
+                          <div class="char_subtitle">within 2 days</div>
                       </div>
                   </div>
               </div>
@@ -72,8 +101,8 @@
                   <div class="char_item d-flex flex-row align-items-center justify-content-start">
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_3.png')}}" alt=""></div>
                       <div class="char_content">
-                          <div class="char_title">Free Delivery</div>
-                          <div class="char_subtitle">from $50</div>
+                          <div class="char_title">Special Coupons</div>
+                          <div class="char_subtitle">redeem them now</div>
                       </div>
                   </div>
               </div>
@@ -84,8 +113,8 @@
                   <div class="char_item d-flex flex-row align-items-center justify-content-start">
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_4.png')}}" alt=""></div>
                       <div class="char_content">
-                          <div class="char_title">Free Delivery</div>
-                          <div class="char_subtitle">from $50</div>
+                          <div class="char_title">Bookmark Our Site</div>
+                          <div class="char_subtitle">please bookmark</div>
                       </div>
                   </div>
               </div>
@@ -130,6 +159,7 @@
                                           <div class="deals_item_price ml-auto">৳{{$row->selling_price - $row->discount_price}}<span
                                             ></div>
                                       </div>
+                                      <div style="margin-top: 5px; text-align: right;"><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
                                       <div class="available">
                                           <div class="available_line d-flex flex-row justify-content-start">
                                               <div class="available_title">Available: <span>{{$row->product_quantity}}</span></div>
@@ -188,7 +218,7 @@
                               <div class="tabs_line"><span></span></div>
                           </div>
 
-                          <!-- Product Panel -->
+                          <!-- Product Panel Featured  -->
                           <div class="product_panel panel active">
                               <div class="featured_slider slider">
                                   @foreach($featured_product as $row)
@@ -215,7 +245,13 @@
                                               </div>
                                               <div class="product_extras">
                                                   <p>{{$row->product_color}}</p>
-                                                  <button class="product_cart_button">Add to Cart</button>
+                                                  {{-- <a onclick="add_to_cart({{$row->id}})" >
+                                                    <div class="product_cart_button">Add to Cart</div>
+                                                  </a> --}}
+                                                  <a onclick="add_to_cart({{$row->id}})" >
+                                                    <div class="product_cart_button">Add To Cart</div>
+                                                </a>
+
                                               </div>
                                           </div>
 
@@ -249,7 +285,7 @@
                               <div class="featured_slider_dots_cover"></div>
                           </div>
 
-                          <!-- Product Panel -->
+                          <!-- Product Panel trending-->
 
                           <div class="product_panel panel">
                               <div class="featured_slider slider">
@@ -257,51 +293,55 @@
                                   @foreach($trending_product as $row)
                                   <!-- Slider Item -->
                                   <div class="featured_slider_item">
-                                      <div class="border_active"></div>
-                                      <div
-                                          class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                          <div
-                                              class="product_image d-flex flex-column align-items-center justify-content-center">
-                                              <img src="{{URL::to($row->image_2)}}" style="height: 130px; width: 150px">
-                                          </div>
-                                          <div class="product_content">
-                                              @if($row->discount_price == NULL)
-                                              <div class="product_price discount">৳ {{$row->selling_price}}</div>
+                                    <div class="border_active"></div>
+                                    <div
+                                        class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
+                                        <div
+                                            class="product_image d-flex flex-column align-items-center justify-content-center">
+                                            <img src="{{URL::to($row->image_2)}}" style="height: 130px; width: 150px">
+                                        </div>
+                                        <div class="product_content">
+                                            @if($row->discount_price == NULL)
+                                            <div class="product_price discount">৳ {{$row->selling_price}}</div>
+                                            @else
+                                            <div class="product_price discount">৳
+                                                {{$row->selling_price - $row->discount_price}}<span
+                                                    class="text-info"><del>৳ {{$row->selling_price}}</del></span>
+                                            </div>
+                                            @endif
+                                            <div class="product_name">
+                                                <div><a href="#">{{$row->product_name}}</a></div>
+                                            </div>
+                                            <div class="product_extras">
+                                                <p>{{$row->product_color}}</p>
+                                                <button class="product_cart_button">Add to Cart</button>
+                                            </div>
+                                        </div>
+
+
+                                          <a onclick="addwishlist({{$row->id}})" >
+                                              @if(Auth::check())
+                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
                                               @else
-                                              <div class="product_price discount">৳
-                                                  {{$row->selling_price - $row->discount_price}}<span
-                                                      class="text-info"><del>৳ {{$row->selling_price}}</del></span>
-                                              </div>
+                                              <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
                                               @endif
-                                              <div class="product_name">
-                                                  <div><a href="#">{{$row->product_name}}</a></div>
-                                              </div>
-                                              <div class="product_extras">
-                                                  <p>{{$row->product_color}}</p>
-                                                  <button class="product_cart_button">Add to Cart</button>
-                                              </div>
-                                          </div>
+                                          </a>
 
-                                            <a onclick="addwishlist({{$row->id}})" >
-                                                @if(Auth::check())
-                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                @else
-                                                <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
-                                                @endif
-                                            </a>
+                                        <ul class="product_marks">
+                                            @if($row->discount_price == NULL)
+                                            @else
+                                            <li class="product_mark product_discount">
+                                                -{{round(($row->discount_price/$row->selling_price)*100)}}%</li>
+                                            @endif
+                                            @if($row->hot_new == NULL)
+                                            @else
+                                            <li class="product_mark product_discount" style="background: #10b529;">New
+                                            </li>
+                                            @endif
 
-
-                                          <ul class="product_marks">
-                                              @if($row->discount_price == NULL)
-
-                                              @else
-                                              <li class="product_mark product_discount">
-                                                  -{{round(($row->discount_price/$row->selling_price)*100)}}%</li>
-                                              @endif
-                                              <li class="product_mark product_new">NEW</li>
-                                          </ul>
-                                      </div>
-                                  </div>
+                                        </ul>
+                                    </div>
+                                </div>
                                   @endforeach
 
 
@@ -310,60 +350,62 @@
                               <div class="featured_slider_dots_cover"></div>
                           </div>
 
-                          <!-- Product Panel -->
+                          <!-- Product Panel best rated-->
 
                           <div class="product_panel panel">
                               <div class="featured_slider slider">
                                   @foreach($Best_rated as $row)
                                   <!-- Slider Item -->
                                   <div class="featured_slider_item">
-                                      <div class="border_active"></div>
-                                      <div
-                                          class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                          <div
-                                              class="product_image d-flex flex-column align-items-center justify-content-center">
-                                              <img src="{{URL::to($row->image_2)}}" style="height: 130px; width: 150px">
-                                          </div>
-                                          <div class="product_content">
-                                              @if($row->discount_price == NULL)
-                                              <div class="product_price discount">৳ {{$row->selling_price}}</div>
+                                    <div class="border_active"></div>
+                                    <div
+                                        class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
+                                        <div
+                                            class="product_image d-flex flex-column align-items-center justify-content-center">
+                                            <img src="{{URL::to($row->image_2)}}" style="height: 130px; width: 150px">
+                                        </div>
+                                        <div class="product_content">
+                                            @if($row->discount_price == NULL)
+                                            <div class="product_price discount">৳ {{$row->selling_price}}</div>
+                                            @else
+                                            <div class="product_price discount">৳
+                                                {{$row->selling_price - $row->discount_price}}<span
+                                                    class="text-info"><del>৳ {{$row->selling_price}}</del></span>
+                                            </div>
+                                            @endif
+                                            <div class="product_name">
+                                                <div><a href="#">{{$row->product_name}}</a></div>
+                                            </div>
+                                            <div class="product_extras">
+                                                <p>{{$row->product_color}}</p>
+                                                <button class="product_cart_button">Add to Cart</button>
+                                            </div>
+                                        </div>
+
+
+                                          <a onclick="addwishlist({{$row->id}})" >
+                                              @if(Auth::check())
+                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
                                               @else
-                                              <div class="product_price discount">৳
-                                                  {{$row->selling_price - $row->discount_price}}<span
-                                                      class="text-info"><del>৳ {{$row->selling_price}}</del></span>
-                                              </div>
+                                              <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
                                               @endif
-                                              <div class="product_name">
-                                                  <div><a href="#">{{$row->product_name}}</a></div>
-                                              </div>
-                                              <div class="product_extras">
-                                                  <p>{{$row->product_color}}</p>
-                                                  <button class="product_cart_button">Add to Cart</button>
-                                              </div>
-                                          </div>
-                                          {{-- <a href="{{URL::to('add/wishlist/'.$row->id)}}"> --}}
-                                            {{-- <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                            </a> --}}
+                                          </a>
 
-                                            <a onclick="addwishlist({{$row->id}})" >
-                                                @if(Auth::check())
-                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                @else
-                                                <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
-                                                @endif
-                                            </a>
+                                        <ul class="product_marks">
+                                            @if($row->discount_price == NULL)
+                                            @else
+                                            <li class="product_mark product_discount">
+                                                -{{round(($row->discount_price/$row->selling_price)*100)}}%</li>
+                                            @endif
+                                            @if($row->hot_new == NULL)
+                                            @else
+                                            <li class="product_mark product_discount" style="background: #10b529;">New
+                                            </li>
+                                            @endif
 
-                                          <ul class="product_marks">
-                                              @if($row->discount_price == NULL)
-
-                                              @else
-                                              <li class="product_mark product_discount">
-                                                  -{{round(($row->discount_price/$row->selling_price)*100)}}%</li>
-                                              @endif
-                                              <li class="product_mark product_new">NEW</li>
-                                          </ul>
-                                      </div>
-                                  </div>
+                                        </ul>
+                                    </div>
+                                </div>
                                   @endforeach
 
 
@@ -437,7 +479,7 @@
               ->orderBy('id','DESC')
               ->limit(4)
               ->get();
-@endphp
+    @endphp
 <div class="banner_2">
     <div class="banner_2_background"
         style="background-image:url({{asset('public/frontend/images/banner_2_background.jpg')}})"></div>
@@ -459,8 +501,6 @@
                                     <div class="banner_2_text">{{$row->brand_name}}<br>
                                     Product ID: {{$row->product_code}}.
                                     </div>
-                                    <div class="rating_r rating_r_4 banner_2_rating">
-                                        <i></i><i></i><i></i><i></i><i></i><i></i></div>
                                     <div class="button banner_2_button"><a href="#">Explore</a></div>
                                 </div>
 
@@ -468,7 +508,6 @@
                             <div class="col-lg-8 col-md-6 fill_height">
                                 <div class="banner_2_image_container">
                                     <div class="banner_2_image"><img src="{{ asset($row->image_1) }}" style="height: 300px; width: 320px;"></div>
-
                                 </div>
                             </div>
                         </div>
@@ -481,7 +520,7 @@
     </div>
 </div>
 
-  <!-- Hot New Arrivals -->
+  <!-- Hot Best Sellers -->
 
   <div class="new_arrivals">
       <div class="container">
@@ -489,1618 +528,123 @@
               <div class="col">
                   <div class="tabbed_container">
                       <div class="tabs clearfix tabs-right">
-                          <div class="new_arrivals_title">Hot New Arrivals</div>
+                          <div class="new_arrivals_title">Hot Best Sellers</div>
                           <ul class="clearfix">
-                              <li class="active">Featured</li>
-                              <li>Audio & Video</li>
-                              <li>Laptops & Computers</li>
+                              <li class="active">Most Viewed</li>
+                              <li>Most Sold</li>
                           </ul>
                           <div class="tabs_line"><span></span></div>
                       </div>
                       <div class="row">
                           <div class="col-lg-9" style="z-index:1;">
 
-                              <!-- Product Panel -->
+                              <!-- Product Panel most viewed-->
                               <div class="product_panel panel active">
                                   <div class="arrivals_slider slider">
+                                      @foreach ($hot_best_sellers as $v_hot_best_sellers)
+
+                                      @if ($v_hot_best_sellers->product_quantity >= 50)
 
                                       <!-- Slider Item -->
                                       <div class="arrivals_slider_item">
                                           <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_1.jpg')}}" alt=""></div>
+                                          <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                                <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                <img src="{{URL::to($v_hot_best_sellers->image_1)}}" style="height: 130px; width: 150px">
+                                                </div>
+
                                               <div class="product_content">
-                                                  <div class="product_price">$225</div>
+                                                  <div class="product_price">৳ {{$v_hot_best_sellers-> selling_price}}</div>
                                                   <div class="product_name">
-                                                      <div><a href="product.html">Astro M2 Black</a></div>
+                                                      <div><a href="product.html">{{$v_hot_best_sellers-> product_name}}</a></div>
                                                   </div>
                                                   <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
+                                                    <p>{{$v_hot_best_sellers->product_color}}</p>
                                                       <button class="product_cart_button">Add to Cart</button>
                                                   </div>
                                               </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount">-25%</li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
+                                              <a onclick="addwishlist({{$v_hot_best_sellers->id}})" >
+                                                @if(Auth::check())
+                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                @else
+                                                <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                                @endif
+                                            </a>
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_2.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Transcend T.Sonic</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button active">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
+                                          <ul class="product_marks">
+                                              @if($v_hot_best_sellers->discount_price == NULL)
+                                              @else
+                                              <li class="product_mark product_new" style="background: red;">
+                                                  -{{round(($v_hot_best_sellers->discount_price/$v_hot_best_sellers->selling_price)*100)}}%</li>
+                                              @endif
+                                              @if($v_hot_best_sellers->hot_new == NULL)
+                                              @else
+                                              <li class="product_mark product_new" >New
+                                              </li>
+                                              @endif
+                                          </ul>
                                           </div>
                                       </div>
+                                      @endif
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_3.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Xiaomi Band 2...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
+                                      @endforeach
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_4.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Rapoo T8 White</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_5.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Philips BT6900A</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_6.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Nokia 3310(2017)...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_7.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Rapoo 7100p Gray</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount">-25%</li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_8.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Canon EF</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_1.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Gembird SPK-103</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_2.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Canon IXUS 175...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_3.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_4.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_5.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_6.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_7.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_8.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
                                   </div>
                                   <div class="arrivals_slider_dots_cover"></div>
                               </div>
 
-                              <!-- Product Panel -->
+                              <!-- Product Panel most sold-->
                               <div class="product_panel panel">
                                   <div class="arrivals_slider slider">
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_1.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount">-25%</li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
+                                    @foreach ($hot_best_sellers as $v_hot_best_sellers)
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_2.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button active">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
+                                    @if ($v_hot_best_sellers->product_quantity >= 100)
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_3.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
+                                    <!-- Slider Item -->
+                                    <div class="arrivals_slider_item">
+                                        <div class="border_active"></div>
+                                        <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                              <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                              <img src="{{URL::to($v_hot_best_sellers->image_1)}}" style="height: 130px; width: 150px">
                                               </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_4.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
+                                            <div class="product_content">
+                                                <div class="product_price">৳ {{$v_hot_best_sellers-> selling_price}}</div>
+                                                <div class="product_name">
+                                                    <div><a href="product.html">{{$v_hot_best_sellers-> product_name}}</a></div>
+                                                </div>
+                                                <div class="product_extras">
+                                                  <p>{{$v_hot_best_sellers->product_color}}</p>
+                                                    <button class="product_cart_button">Add to Cart</button>
+                                                </div>
+                                            </div>
+                                            <a onclick="addwishlist({{$v_hot_best_sellers->id}})" >
+                                              @if(Auth::check())
                                               <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
+                                              @else
+                                              <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                              @endif
+                                          </a>
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_5.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
+                                        <ul class="product_marks">
+                                            @if($v_hot_best_sellers->discount_price == NULL)
+                                            @else
+                                            <li class="product_mark product_new" style="background: red;">
+                                                -{{round(($v_hot_best_sellers->discount_price/$v_hot_best_sellers->selling_price)*100)}}%</li>
+                                            @endif
+                                            @if($v_hot_best_sellers->hot_new == NULL)
+                                            @else
+                                            <li class="product_mark product_new" >New
+                                            </li>
+                                            @endif
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    @endif
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_6.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
+                                    @endforeach
 
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_7.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount">-25%</li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_8.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_1.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_2.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_3.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_4.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_5.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_6.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_7.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_8.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="arrivals_slider_dots_cover"></div>
-                              </div>
-
-                              <!-- Product Panel -->
-                              <div class="product_panel panel">
-                                  <div class="arrivals_slider slider">
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_1.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount">-25%</li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_2.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button active">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_3.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_4.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_5.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_6.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_7.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount">-25%</li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_8.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_1.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_2.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_3.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_4.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_5.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_6.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_7.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$379</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
-
-                                      <!-- Slider Item -->
-                                      <div class="arrivals_slider_item">
-                                          <div class="border_active"></div>
-                                          <div
-                                              class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                              <div
-                                                  class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                  <img src="{{asset('public/frontend/images/new_8.jpg')}}" alt=""></div>
-                                              <div class="product_content">
-                                                  <div class="product_price">$225</div>
-                                                  <div class="product_name">
-                                                      <div><a href="product.html">Huawei MediaPad...</a></div>
-                                                  </div>
-                                                  <div class="product_extras">
-                                                      <div class="product_color">
-                                                          <input type="radio" checked name="product_color"
-                                                              style="background:#b19c83">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#000000">
-                                                          <input type="radio" name="product_color"
-                                                              style="background:#999999">
-                                                      </div>
-                                                      <button class="product_cart_button">Add to Cart</button>
-                                                  </div>
-                                              </div>
-                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                              <ul class="product_marks">
-                                                  <li class="product_mark product_discount"></li>
-                                                  <li class="product_mark product_new">new</li>
-                                              </ul>
-                                          </div>
-                                      </div>
                                   </div>
                                   <div class="arrivals_slider_dots_cover"></div>
                               </div>
@@ -2110,23 +654,36 @@
                           <div class="col-lg-3">
                               <div class="arrivals_single clearfix">
                                   <div class="d-flex flex-column align-items-center justify-content-center">
-                                      <div class="arrivals_single_image"><img src="images/new_single.png" alt=""></div>
+                                      <div class="arrivals_single_image"><img src="{{URL::to($hot_deal[1]->image_1)}}" style="height: 200px; width: 200px"></div>
                                       <div class="arrivals_single_content">
-                                          <div class="arrivals_single_category"><a href="#">Smartphones</a></div>
+                                          <div class="arrivals_single_category"><a href="#">{{$hot_deal[1]->category_name}}</a></div>
                                           <div class="arrivals_single_name_container clearfix">
-                                              <div class="arrivals_single_name"><a href="#">LUNA Smartphone</a></div>
-                                              <div class="arrivals_single_price text-right">$379</div>
+                                              <div class="arrivals_single_name"><a href="#">{{$hot_deal[1]->product_name}}</a></div>
+                                              <div class="arrivals_single_price text-right">৳ {{$hot_deal[1]->selling_price}}</div>
                                           </div>
-                                          <div class="rating_r rating_r_4 arrivals_single_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
                                           <form action="#"><button class="arrivals_single_button">Add to Cart</button>
                                           </form>
                                       </div>
-                                      <div class="arrivals_single_fav product_fav active"><i class="fas fa-heart"></i>
-                                      </div>
-                                      <ul class="arrivals_single_marks product_marks">
-                                          <li class="arrivals_single_mark product_mark product_new">new</li>
-                                      </ul>
+
+                                      <a onclick="addwishlist({{$hot_deal[1]->id}})" >
+                                        @if(Auth::check())
+                                        <div class="arrivals_single_fav product_fav"><i class="fas fa-heart"></i></div>
+                                        @else
+                                        <div class="arrivals_single_fav product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                        @endif
+                                     </a>
+                                    <ul class="arrivals_single_marks product_marks">
+                                        @if($hot_deal[1]->discount_price == NULL)
+                                        @else
+                                        <li class="arrivals_single_mark product_mark product_new" style="background: red;">
+                                            -{{round(($hot_deal[1]->discount_price/$hot_deal[1]->selling_price)*100)}}%</li>
+                                        @endif
+                                        @if($hot_deal[1]->hot_new == NULL)
+                                        @else
+                                        <li class="arrivals_single_mark product_mark product_new" >New
+                                        </li>
+                                        @endif
+                                    </ul>
                                   </div>
                               </div>
                           </div>
@@ -2139,7 +696,7 @@
       </div>
   </div>
 
-  <!-- Best Sellers -->
+  <!-- Hot New Arrivals -->
 
   <div class="best_sellers">
       <div class="container">
@@ -2147,11 +704,11 @@
               <div class="col">
                   <div class="tabbed_container">
                       <div class="tabs clearfix tabs-right">
-                          <div class="new_arrivals_title">Hot Best Sellers</div>
+                          <div class="new_arrivals_title">Hot New Arrivals</div>
                           <ul class="clearfix">
-                              <li class="active">Top 20</li>
-                              <li>Audio & Video</li>
-                              <li>Laptops & Computers</li>
+                              <li class="active">Hot New</li>
+                              {{-- <li>Audio & Video</li>
+                              <li>Laptops & Computers</li> --}}
                           </ul>
                           <div class="tabs_line"><span></span></div>
                       </div>
@@ -2162,814 +719,38 @@
 
                           <div class="bestsellers_slider slider">
 
+                            @foreach ($hot_new_arrivals as $item)
                               <!-- Best Sellers Item -->
                               <div class="bestsellers_item discount">
                                   <div
                                       class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
                                       <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_1.png')}}" alt=""></div>
+                                              src="{{asset($item->image_1)}}" style="height: 200px; width: 220px"></div>
                                       <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
+                                          <div class="bestsellers_category"><a href="#">{{$item->category_name}}</a></div>
+                                          <div class="bestsellers_name"><a href="product.html">{{$item->product_name}}</a>
                                           </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
+                                          <div class="bestsellers_price discount">৳{{$item->selling_price - $item->discount_price}}<span>৳ {{$item->selling_price}}</span></div>
                                       </div>
                                   </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
+
+                                <ul class="bestsellers_marks">
+                                    @if($item->discount_price == NULL)
+                                    @else
+                                    <li class="bestsellers_mark bestsellers_discount">
+                                        -{{round(($item->discount_price/$item->selling_price)*100)}}%</li>
+                                    @endif
+                                    @if($item->hot_new == NULL)
+                                    @else
+                                    <li class="bestsellers_mark bestsellers_discount" style="background: #10b529;">New
+                                    </li>
+                                    @endif
+
+                                </ul>
                               </div>
+                              @endforeach
 
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_2.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Samsung J730F...</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
 
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_3.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Nomi Black White</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_4.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Samsung Charm Gold</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_5.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Beoplay H7</a></div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_6.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Huawei MediaPad T3</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_1.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_2.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_3.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_4.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_5.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_6.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                          </div>
-                      </div>
-
-                      <div class="bestsellers_panel panel">
-
-                          <!-- Best Sellers Slider -->
-
-                          <div class="bestsellers_slider slider">
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_1.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_2.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_3.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_4.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_5.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_6.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_1.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_2.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_3.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_4.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_5.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_6.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                          </div>
-                      </div>
-
-                      <div class="bestsellers_panel panel">
-
-                          <!-- Best Sellers Slider -->
-
-                          <div class="bestsellers_slider slider">
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_1.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_2.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_3.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_4.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_5.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_6.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_1.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_2.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_3.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_4.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item discount">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_5.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
-
-                              <!-- Best Sellers Item -->
-                              <div class="bestsellers_item">
-                                  <div
-                                      class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                      <div class="bestsellers_image"><img
-                                              src="{{asset('public/frontend/images/best_6.png')}}" alt=""></div>
-                                      <div class="bestsellers_content">
-                                          <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                          <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a>
-                                          </div>
-                                          <div class="rating_r rating_r_4 bestsellers_rating">
-                                              <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                  <ul class="bestsellers_marks">
-                                      <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                      <li class="bestsellers_mark bestsellers_new">new</li>
-                                  </ul>
-                              </div>
 
                           </div>
                       </div>
@@ -2979,6 +760,94 @@
           </div>
       </div>
   </div>
+
+
+  <!-- Product By Categories -->
+  <div class="new_arrivals">
+    <div class="container">
+        @foreach ($category as $cat)
+        @php
+            $category_id=$cat->id;
+            $product_by_category = DB::table('products')
+            ->where('category_id',$category_id)
+            ->where('publication_status',1)
+            ->orderBy('id','desc')
+            ->get();
+        @endphp
+        <div class="row">
+            <div class="col">
+                <div class="tabbed_container">
+                    <div class="tabs clearfix tabs-right">
+                        <div class="new_arrivals_title" id="home-cat-{{$cat->id}}" style="transition-delay: 1s;">{{$cat->category_name}}</div>
+                        <ul class="clearfix">
+                            <li class="active">{{$cat->category_name}}</li>
+                        </ul>
+                        <div class="tabs_line"><span></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9" style="z-index:1;">
+
+                            <!-- Product Panel most viewed-->
+                            <div class="product_panel panel active">
+                                <div class="arrivals_slider slider">
+                                    @foreach ($product_by_category as $item)
+
+                                    <!-- Slider Item -->
+                                    <div class="arrivals_slider_item">
+                                        <div class="border_active"></div>
+                                        <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                              <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                              <img src="{{URL::to($item->image_1)}}" style="height: 130px; width: 150px">
+                                              </div>
+
+                                            <div class="product_content">
+                                                <div class="product_price">৳ {{$item-> selling_price}}</div>
+                                                <div class="product_name">
+                                                    <div><a href="product.html">{{$item-> product_name}}</a></div>
+                                                </div>
+                                                <div class="product_extras">
+                                                  <p>{{$item->product_color}}</p>
+                                                    <button class="product_cart_button">Add to Cart</button>
+                                                </div>
+                                            </div>
+                                            <a onclick="addwishlist({{$item->id}})" >
+                                              @if(Auth::check())
+                                              <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                              @else
+                                              <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                              @endif
+                                          </a>
+
+                                        <ul class="product_marks">
+                                            @if($item->discount_price == NULL)
+                                            @else
+                                            <li class="product_mark product_new" style="background: red;">
+                                                -{{round(($item->discount_price/$item->selling_price)*100)}}%</li>
+                                            @endif
+                                            @if($item->hot_new == NULL)
+                                            @else
+                                            <li class="product_mark product_new" >New
+                                            </li>
+                                            @endif
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    @endforeach
+
+                                </div>
+                                <div class="arrivals_slider_dots_cover"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
 
   <!-- Adverts -->
 
@@ -3039,7 +908,7 @@
       </div>
   </div>
 
-  <!-- Trends -->
+   <!-- Buy One Get One -->
 
   <div class="trends">
       <div class="trends_background"
@@ -3051,16 +920,17 @@
               <!-- Trends Content -->
               <div class="col-lg-3">
                   <div class="trends_container">
-                      <h2 class="trends_title">Trends 2018</h2>
+                      <h2 class="trends_title">Buy One Get One</h2>
                       <div class="trends_text">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing Donec et.</p>
+                          <p>Grab on the special offer only available for limited time.</p>
                       </div>
                       <div class="trends_slider_nav">
-                          <div class="trends_prev trends_nav"><i class="fas fa-angle-left ml-auto"></i></div>
-                          <div class="trends_next trends_nav"><i class="fas fa-angle-right ml-auto"></i></div>
+                          <div class="trends_prev trends_nav" style="background: black"><i class="fas fa-angle-left ml-auto"></i></div>
+                          <div class="trends_next trends_nav" style="background: black"><i class="fas fa-angle-right ml-auto"></i></div>
                       </div>
                   </div>
               </div>
+
 
               <!-- Trends Slider -->
               <div class="col-lg-9">
@@ -3069,132 +939,45 @@
                       <!-- Trends Slider -->
 
                       <div class="owl-carousel owl-theme trends_slider">
-
+                        @foreach ($b1g1 as $item)
                           <!-- Trends Slider Item -->
                           <div class="owl-item">
                               <div class="trends_item is_new">
                                   <div
                                       class="trends_image d-flex flex-column align-items-center justify-content-center">
-                                      <img src="{{asset('public/frontend/images/trends_1.jpg')}}" alt=""></div>
+                                      <img src="{{asset($item->image_1)}}" style="height: 200px; width: 220px"></div>
                                   <div class="trends_content">
-                                      <div class="trends_category"><a href="#">Smartphones</a></div>
+                                      <div class="trends_category"><a href="#">{{$item->category_name}}</a></div>
                                       <div class="trends_info clearfix">
-                                          <div class="trends_name"><a href="product.html">Jump White</a></div>
-                                          <div class="trends_price">$379</div>
+                                          <div class="trends_name"><a href="product.html">{{$item->product_name}}</a></div>
+                                          <div class="trends_price">৳ {{$item->selling_price}}</div>
                                       </div>
                                   </div>
-                                  <ul class="trends_marks">
-                                      <li class="trends_mark trends_discount">-25%</li>
-                                      <li class="trends_mark trends_new">new</li>
-                                  </ul>
-                                  <div class="trends_fav"><i class="fas fa-heart"></i></div>
-                              </div>
-                          </div>
+                                    <a onclick="addwishlist({{$item->id}})" >
+                                        @if(Auth::check())
+                                        <div class="trends_fav"><i class="fas fa-heart"></i></div>
+                                        @else
+                                        <div class="trends_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                        @endif
+                                    </a>
 
-                          <!-- Trends Slider Item -->
-                          <div class="owl-item">
-                              <div class="trends_item">
-                                  <div
-                                      class="trends_image d-flex flex-column align-items-center justify-content-center">
-                                      <img src="{{asset('public/frontend/images/trends_2.jpg')}}" alt=""></div>
-                                  <div class="trends_content">
-                                      <div class="trends_category"><a href="#">Smartphones</a></div>
-                                      <div class="trends_info clearfix">
-                                          <div class="trends_name"><a href="product.html">Samsung Charm...</a></div>
-                                          <div class="trends_price">$379</div>
-                                      </div>
-                                  </div>
-                                  <ul class="trends_marks">
-                                      <li class="trends_mark trends_discount">-25%</li>
-                                      <li class="trends_mark trends_new">new</li>
-                                  </ul>
-                                  <div class="trends_fav"><i class="fas fa-heart"></i></div>
+                                <ul class="trends_marks">
+                                    @if($item->discount_price == NULL)
+                                    @else
+                                    <li class="trends_mark trends_new" style="background: red;">
+                                        -{{round(($item->discount_price/$item->selling_price)*100)}}%</li>
+                                    @endif
+                                    @if($item->hot_new == NULL)
+                                    @else
+                                    <li class="trends_mark trends_new" style="background: #10b529;">New
+                                    </li>
+                                    @endif
+                                </ul>
+                                <div style="margin-top: 10px; text-align: center;"><a href="#" class="btn btn-primary btn-sm" >Add to Cart</a></div>
                               </div>
                           </div>
+                        @endforeach
 
-                          <!-- Trends Slider Item -->
-                          <div class="owl-item">
-                              <div class="trends_item is_new">
-                                  <div
-                                      class="trends_image d-flex flex-column align-items-center justify-content-center">
-                                      <img src="{{asset('public/frontend/images/trends_3.jpg')}}" alt=""></div>
-                                  <div class="trends_content">
-                                      <div class="trends_category"><a href="#">Smartphones</a></div>
-                                      <div class="trends_info clearfix">
-                                          <div class="trends_name"><a href="product.html">DJI Phantom 3...</a></div>
-                                          <div class="trends_price">$379</div>
-                                      </div>
-                                  </div>
-                                  <ul class="trends_marks">
-                                      <li class="trends_mark trends_discount">-25%</li>
-                                      <li class="trends_mark trends_new">new</li>
-                                  </ul>
-                                  <div class="trends_fav"><i class="fas fa-heart"></i></div>
-                              </div>
-                          </div>
-
-                          <!-- Trends Slider Item -->
-                          <div class="owl-item">
-                              <div class="trends_item is_new">
-                                  <div
-                                      class="trends_image d-flex flex-column align-items-center justify-content-center">
-                                      <img src="{{asset('public/frontend/images/trends_1.jpg')}}" alt=""></div>
-                                  <div class="trends_content">
-                                      <div class="trends_category"><a href="#">Smartphones</a></div>
-                                      <div class="trends_info clearfix">
-                                          <div class="trends_name"><a href="product.html">Jump White</a></div>
-                                          <div class="trends_price">$379</div>
-                                      </div>
-                                  </div>
-                                  <ul class="trends_marks">
-                                      <li class="trends_mark trends_discount">-25%</li>
-                                      <li class="trends_mark trends_new">new</li>
-                                  </ul>
-                                  <div class="trends_fav"><i class="fas fa-heart"></i></div>
-                              </div>
-                          </div>
-
-                          <!-- Trends Slider Item -->
-                          <div class="owl-item">
-                              <div class="trends_item">
-                                  <div
-                                      class="trends_image d-flex flex-column align-items-center justify-content-center">
-                                      <img src="{{asset('public/frontend/images/trends_2.jpg')}}" alt=""></div>
-                                  <div class="trends_content">
-                                      <div class="trends_category"><a href="#">Smartphones</a></div>
-                                      <div class="trends_info clearfix">
-                                          <div class="trends_name"><a href="product.html">Jump White</a></div>
-                                          <div class="trends_price">$379</div>
-                                      </div>
-                                  </div>
-                                  <ul class="trends_marks">
-                                      <li class="trends_mark trends_discount">-25%</li>
-                                      <li class="trends_mark trends_new">new</li>
-                                  </ul>
-                                  <div class="trends_fav"><i class="fas fa-heart"></i></div>
-                              </div>
-                          </div>
-
-                          <!-- Trends Slider Item -->
-                          <div class="owl-item">
-                              <div class="trends_item is_new">
-                                  <div
-                                      class="trends_image d-flex flex-column align-items-center justify-content-center">
-                                      <img src="{{asset('public/frontend/images/trends_3.jpg')}}" alt=""></div>
-                                  <div class="trends_content">
-                                      <div class="trends_category"><a href="#">Smartphones</a></div>
-                                      <div class="trends_info clearfix">
-                                          <div class="trends_name"><a href="product.html">Jump White</a></div>
-                                          <div class="trends_price">$379</div>
-                                      </div>
-                                  </div>
-                                  <ul class="trends_marks">
-                                      <li class="trends_mark trends_discount">-25%</li>
-                                      <li class="trends_mark trends_new">new</li>
-                                  </ul>
-                                  <div class="trends_fav"><i class="fas fa-heart"></i></div>
-                              </div>
-                          </div>
 
                       </div>
                   </div>
@@ -3592,6 +1375,56 @@
         if(id) {
                $.ajax({
                    url: "{{  url('/add/wishlist/') }}/"+id,
+                   type:"GET",
+                   dataType:"json",
+                   success:function(data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'success',
+                        title: data.msg
+                        })
+                   },
+
+                   error:function(data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'error',
+                        title: data.responseJSON.msg
+                        })
+                   },
+               });
+        } else {
+            alert('danger');
+           }
+    }
+</script>
+
+<script type="text/javascript">
+    function add_to_cart(id) {
+        console.log(id);
+        if(id) {
+               $.ajax({
+                   url: "{{  url('/addtocart/') }}/"+id,
                    type:"GET",
                    dataType:"json",
                    success:function(data) {

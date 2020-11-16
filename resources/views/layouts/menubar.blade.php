@@ -22,7 +22,7 @@
 								<ul class="cat_menu">
 								@foreach($category as $v_category)
 									<li class="hassubs">
-										<a href="#">{{$v_category->category_name}}<i class="fas fa-chevron-right"></i></a>
+										<a href="/elaravel_v2/?/#home-cat-{{$v_category->id}}">{{$v_category->category_name}}<i class="fas fa-chevron-right"></i></a>
 										<ul>
 										@php
 											$sub_category=DB::table('sub_categories')->where('category_id',$v_category->id)->get();

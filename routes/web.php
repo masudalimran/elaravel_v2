@@ -86,8 +86,12 @@ Route::get('admin/newsletter','Admin\NewsletterController@newsletter')->name('ad
 Route::get('delete/newsletter/{id}', 'Admin\NewsletterController@delete_newsletter');
 
 //Frontend
+    //newsletter
 Route::post('store/newsletter','FrontController@store_newsletter')->name('store.newsletter');
+    //wishlist
 Route::get('add/wishlist/{id}','wishlistController@add_wishlist');
+    //addtocart
+Route::get('addtocart/{id}','CartController@add_cart');
 
 //customer profile related routes
 

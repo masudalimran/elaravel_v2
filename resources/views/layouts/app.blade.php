@@ -15,6 +15,11 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/slick-1.8.0/slick.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/main_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/responsive.css')}}">
+{{-- <style>
+    html{
+        scroll-behavior: smooth;
+    }
+</style> --}}
 
 
 
@@ -122,10 +127,14 @@
 												<span class="custom_dropdown_placeholder clc">All Categories</span>
 												<i class="fas fa-chevron-down"></i>
 												<ul class="custom_list clc">
-													<li><a class="clc" href="#">All Categories</a></li>
+                                                    <li><a class="clc" href="#">All Categories</a></li>
+
 													@foreach($category as $v_category)
-														<li><a class="clc" href="#">{{ $v_category->category_name }}</a></li>
-													@endforeach
+														<li>
+                                                            <a class="clc" href="#">{{ $v_category->category_name }}</a>
+                                                        </li>
+                                                    @endforeach
+
 												</ul>
 											</div>
 										</div>
@@ -310,6 +319,34 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     @endif
  </script>
 
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links
+  $("a").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 1100, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+});
+</script>
 
 
 
