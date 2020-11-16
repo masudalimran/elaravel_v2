@@ -217,7 +217,7 @@
 						<div class="banner_product_name">Brand: {{$slider->brand_name}}</div>
 						<div class="banner_product_name">Available In: {{$slider->product_color}}</div>
 						<div class="banner_product_name">Available Sizes: {{$slider->product_size}}</div>
-						<div class="button banner_button"><a href="#">Buy Now</a></div>
+						<div class="button banner_button"><a onclick="add_to_cart({{$slider->id}})">Buy Now</a></div>
 					</div>
 				</div>
 			</div>

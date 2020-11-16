@@ -159,7 +159,9 @@
                                           <div class="deals_item_price ml-auto">৳{{$row->selling_price - $row->discount_price}}<span
                                             ></div>
                                       </div>
-                                      <div style="margin-top: 5px; text-align: right;"><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                                      <div style="margin-top: 5px; text-align: right;">
+                                        <a onclick="add_to_cart({{$row->id}})" class="btn btn-primary btn-sm">Add to Cart</a>
+                                    </div>
                                       <div class="available">
                                           <div class="available_line d-flex flex-row justify-content-start">
                                               <div class="available_title">Available: <span>{{$row->product_quantity}}</span></div>
@@ -314,7 +316,9 @@
                                             </div>
                                             <div class="product_extras">
                                                 <p>{{$row->product_color}}</p>
+                                                <a onclick="add_to_cart({{$row->id}})" >
                                                 <button class="product_cart_button">Add to Cart</button>
+                                                </a>
                                             </div>
                                         </div>
 
@@ -378,7 +382,9 @@
                                             </div>
                                             <div class="product_extras">
                                                 <p>{{$row->product_color}}</p>
+                                                <a onclick="add_to_cart({{$row->id}})" >
                                                 <button class="product_cart_button">Add to Cart</button>
+                                                </a>
                                             </div>
                                         </div>
 
@@ -560,7 +566,9 @@
                                                   </div>
                                                   <div class="product_extras">
                                                     <p>{{$v_hot_best_sellers->product_color}}</p>
+                                                    <a onclick="add_to_cart({{$v_hot_best_sellers->id}})" >
                                                       <button class="product_cart_button">Add to Cart</button>
+                                                    </a>
                                                   </div>
                                               </div>
                                               <a onclick="addwishlist({{$v_hot_best_sellers->id}})" >
@@ -616,7 +624,9 @@
                                                 </div>
                                                 <div class="product_extras">
                                                   <p>{{$v_hot_best_sellers->product_color}}</p>
+                                                  <a onclick="add_to_cart({{$v_hot_best_sellers->id}})" >
                                                     <button class="product_cart_button">Add to Cart</button>
+                                                  </a>
                                                 </div>
                                             </div>
                                             <a onclick="addwishlist({{$v_hot_best_sellers->id}})" >
@@ -661,8 +671,9 @@
                                               <div class="arrivals_single_name"><a href="#">{{$hot_deal[1]->product_name}}</a></div>
                                               <div class="arrivals_single_price text-right">৳ {{$hot_deal[1]->selling_price}}</div>
                                           </div>
-                                          <form action="#"><button class="arrivals_single_button">Add to Cart</button>
-                                          </form>
+                                            <a onclick="add_to_cart({{$hot_deal[1]->id}})" >
+                                                <button class="arrivals_single_button">Add to Cart</button>
+                                            </a>
                                       </div>
 
                                       <a onclick="addwishlist({{$hot_deal[1]->id}})" >
@@ -807,7 +818,9 @@
                                                 </div>
                                                 <div class="product_extras">
                                                   <p>{{$item->product_color}}</p>
+                                                  <a onclick="add_to_cart({{$item->id}})" >
                                                     <button class="product_cart_button">Add to Cart</button>
+                                                  </a>
                                                 </div>
                                             </div>
                                             <a onclick="addwishlist({{$item->id}})" >
@@ -973,7 +986,7 @@
                                     </li>
                                     @endif
                                 </ul>
-                                <div style="margin-top: 10px; text-align: center;"><a href="#" class="btn btn-primary btn-sm" >Add to Cart</a></div>
+                                <div style="margin-top: 10px; text-align: center;"><a onclick="add_to_cart({{$item->id}})" class="btn btn-primary btn-sm" >Add to Cart</a></div>
                               </div>
                           </div>
                         @endforeach
