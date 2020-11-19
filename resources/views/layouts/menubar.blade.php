@@ -28,7 +28,7 @@
 											$sub_category=DB::table('sub_categories')->where('category_id',$v_category->id)->get();
 										@endphp
 											@foreach($sub_category as $v_sub_category)
-												<li><a href="#">{{$v_sub_category->sub_category_name}}<i class="fas fa-chevron-right"></i></a></li>
+												<li><a href="/elaravel_v2/?/#home-cat-{{$v_category->id}}">{{$v_sub_category->sub_category_name}}<i class="fas fa-chevron-right"></i></a></li>
 											@endforeach
 										</ul>
 									</li>

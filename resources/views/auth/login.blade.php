@@ -36,8 +36,8 @@
                         <a href="{{route('password.request')}}">Forgot password</a>
                         <br><br>
 
-                          <button type="submit" class="btn btn-info btn-block">Login With Facebook</button>
-                          <button type="submit" class="btn btn-danger btn-block">Login With google</button>
+                            <a href="{{ URL::to('/auth/redirect/google') }}" type="submit" class="btn btn-danger btn-block">Login With google</a>
+                            <a href="{{ URL::to('/auth/redirect/facebook') }}" type="submit" class="btn btn-info btn-block">Login With Facebook</a>
 
 					</div>
 				</div>

@@ -56,9 +56,12 @@
                     <div class="card" style="width: 18rem;">
                         <img src="{{asset('public/yo.webp')}}" class="card-img-top" style="height: 50%; width: 80%; margin-left: 10%; margin-top: 5%; ">
                         <div class="card-body">
-                            <h5 class="card-title text-center">
+                            <h5 class="card-title text-left">
                                 @php
-                                    echo strtoupper(Auth::user()->name);
+                                    echo strtoupper(Auth::user()->name."<br>");
+                                    echo ("Email:".Auth::user()->email."<br>");
+                                    echo strtoupper("Provider : ".Auth::user()->provider."<br>");
+                                    echo strtoupper("ID : ".substr(Auth::user()->provider_id,-4));
                                 @endphp
                             </h5>
                         </div>

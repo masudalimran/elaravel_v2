@@ -8,13 +8,18 @@
 <meta name="description" content="OneTech shop project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/bootstrap4/bootstrap.min.css')}}">
-<link href="plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+<link href="{{asset('public/frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/animate.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/slick-1.8.0/slick.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/main_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/responsive.css')}}">
+<link rel="stylesheet" type="text/css" href="'{{asset('public/frontend/styles/product_styles.css')}}'">
+<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/product_responsive.css')}}">
+
+
+
 {{-- <style>
     html{
         scroll-behavior: smooth;
@@ -79,7 +84,7 @@
                                     <div class="top_bar_menu">
                                         <ul class="standard_dropdown top_bar_dropdown">
                                             <li>
-                                                <div><a href="{{route('home')}}">Profile</a></div>
+                                                <div><a href="{{route('home')}}">Profile ({{Auth::user()->name}})</a></div>
                                                 <ul>
                                                     <li><a href="#">Checkout</a></li>
                                                     <li><a href="#">Wishlist</a></li>
@@ -148,24 +153,43 @@
 					<!-- Wishlist -->
 					<div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
 						<div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
-							<div class="wishlist d-flex flex-row align-items-center justify-content-end">
+                            @guest
+
+                            @else
+                            @php
+                                $wishlist=DB::table('wishlists')
+                                ->where('user_id',Auth::id())
+                                ->get();
+                            @endphp
+                            <div class="wishlist d-flex flex-row align-items-center justify-content-end">
 								<div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
 								<div class="wishlist_content">
 									<div class="wishlist_text"><a href="#">Wishlist</a></div>
-									<div class="wishlist_count">115</div>
+									<div class="wishlist_count">{{count($wishlist)}}</div>
 								</div>
-							</div>
+                            </div>
+                            @endguest
 
 							<!-- Cart -->
 							<div class="cart">
+                                @php
+                                $cart=DB::table('cart')
+                                ->where('user_id',Auth::id())
+                                ->get();
+
+                                $subtotal_cart = 0;
+                                foreach($cart as $v_cart){
+                                    $subtotal_cart = ($v_cart->qty) * ($v_cart->price);
+                                }
+                                @endphp
 								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
 									<div class="cart_icon">
 										<img src="images/cart.png" alt="">
-										<div class="cart_count"><span>10</span></div>
+										<div class="cart_count"><span>{{count($cart)}}</span></div>
 									</div>
 									<div class="cart_content">
-										<div class="cart_text"><a href="#">Cart</a></div>
-										<div class="cart_price">$85</div>
+										<div class="cart_text"><a href="{{route('show.cart')}}">Cart</a></div>
+										<div class="cart_price">৳ {{numberFormat($subtotal_cart)}}</div>
 									</div>
 								</div>
 							</div>
@@ -321,32 +345,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
 
-<script>
-$(document).ready(function(){
-  // Add smooth scrolling to all links
-  $("a").on('click', function(event) {
 
-    // Make sure this.hash has a value before overriding default behavior
-    if (this.hash !== "") {
-      // Prevent default anchor click behavior
-      event.preventDefault();
-
-      // Store hash
-      var hash = this.hash;
-
-      // Using jQuery's animate() method to add smooth page scroll
-      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 1100, function(){
-
-        // Add hash (#) to URL when done scrolling (default click behavior)
-        window.location.hash = hash;
-      });
-    } // End if
-  });
-});
-</script>
 
 
 

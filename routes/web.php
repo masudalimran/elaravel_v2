@@ -12,6 +12,14 @@ Route::get('/password-change', 'HomeController@changePassword')->name('password.
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
 Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');
 
+//Google Socialite
+Route::get('/auth/redirect/{provider}', 'Auth\GoogleController@redirect');
+ Route::get('/callback/{provider}', 'Auth\GoogleController@callback');
+
+//facebook socialite
+// Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
+// Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
+
 //admin=======
 Route::get('admin/home', 'AdminController@index');
 Route::get('admin/', 'Admin\LoginController@showLoginForm')->name('admin.login');
@@ -92,6 +100,13 @@ Route::post('store/newsletter','FrontController@store_newsletter')->name('store.
 Route::get('add/wishlist/{id}','wishlistController@add_wishlist');
     //addtocart
 Route::get('addtocart/{id}','CartController@add_cart');
+Route::get('show/cart','CartController@show_cart')->name('show.cart');
+
+    //visitproduct
+Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
+Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
+
+
 
 //customer profile related routes
 
