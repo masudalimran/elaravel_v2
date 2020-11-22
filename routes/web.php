@@ -104,7 +104,8 @@ Route::get('show/cart','CartController@show_cart')->name('show.cart');
 Route::post('cart/coupon/add/{user_id}/{sum_total}','CartController@add_coupon');
 Route::get('remove/cart/{user_id}/{active_coupon}','CartController@remove_cart');
 Route::get('remove/item/{product_id}/{coupon_minus}/{active_coupon}','CartController@remove_item');
-// Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
+Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
+Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
 
 
     //visitproduct

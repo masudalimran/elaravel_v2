@@ -25,8 +25,8 @@
                     <div class="cart_title">Shopping Cart</div>
 
 
-                    {{-- <form action="{{route('user.checkout')}}" method="post">
-                        @csrf --}}
+            {{-- <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
+                @csrf --}}
                 @foreach ($cart as $item)
 
                     @php
@@ -76,19 +76,22 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    {{-- QUANTIY --}}
                                     <div class="cart_item_quantity cart_info_col" style="max-width: 8%; min-width:8%;">
                                         <div class="cart_item_title">Quantity</div>
                                         <div class="cart_item_text" >
-                                            <input class="form-control" type="number" pattern="[0-9]*" value="{{$item->qty}}" name="qty">
+                                            <input onchange="qty_change({{$item->id}},this.value, {{$item->price}})" class="form-control" type="number" pattern="[0-9]*" value="{{$item->qty}}" name="qty">
                                         </div>
                                     </div>
+
                                     <div class="cart_item_price cart_info_col" style="max-width: 10%; min-width:10%;">
                                         <div class="cart_item_title" style="text-align: right">Price</div>
                                         <div class="cart_item_text">{{numberFormat($item->price)}}</div>
                                     </div>
                                     <div class="cart_item_total cart_info_col" style="max-width: 10%; min-width:10%;">
                                         <div class="cart_item_title" style="text-align: right">Total</div>
-                                        <div class="cart_item_text">{{numberFormat($item->price * $item->qty)  }}</div>
+                                        <div class="cart_item_text" id="product-subtotal-{{$item->id}}">{{numberFormat($item->price * $item->qty)  }}</div>
                                     </div>
                                     <div class="cart_item_name cart_info_col" style="max-width: 5%; min-width:5%;">
                                         <div class="cart_item_title" style="text-align: center">Action</div>
@@ -123,7 +126,7 @@
                         <div class="order_total_content text-md-right">
 
                             <div class="order_total_title">Sum Total</div>
-                            <div class="order_total_amount">{{numberFormat($sum_total)}}</div><br>
+                            <div class="order_total_amount" id="cart-subtotal">{{numberFormat($sum_total)}}</div><br>
                         </div>
                     </div>
                     <div class="order_total">
@@ -137,7 +140,7 @@
                         <div class="order_total_content text-md-right">
                             <div class="order_total_title">Order Total:</div>
                             {{-- @if($coupon_minus != Null) --}}
-                            <div class="order_total_amount">{{numberFormat(($sum_total)- ($coupon_minus ?? ''))}}</div>
+                            <div class="order_total_amount" id="cart-subtotal-with-coupon">{{numberFormat(($sum_total)- ($coupon_minus ?? ''))}}</div>
                             {{-- @else --}}
                             {{-- <div class="order_total_amount">{{numberFormat($sum_total)}}</div> --}}
                             {{-- @endif --}}
@@ -146,9 +149,7 @@
 
                     <div class="cart_buttons">
                         <a href="{{url('remove/cart/'.$userId.'/'.$active_coupon)}}"><button type="button" class="button cart_button_clear" style="color: red">Cancel Cart</button></a>
-                        {{-- <a href="{{route('user.checkout')}}"> --}}
-                            <button type="button" class="button cart_button_checkout">Checkout</button>
-                        {{-- </a> --}}
+                        <button onclick="checkout()" type="button" class="button cart_button_checkout">Checkout</button>
                     </div>
                 </div>
             {{-- </form> --}}
@@ -174,25 +175,38 @@
 
 
 
+<script type="text/javascript">
+    function qty_change(productId , qty, price) {
+        var subtotal = qty * price;
+        console.log(subtotal)
+        $('#product-subtotal-'+productId).text(subtotal)
 
-<script>
-    @if(Session::has('messege'))
-      var type="{{Session::get('alert-type','info')}}"
-      switch(type){
-          case 'info':
-               toastr.info("{{ Session::get('messege') }}");
-               break;
-          case 'success':
-              toastr.success("{{ Session::get('messege') }}");
-              break;
-          case 'warning':
-             toastr.warning("{{ Session::get('messege') }}");
-              break;
-          case 'error':
-              toastr.error("{{ Session::get('messege') }}");
-              break;
-      }
-    @endif
- </script>
+        var subtotal = qty * price;
+        $('#cart-subtotal-'+productId).text(subtotal)
+
+
+        console.log('===============================================', productId, qty)
+        event.preventDefault();
+
+        $.ajax({
+            url: "{{  url('update/cart/') }}/"+productId+'/'+qty,
+            type:"GET",
+            // data: $('#checkout_form').serialize(),
+            dataType:"json",
+            success:function(data) {
+                console.log(data.final_cart)
+                var arr =  data.final_cart;
+                var total = 0;
+                arr.forEach(element => {
+                    total += element.price*element.qty
+                });
+                console.log(total)
+                $("#cart-subtotal").text(total);
+                $("#cart-subtotal-with-coupon").text(total);
+
+            }
+        });
+    }
+</script>
 
 @endsection

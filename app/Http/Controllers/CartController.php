@@ -72,8 +72,6 @@ class CartController extends Controller
 
         $active_coupon=0;
 
-
-
         if($coupon != NULL){
             $coupon_minus=0;
             $coupon_data=$coupon->discount;
@@ -83,13 +81,18 @@ class CartController extends Controller
             ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
             ->where('user_id',$user_id)
             ->get();
-
             // return response() -> json($coupon_minus) ;
             $active_coupon = $coupon_data;
-            return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
+            // return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
+            return response(json_encode([
+                "msg" => "Product Already exist in cart",
+                "cart" => $cart,
+                "coupon_minus" => $coupon_minus,
+                "active_coupon" => $active_coupon,
+
+            ]), 200, ["Content-Type" => "application/json"]);
 
         }
-
         //  return response() -> json($coupon) ;
     }
 
@@ -140,5 +143,29 @@ class CartController extends Controller
         // return Redirect()->route('home')->with($notification);
 
         // }
+    }
+
+    public function update_cart($product_id, $qty){
+        $userId = Auth::id();
+        $cart=DB::table('cart')
+        //->leftjoin('products','cart.product_id','=','products.id')
+        //->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
+        ->where('user_id',$userId)
+        ->where('product_id',$product_id)
+        ->update(['qty'=>$qty]);
+
+        $final_cart=DB::table('cart')
+        ->leftjoin('products','cart.product_id','=','products.id')
+        ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
+        ->where('user_id',$userId)
+        // ->where('product_id',$product_id)
+        ->get();
+
+        $coupon_minus=0;
+        $active_coupon=0;
+        return response(json_encode([
+            "msg" => "Login with your account first",
+            "final_cart" => $final_cart
+        ]), 200, ["Content-Type" => "application/json"]);
     }
 }
