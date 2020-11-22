@@ -12,7 +12,10 @@ class wishlistController extends Controller
     //
     public function add_wishlist($id){
         $userId = Auth::id();
-        $wishlist = DB::table('wishlists')->where('user_id',$userId)->where('product_id',$id)->first();
+        $wishlist = DB::table('wishlists')
+        ->where('user_id',$userId)
+        ->where('product_id',$id)
+        ->first();
         $data = array('user_id'=>$userId, 'product_id'=>$id);
 
         if(Auth::check()){
@@ -23,10 +26,11 @@ class wishlistController extends Controller
 
             }else{
                 DB::table('wishlists')->insert($data);
+                $wishlist_count =  DB::table('wishlists')->where('user_id',$userId)->count();
                 return response(json_encode([
-                    "msg" => "Product added to wishlist"
+                    "msg" => "Product added to wishlist",
+                    "wishlist_count" => $wishlist_count
                 ]), 200, ["Content-Type" => "application/json"]);
-
             }
         }else{
             return response(json_encode([

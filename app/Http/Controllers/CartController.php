@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
+// use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
@@ -34,8 +35,10 @@ class CartController extends Controller
 
                 }else{
                     DB::table('cart')->insert($data);
+                    $cart_count =  DB::table('cart')->where('user_id',$userId)->count();
                     return response(json_encode([
-                        "msg" => "Product added to Cart"
+                        "msg" => "Product added to Cart",
+                        "cart_count" => $cart_count
                     ]), 200, ["Content-Type" => "application/json"]);
 
                 }
@@ -55,15 +58,87 @@ class CartController extends Controller
         ->where('user_id',$userId)
         ->get();
 
-        // $product = DB::table('products')
-        // ->leftjoin('categories','products.category_id','=','categories.id')
-        // ->leftjoin('brands','products.brand_id','=','brands.id')
-        // ->leftjoin('sub_categories','products.subcategory_id','=','sub_categories.id')
-        // ->select('products.*','categories.category_name','sub_categories.sub_category_name','brands.brand_name')
-        // ->where('products.id',$id)
-        // ->first();
-        // return response()->json($cart);
-        return view('pages.cart',compact('cart'));
+        $coupon_minus=0;
+        $active_coupon=0;
+        return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
 
+    }
+
+    public function add_coupon(Request $request, $user_id,$sum_total){
+        // echo "$sum_total";
+         $coupon=DB::table('coupons')
+        ->where('coupon',$request->coupon_input)
+        ->first();
+
+        $active_coupon=0;
+
+
+
+        if($coupon != NULL){
+            $coupon_minus=0;
+            $coupon_data=$coupon->discount;
+            $coupon_minus += (($sum_total * $coupon_data)/100);
+            $cart=DB::table('cart')
+            ->leftjoin('products','cart.product_id','=','products.id')
+            ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
+            ->where('user_id',$user_id)
+            ->get();
+
+            // return response() -> json($coupon_minus) ;
+            $active_coupon = $coupon_data;
+            return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
+
+        }
+
+        //  return response() -> json($coupon) ;
+    }
+
+    public function remove_cart($id,$active_coupon){
+        DB::table('cart')
+        ->where('user_id',$id)
+        ->delete();
+
+        $cart=DB::table('cart')
+        ->leftjoin('products','cart.product_id','=','products.id')
+        ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
+        ->where('user_id',$id)
+        ->get();
+        $active_coupon=0;
+        $coupon_minus=0;
+        return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
+    }
+
+    public function remove_item($id,$coupon_minus,$active_coupon){
+        // return response() -> json($active_coupon) ;
+
+        $userId = Auth::id();
+        DB::table('cart')
+        ->where('user_id',$userId)
+        ->where('product_id',$id)
+        ->delete();
+
+        $coupon_minus=($coupon_minus*($active_coupon/100));
+        $active_coupon = $active_coupon;
+
+        $cart=DB::table('cart')
+        ->leftjoin('products','cart.product_id','=','products.id')
+        ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
+        ->where('user_id',$userId)
+        ->get();
+        return view('pages.cart',compact('cart','userId','coupon_minus','active_coupon'));
+    }
+
+    public function checkout(Request $request){
+        $a = $request->product_id;
+        return response() -> json($a) ;
+
+        // if(Auth::check()){
+        //     $notification = array(
+        //         'messege'=>'Login First',
+        //         'alert-type'=>'success'
+        // );
+        // return Redirect()->route('home')->with($notification);
+
+        // }
     }
 }

@@ -165,7 +165,7 @@
 								<div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
 								<div class="wishlist_content">
 									<div class="wishlist_text"><a href="#">Wishlist</a></div>
-									<div class="wishlist_count">{{count($wishlist)}}</div>
+									<div class="wishlist_count" id="wishlist-count">{{count($wishlist)}}</div>
 								</div>
                             </div>
                             @endguest
@@ -179,13 +179,13 @@
 
                                 $subtotal_cart = 0;
                                 foreach($cart as $v_cart){
-                                    $subtotal_cart = ($v_cart->qty) * ($v_cart->price);
+                                    $subtotal_cart += ($v_cart->qty) * ($v_cart->price);
                                 }
                                 @endphp
 								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
 									<div class="cart_icon">
 										<img src="images/cart.png" alt="">
-										<div class="cart_count"><span>{{count($cart)}}</span></div>
+										<div class="cart_count" ><span id="cart-count">{{count($cart)}}</span></div>
 									</div>
 									<div class="cart_content">
 										<div class="cart_text"><a href="{{route('show.cart')}}">Cart</a></div>

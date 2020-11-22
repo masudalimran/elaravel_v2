@@ -67,9 +67,7 @@
                                 @if ($errors->has('email'))
                                         <strong style="color: red">{{$errors->first('email')}}</strong>
                                 @endif
-                              </div>
-
-
+                            </div>
 
                             <div class="form-group">
                               <label for="exampleInputEmail1">Password</label>

@@ -60,8 +60,15 @@
                                 @php
                                     echo strtoupper(Auth::user()->name."<br>");
                                     echo ("Email:".Auth::user()->email."<br>");
+                                    if(Auth::user()->phone){
+                                        echo ("Phone: ".Auth::user()->phone."<br>");
+                                    }
+                                    if(Auth::user()->provider){
                                     echo strtoupper("Provider : ".Auth::user()->provider."<br>");
+                                    }
+                                    if(Auth::user()->provider_id){
                                     echo strtoupper("ID : ".substr(Auth::user()->provider_id,-4));
+                                    }
                                 @endphp
                             </h5>
                         </div>
