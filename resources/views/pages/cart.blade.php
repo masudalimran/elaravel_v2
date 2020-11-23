@@ -184,10 +184,9 @@
         var subtotal = qty * price;
         $('#cart-subtotal-'+productId).text(subtotal)
 
-
         console.log('===============================================', productId, qty)
         event.preventDefault();
-
+        let _this = this
         $.ajax({
             url: "{{  url('update/cart/') }}/"+productId+'/'+qty,
             type:"GET",
@@ -203,9 +202,15 @@
                 console.log(total)
                 $("#cart-subtotal").text(total);
                 $("#cart-subtotal-with-coupon").text(total);
+                _this.function1();
 
             }
+
         });
+    }
+    function function1(){
+        console.log("=======================================================================")
+
     }
 </script>
 
