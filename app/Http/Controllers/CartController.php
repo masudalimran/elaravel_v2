@@ -85,11 +85,12 @@ class CartController extends Controller
             $active_coupon = $coupon_data;
             // return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
             return response(json_encode([
-                "msg" => "Product Already exist in cart",
+                // "msg" => "Product Already exist in cart",
                 "cart" => $cart,
                 "coupon_minus" => $coupon_minus,
                 "active_coupon" => $active_coupon,
-
+                "coupon_input" => $request->coupon_input,
+                "coupon_percentage" => $coupon_data
             ]), 200, ["Content-Type" => "application/json"]);
 
         }
@@ -111,24 +112,28 @@ class CartController extends Controller
         return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
     }
 
-    public function remove_item($id,$coupon_minus,$active_coupon){
-        // return response() -> json($active_coupon) ;
+    public function remove_item($product_id,$price,$coupon_minus_final,$active_coupon_percentage_final, $coupon_input){
+        // dd($product_id. ', '.$coupon_minus.' , '.$active_coupon);
 
         $userId = Auth::id();
-        DB::table('cart')
-        ->where('user_id',$userId)
-        ->where('product_id',$id)
-        ->delete();
+        // DB::table('cart')
+        // ->where('user_id',$userId)
+        // ->where('product_id',$product_id)
+        // ->delete();
+        $coupon_minus = $coupon_minus_final;
+        $coupon_minus-=($price*($active_coupon_percentage_final/100));
+        $active_coupon = $coupon_input;
 
-        $coupon_minus=($coupon_minus*($active_coupon/100));
-        $active_coupon = $active_coupon;
-
-        $cart=DB::table('cart')
-        ->leftjoin('products','cart.product_id','=','products.id')
-        ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
-        ->where('user_id',$userId)
-        ->get();
-        return view('pages.cart',compact('cart','userId','coupon_minus','active_coupon'));
+        // return view('pages.cart',compact('cart','userId','coupon_minus','active_coupon'));
+        return response(json_encode([
+            // "msg" => "Product Already exist in cart",
+            // "cart" => $cart,
+            "product_id" => $product_id,
+            "coupon_minus" => $coupon_minus,
+            "active_coupon_percentage" => $active_coupon_percentage_final,
+            "coupon_input" => $active_coupon
+            // "coupon_percentage" => $coupon_data
+        ]), 200, ["Content-Type" => "application/json"]);
     }
 
     public function checkout(Request $request){
@@ -164,7 +169,7 @@ class CartController extends Controller
         $coupon_minus=0;
         $active_coupon=0;
         return response(json_encode([
-            "msg" => "Login with your account first",
+            // "msg" => "Login with your account first",
             "final_cart" => $final_cart
         ]), 200, ["Content-Type" => "application/json"]);
     }

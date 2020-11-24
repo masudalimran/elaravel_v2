@@ -87,8 +87,8 @@
                                                 <div><a href="{{route('home')}}">Profile ({{Auth::user()->name}})</a></div>
                                                 <ul>
                                                     <li><a href="#">Checkout</a></li>
-                                                    <li><a href="#">Wishlist</a></li>
-                                                    <li><a href="#">Cart</a></li>
+                                                    <li><a href="{{route('show.wishlist')}}">Wishlist</a></li>
+                                                    <li><a href="{{route('show.cart')}}">Cart</a></li>
                                                     <li><a href="{{route('user.logout')}}">Logout</a></li>
                                                 </ul>
                                             </li>
@@ -164,7 +164,7 @@
                             <div class="wishlist d-flex flex-row align-items-center justify-content-end">
 								<div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
 								<div class="wishlist_content">
-									<div class="wishlist_text"><a href="#">Wishlist</a></div>
+									<div class="wishlist_text"><a href="{{route('show.wishlist')}}">Wishlist</a></div>
 									<div class="wishlist_count" id="wishlist-count">{{count($wishlist)}}</div>
 								</div>
                             </div>
@@ -172,6 +172,9 @@
 
 							<!-- Cart -->
 							<div class="cart">
+                                @guest
+
+                                @else
                                 @php
                                 $cart=DB::table('cart')
                                 ->where('user_id',Auth::id())
@@ -191,7 +194,8 @@
 										<div class="cart_text"><a href="{{route('show.cart')}}">Cart</a></div>
 										<div class="cart_price">৳ {{numberFormat($subtotal_cart)}}</div>
 									</div>
-								</div>
+                                </div>
+                                @endguest
 							</div>
 						</div>
 					</div>

@@ -40,7 +40,7 @@
 
                     <div class="cart_items">
                         <ul class="cart_list">
-                            <li class="cart_item clearfix">
+                            <li class="cart_item clearfix" id="remove-cart-item-{{$item->id}}">
                                 <div class="cart_item_image">
                                     <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
                                          <img src="{{asset($item->image)}}" alt="">
@@ -81,9 +81,10 @@
                                     <div class="cart_item_quantity cart_info_col" style="max-width: 8%; min-width:8%;">
                                         <div class="cart_item_title">Quantity</div>
                                         <div class="cart_item_text" >
-                                            <input onchange="qty_change({{$item->id}},this.value, {{$item->price}})" class="form-control" type="number" pattern="[0-9]*" value="{{$item->qty}}" name="qty">
+                                            <input onchange="qty_change({{$item->id}},this.value, {{$item->price}}, {{$userId}})" class="form-control" type="number" pattern="[0-9]*" value="{{$item->qty}}" name="qty">
                                         </div>
                                     </div>
+                                    {{-- QUANTIY --}}
 
                                     <div class="cart_item_price cart_info_col" style="max-width: 10%; min-width:10%;">
                                         <div class="cart_item_title" style="text-align: right">Price</div>
@@ -95,7 +96,11 @@
                                     </div>
                                     <div class="cart_item_name cart_info_col" style="max-width: 5%; min-width:5%;">
                                         <div class="cart_item_title" style="text-align: center">Action</div>
-                                        <div class="cart_item_text" style="text-align: center"><a href="{{url('remove/item/'.$item->product_id.'/'.$coupon_minus.'/'.$active_coupon)}}"><button class="btn btn-sm btn-danger">X</button></a></div>
+                                        <div class="cart_item_text" style="text-align: center">
+                                            {{-- <a href="{{url('remove/item/'.$item->product_id.'/'.$coupon_minus.'/'.$active_coupon)}}"> --}}
+                                                <button onclick="remove_cart_item({{$item->product_id}},{{$item->price}})" class="btn btn-sm btn-danger">X</button>
+                                            {{-- </a> --}}
+                                        </div>
 
                                     </div>
                                     @php
@@ -110,13 +115,13 @@
 
                     {{-- Coupon Addition  --}}
                     <div>
-                        <form action="{{ url('cart/coupon/add/'.$userId.'/'.$sum_total) }}" method="post">
+                        <form action="{{ url('cart/coupon/add/'.$userId.'/'.$sum_total) }}" method="post" id="coupon_update">
                             @csrf
                             <div class="form-group" >
                               <label for="exampleInputEmail1" style="font-weight: bold; text-align: right;">Coupon Code</label>
                               <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Coupon Code" name="coupon_input">
                             </div>
-                              <button style="position: absolute; right: 0;" type="submit" class="btn btn-primary">Submit</button>
+                              <button onclick="function1({{$userId}}, {{$sum_total}})" style="position: absolute; right: 0;" type="submit" class="btn btn-primary">Submit</button>
                           </form>
                     </div>
                     <br>
@@ -131,8 +136,11 @@
                     </div>
                     <div class="order_total">
                         <div class="order_total_content text-md-right">
-                            <div class="order_total_title">Coupon Discount (-)</div>
-                            <div class="order_total_amount">{{numberFormat($coupon_minus ?? '0')}}</div><br>
+                            <div class="order_total_title">Coupon Discount
+                                <span class="badge badge-pill badge-success" id="coupon_name"></span>
+                                 <span class="badge badge-pill badge-warning" id="coupon_percentage"></span>
+                                  (-)</div>
+                            <div class="order_total_amount" id="updated_coupon">{{numberFormat($coupon_minus ?? '0')}}</div><br>
                         </div>
                     </div>
 
@@ -149,7 +157,7 @@
 
                     <div class="cart_buttons">
                         <a href="{{url('remove/cart/'.$userId.'/'.$active_coupon)}}"><button type="button" class="button cart_button_clear" style="color: red">Cancel Cart</button></a>
-                        <button onclick="checkout()" type="button" class="button cart_button_checkout">Checkout</button>
+                        <button onclick="checkout()" type="submit" class="button cart_button_checkout">Checkout</button>
                     </div>
                 </div>
             {{-- </form> --}}
@@ -170,19 +178,26 @@
 <script src="{{asset('public/frontend/js/cart_custom.js')}}"></script>
 {{-- scripts --}}
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{{-- <script type="text/javascript" ></script>
+<script ></script> --}}
 
 
 
 <script type="text/javascript">
-    function qty_change(productId , qty, price) {
-        var subtotal = qty * price;
+src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"
+
+src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
+
+    let coupon_minus_init = 0
+    let coupon_percentage_init = 0
+    let coupon_input_init = 0
+    let total_init = 0
+
+
+    function qty_change(productId , qty, price, userId) {
+        let subtotal = qty * price;
         console.log(subtotal)
         $('#product-subtotal-'+productId).text(subtotal)
-
-        var subtotal = qty * price;
-        $('#cart-subtotal-'+productId).text(subtotal)
 
         console.log('===============================================', productId, qty)
         event.preventDefault();
@@ -194,24 +209,90 @@
             dataType:"json",
             success:function(data) {
                 console.log(data.final_cart)
-                var arr =  data.final_cart;
-                var total = 0;
+                let arr =  data.final_cart;
+                let total = 0;
                 arr.forEach(element => {
                     total += element.price*element.qty
                 });
                 console.log(total)
                 $("#cart-subtotal").text(total);
-                $("#cart-subtotal-with-coupon").text(total);
-                _this.function1();
+                _this.function2(userId, total);
 
             }
 
         });
     }
-    function function1(){
-        console.log("=======================================================================")
+    function function1(userId, total){
+        console.log("=======================================================================:", userId)
+        event.preventDefault();
+        this.function2(userId, total)
 
     }
+
+    function function2(userId, total){
+        console.log("=======================================================================:", userId)
+        // event.preventDefault();
+        let _this = this
+        $.ajax({
+            url: "{{  url('cart/coupon/add/') }}/"+userId+'/'+total,
+            type:"POST",
+            data: $('#coupon_update').serialize(),
+            dataType:"json",
+            success:function(data) {
+                console.log("Updated Coupon =======================================================================:", data.coupon_minus)
+                console.log("Updated Coupon =======================================================================:", data.coupon_input)
+                $('#updated_coupon').text(data.coupon_minus)
+                let cart_total = total - data.coupon_minus
+                $('#cart-subtotal-with-coupon').text(cart_total)
+                $('#coupon_name').text(data.coupon_input)
+                $('#coupon_percentage').text(data.coupon_percentage+'%')
+
+                _this.total_init = total
+
+                _this.coupon_minus_init = parseInt(data.coupon_minus)
+                console.log("updating coupon minus internally "+_this.coupon_minus_init)
+
+                _this.coupon_percentage_init = parseInt(data.coupon_percentage)
+                console.log("updating coupon percentage internally "+ _this.coupon_percentage_init)
+
+                _this.coupon_input_init = parseInt(data.coupon_input)
+                console.log("updating coupon percentage internally "+ _this.coupon_input_init)
+            }
+        });
+    }
+
+    function remove_cart_item(product_id, price, coupon_minus_init, coupon_percentage_init, coupon_input_init, ){
+        console.log("remove cart item = "+product_id+"  "+price+"  "+ this.coupon_minus_init +"   "+ this.coupon_percentage_init +"   "+ this.coupon_input_init)
+        let _this = this
+        $.ajax({
+            url: "{{  url('remove/cart/item') }}/"+product_id+'/'+price+'/'+_this.coupon_minus_init+'/'+_this.coupon_percentage_init+'/'+_this.coupon_input_init,
+            type:"GET",
+            dataType:"json",
+            success:function(data) {
+                console.log("product_id=======================================================================:", data.product_id)
+                console.log("coupon_minus =======================================================================:", data.coupon_minus)
+                console.log("active_coupon_percentage =======================================================================:", data.active_coupon_percentage)
+                console.log("coupon_input =======================================================================:", data.coupon_input)
+                if(_this.coupon_minus_init){
+                    $('#updated_coupon').text(data.coupon_minus)
+                    let cart_total = _this.total_init - data.coupon_minus
+                    $('#cart-subtotal-with-coupon').text(cart_total)
+                    $('#coupon_name').text(data.coupon_input)
+                    $('#coupon_percentage').text(data.active_coupon_percentage+'%')
+                    $('#remove-cart-item-'+data.product_id).remove()
+                }else{
+                    $('#remove-cart-item-'+_this.product_id).remove()
+
+                }
+            }
+        });
+    }
+
+    function checkout(){
+        // event.preventDefault();
+        console.log("Inside Checkout")
+    }
+
 </script>
 
 @endsection

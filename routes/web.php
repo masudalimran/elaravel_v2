@@ -98,12 +98,15 @@ Route::get('delete/newsletter/{id}', 'Admin\NewsletterController@delete_newslett
 Route::post('store/newsletter','FrontController@store_newsletter')->name('store.newsletter');
     //wishlist
 Route::get('add/wishlist/{id}','wishlistController@add_wishlist');
+Route::get('show/wishlist','wishlistController@show_wishlist')->name('show.wishlist');
+Route::get('remove/wishlist/{product_id}','wishlistController@remove_wishlist');
     //addtocart
 Route::get('addtocart/{id}','CartController@add_cart');
 Route::get('show/cart','CartController@show_cart')->name('show.cart');
 Route::post('cart/coupon/add/{user_id}/{sum_total}','CartController@add_coupon');
 Route::get('remove/cart/{user_id}/{active_coupon}','CartController@remove_cart');
-Route::get('remove/item/{product_id}/{coupon_minus}/{active_coupon}','CartController@remove_item');
+// Route::get('remove/item/{product_id}/{coupon_minus}/{active_coupon}','CartController@remove_item');
+Route::get('remove/cart/item/{product_id}/{price}/{coupon_minus}/{active_coupon_percentage}/{coupon_input}','CartController@remove_item');
 Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
 Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
 
@@ -111,6 +114,7 @@ Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
     //visitproduct
 Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
 Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
+
 
 
 

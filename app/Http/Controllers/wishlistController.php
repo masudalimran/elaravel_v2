@@ -39,4 +39,34 @@ class wishlistController extends Controller
 
         }
     }
+
+    public function show_wishlist(){
+        $userId = Auth::id();
+        $wishlist=DB::table('products')
+        ->leftjoin('wishlists','products.id','=','wishlists.product_id')
+        ->leftjoin('categories','products.category_id','=','categories.id')
+        ->leftjoin('brands','products.brand_id','=','brands.id')
+        ->leftjoin('sub_categories','products.subcategory_id','=','sub_categories.id')
+        ->select('products.*','wishlists.*','categories.*','brands.*','sub_categories.*')
+        ->where('wishlists.user_id',$userId)
+        ->get();
+
+        return view('pages.wishlist',compact('wishlist'));
+        // return response()->json($wishlist);
+
+    }
+
+    public function remove_wishlist($product_id){
+        $userId = Auth::id();
+        DB::table('wishlists')
+        ->where('product_id',$product_id)
+        ->where('user_id',$userId)
+        ->delete();
+
+        return response(json_encode([
+            "msg" => "Wishlist removed Successfully",
+            "product_id" => $product_id
+        ]), 200, ["Content-Type" => "application/json"]);
+
+    }
 }
