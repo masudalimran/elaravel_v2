@@ -7,8 +7,9 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/cart_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/cart_responsive.css')}}">
 
-{{-- Sweetalert --}}
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+{{-- sweetalert2 css --}}
+<link rel="stylesheet" href="sweetalert2.min.css">
+{{-- sweetalert2 css --}}
 
 {{-- styles --}}
 @php
@@ -140,7 +141,7 @@
                                 <span class="badge badge-pill badge-success" id="coupon_name"></span>
                                  <span class="badge badge-pill badge-warning" id="coupon_percentage"></span>
                                   (-)</div>
-                            <div class="order_total_amount" id="updated_coupon">{{numberFormat($coupon_minus ?? '0')}}</div><br>
+                            <div class="order_total_amount" id="updated_coupon">{{numberFormat($coupon_minus)}}</div><br>
                         </div>
                     </div>
 
@@ -148,7 +149,7 @@
                         <div class="order_total_content text-md-right">
                             <div class="order_total_title">Order Total:</div>
                             {{-- @if($coupon_minus != Null) --}}
-                            <div class="order_total_amount" id="cart-subtotal-with-coupon">{{numberFormat(($sum_total)- ($coupon_minus ?? ''))}}</div>
+                            <div class="order_total_amount" id="cart-subtotal-with-coupon">{{numberFormat(($sum_total)- ($coupon_minus))}}</div>
                             {{-- @else --}}
                             {{-- <div class="order_total_amount">{{numberFormat($sum_total)}}</div> --}}
                             {{-- @endif --}}
@@ -178,8 +179,14 @@
 <script src="{{asset('public/frontend/js/cart_custom.js')}}"></script>
 {{-- scripts --}}
 
-{{-- <script type="text/javascript" ></script>
-<script ></script> --}}
+
+{{-- sweetalert2 --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+{{-- sweetalert2 --}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+{{-- Sweetalert 2 --}}
 
 
 
@@ -247,25 +254,34 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 $('#coupon_name').text(data.coupon_input)
                 $('#coupon_percentage').text(data.coupon_percentage+'%')
 
-                _this.total_init = total
 
-                _this.coupon_minus_init = parseInt(data.coupon_minus)
+                _this.total_init = total
+                _this.coupon_minus_init = (data.coupon_minus)
                 console.log("updating coupon minus internally "+_this.coupon_minus_init)
 
-                _this.coupon_percentage_init = parseInt(data.coupon_percentage)
+                _this.coupon_percentage_init = (data.coupon_percentage)
                 console.log("updating coupon percentage internally "+ _this.coupon_percentage_init)
 
-                _this.coupon_input_init = parseInt(data.coupon_input)
+                _this.coupon_input_init = (data.coupon_input)
                 console.log("updating coupon percentage internally "+ _this.coupon_input_init)
             }
         });
     }
 
-    function remove_cart_item(product_id, price, coupon_minus_init, coupon_percentage_init, coupon_input_init, ){
-        console.log("remove cart item = "+product_id+"  "+price+"  "+ this.coupon_minus_init +"   "+ this.coupon_percentage_init +"   "+ this.coupon_input_init)
+    function remove_cart_item(product_id, price, coupon_minus_init, coupon_percentage_init, coupon_input_init, total_init ){
+        console.log("remove cart item = "+product_id+"  "+price+"  "+ this.coupon_minus_init +"   "+ this.coupon_percentage_init +"   "+ this.coupon_input_init+"   "+ this.total_init)
+        let _this = this
+        if(this.coupon_minus_init){
+            _this.manage_item_with_coupon_delete(product_id, price, coupon_minus_init, coupon_percentage_init, coupon_input_init, total_init );
+        }else{
+            _this.manage_item_without_coupon_delete(product_id, price, total_init);
+        }
+    }
+
+    function manage_item_with_coupon_delete(product_id, price, coupon_minus_init, coupon_percentage_init, coupon_input_init, total_init ){
         let _this = this
         $.ajax({
-            url: "{{  url('remove/cart/item') }}/"+product_id+'/'+price+'/'+_this.coupon_minus_init+'/'+_this.coupon_percentage_init+'/'+_this.coupon_input_init,
+            url: "{{  url('remove/cart/item/coupon/') }}/"+product_id+'/'+price+'/'+_this.coupon_minus_init+'/'+_this.coupon_percentage_init+'/'+_this.coupon_input_init+'/'+_this.total_init,
             type:"GET",
             dataType:"json",
             success:function(data) {
@@ -273,17 +289,77 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log("coupon_minus =======================================================================:", data.coupon_minus)
                 console.log("active_coupon_percentage =======================================================================:", data.active_coupon_percentage)
                 console.log("coupon_input =======================================================================:", data.coupon_input)
-                if(_this.coupon_minus_init){
-                    $('#updated_coupon').text(data.coupon_minus)
-                    let cart_total = _this.total_init - data.coupon_minus
+                // console.log("product_id=======================================================================:", data.product_id)
+                console.log(data.final_cart)
+                let arr =  data.final_cart;
+                let total = 0;
+                arr.forEach(element => {
+                    total += element.price*element.qty
+                });
+                console.log("Total =======================================================================:", total)
+                    let coupon_minus = total * (coupon_percentage_init/100)
+                    console.log("Coupon to be minus =======================================================================:", coupon_minus)
+                    $('#updated_coupon').text(coupon_minus)
+                    let cart_total = total - coupon_minus
+                    console.log("cart total =======================================================================:",cart_total)
                     $('#cart-subtotal-with-coupon').text(cart_total)
                     $('#coupon_name').text(data.coupon_input)
                     $('#coupon_percentage').text(data.active_coupon_percentage+'%')
+                    $("#cart-subtotal").text(total);
                     $('#remove-cart-item-'+data.product_id).remove()
-                }else{
-                    $('#remove-cart-item-'+_this.product_id).remove()
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'warning',
+                        title: data.msg
+                        })
+            }
+        });
+    }
+    function manage_item_without_coupon_delete(product_id, price, total_init){
+        console.log("Product price = "+ price)
+        let _this = this
+        $.ajax({
+            url: "{{  url('remove/cart/item') }}/"+product_id+'/'+price+'/'+_this.total_init,
+            type:"GET",
+            dataType:"json",
+            success:function(data) {
+                console.log("product_id=======================================================================:", data.product_id)
+                console.log(data.final_cart)
+                let arr =  data.final_cart;
+                let total = 0;
+                arr.forEach(element => {
+                    total += element.price*element.qty
+                });
 
-                }
+
+                    $('#cart-subtotal').text(total)
+                    $('#cart-subtotal-with-coupon').text(total)
+                    $('#remove-cart-item-'+data.product_id).remove()
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'warning',
+                        title: data.msg
+                        })
             }
         });
     }

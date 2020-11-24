@@ -112,27 +112,60 @@ class CartController extends Controller
         return view('pages.cart',compact('cart','coupon_minus','active_coupon'));
     }
 
-    public function remove_item($product_id,$price,$coupon_minus_final,$active_coupon_percentage_final, $coupon_input){
+    public function remove_item_with_coupon($product_id,$product_price,$coupon_minus_final,$active_coupon_percentage_final, $coupon_input, $cart_total_final){
         // dd($product_id. ', '.$coupon_minus.' , '.$active_coupon);
 
         $userId = Auth::id();
-        // DB::table('cart')
-        // ->where('user_id',$userId)
-        // ->where('product_id',$product_id)
-        // ->delete();
-        $coupon_minus = $coupon_minus_final;
-        $coupon_minus-=($price*($active_coupon_percentage_final/100));
+        DB::table('cart')
+        ->where('user_id',$userId)
+        ->where('product_id',$product_id)
+        ->delete();
+        // $coupon_minus = $coupon_minus_final;
+        // $coupon_minus-=($product_price*($active_coupon_percentage_final/100));
+        // $cart_total = $cart_total_final-$product_price;
+        // $cart_total_after_coupon = $cart_total - $coupon_minus;
         $active_coupon = $coupon_input;
 
-        // return view('pages.cart',compact('cart','userId','coupon_minus','active_coupon'));
+        $final_cart=DB::table('cart')
+        ->leftjoin('products','cart.product_id','=','products.id')
+        ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
+        ->where('user_id',$userId)
+        ->get();
+
         return response(json_encode([
-            // "msg" => "Product Already exist in cart",
-            // "cart" => $cart,
+            "msg" => "Item removed Successfully",
+            "final_cart" => $final_cart,
             "product_id" => $product_id,
-            "coupon_minus" => $coupon_minus,
+            // "coupon_minus" => $coupon_minus,
             "active_coupon_percentage" => $active_coupon_percentage_final,
-            "coupon_input" => $active_coupon
+            "coupon_input" => $active_coupon,
+            // "cart_total" => $cart_total,
+            // 'cart_total_after_coupon' => $cart_total_after_coupon
             // "coupon_percentage" => $coupon_data
+        ]), 200, ["Content-Type" => "application/json"]);
+    }
+
+    public function remove_item_without_coupon($product_id,$price,$cart_total){
+
+        $userId = Auth::id();
+        DB::table('cart')
+        ->where('user_id',$userId)
+        ->where('product_id',$product_id)
+        ->delete();
+
+        $final_cart=DB::table('cart')
+        ->leftjoin('products','cart.product_id','=','products.id')
+        ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
+        ->where('user_id',$userId)
+        ->get();
+
+        // $new_cart_price = $price;
+
+        return response(json_encode([
+            "msg" => "Item removed Successfully",
+            "product_id" => $product_id,
+            "final_cart" => $final_cart,
+            // "new_cart_price" => $new_cart_price
         ]), 200, ["Content-Type" => "application/json"]);
     }
 
@@ -163,7 +196,6 @@ class CartController extends Controller
         ->leftjoin('products','cart.product_id','=','products.id')
         ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
         ->where('user_id',$userId)
-        // ->where('product_id',$product_id)
         ->get();
 
         $coupon_minus=0;
