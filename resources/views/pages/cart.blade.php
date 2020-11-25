@@ -132,7 +132,7 @@
                         <div class="order_total_content text-md-right">
 
                             <div class="order_total_title">Sum Total</div>
-                            <div class="order_total_amount" id="cart-subtotal">{{numberFormat($sum_total)}}</div><br>
+                            <div class="order_total_amount" id="cart-subtotal-in-cart-page">{{numberFormat($sum_total)}}</div><br>
                         </div>
                     </div>
                     <div class="order_total">
@@ -202,6 +202,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 
 
     function qty_change(productId , qty, price, userId) {
+        // $("#cart-subtotal").text(0)
         let subtotal = qty * price;
         console.log(subtotal)
         $('#product-subtotal-'+productId).text(subtotal)
@@ -221,25 +222,28 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 arr.forEach(element => {
                     total += element.price*element.qty
                 });
-                console.log(total)
-                $("#cart-subtotal").text(total);
-                _this.function2(userId, total);
+                console.log("quntity change total",total)
+                $("#cart-subtotal-in-cart-page").text(total)
+                $('#cart-subtotal-with-coupon').text(total)
+                _this.total_init = total;
+                _this.function1(userId, _this.total_init);
 
             }
 
         });
+
     }
-    function function1(userId, total){
-        console.log("=======================================================================:", userId)
+    function function1(userId, total){//button click on coupon
+        let _this = this
+        console.log("function 1 userID, total =======================================================================:", userId, total, _this.total_init)
         event.preventDefault();
         this.function2(userId, total)
-
     }
 
     function function2(userId, total){
-        console.log("=======================================================================:", userId)
         // event.preventDefault();
         let _this = this
+        console.log("function 2 userID, total =======================================================================:", userId, total, _this.total_init)
         $.ajax({
             url: "{{  url('cart/coupon/add/') }}/"+userId+'/'+total,
             type:"POST",
@@ -249,7 +253,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log("Updated Coupon =======================================================================:", data.coupon_minus)
                 console.log("Updated Coupon =======================================================================:", data.coupon_input)
                 $('#updated_coupon').text(data.coupon_minus)
-                let cart_total = total - data.coupon_minus
+                let cart_total = _this.total_init - data.coupon_minus
+                console.log("Updated cart total =======================================================================:", cart_total)
                 $('#cart-subtotal-with-coupon').text(cart_total)
                 $('#coupon_name').text(data.coupon_input)
                 $('#coupon_percentage').text(data.coupon_percentage+'%')
@@ -279,6 +284,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     }
 
     function manage_item_with_coupon_delete(product_id, price, coupon_minus_init, coupon_percentage_init, coupon_input_init, total_init ){
+        console.log("remove cart item = "+product_id+"  "+price+"  "+ this.coupon_minus_init +"   "+ this.coupon_percentage_init +"   "+ this.coupon_input_init+"   "+ this.total_init)
         let _this = this
         $.ajax({
             url: "{{  url('remove/cart/item/coupon/') }}/"+product_id+'/'+price+'/'+_this.coupon_minus_init+'/'+_this.coupon_percentage_init+'/'+_this.coupon_input_init+'/'+_this.total_init,
@@ -297,7 +303,11 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     total += element.price*element.qty
                 });
                 console.log("Total =======================================================================:", total)
-                    let coupon_minus = total * (coupon_percentage_init/100)
+                    let coupon_minus = total * (data.active_coupon_percentage/100)
+                    _this.coupon_minus_init = coupon_minus;
+                    _this.coupon_percentage_init = data.active_coupon_percentage;
+                    _this.coupon_input_init = data.coupon_input;
+                    // _this.total_init = total;
                     console.log("Coupon to be minus =======================================================================:", coupon_minus)
                     $('#updated_coupon').text(coupon_minus)
                     let cart_total = total - coupon_minus
@@ -305,8 +315,11 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     $('#cart-subtotal-with-coupon').text(cart_total)
                     $('#coupon_name').text(data.coupon_input)
                     $('#coupon_percentage').text(data.active_coupon_percentage+'%')
-                    $("#cart-subtotal").text(total);
+                    $("#cart-subtotal-in-cart-page").text(total);
                     $('#remove-cart-item-'+data.product_id).remove()
+
+
+
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -341,10 +354,11 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     total += element.price*element.qty
                 });
 
-
-                    $('#cart-subtotal').text(total)
-                    $('#cart-subtotal-with-coupon').text(total)
+                    _this.total_init = total;
+                    $('#cart-subtotal-in-cart-page').text(_this.total_init)
+                    $('#cart-subtotal-with-coupon').text(_this.total_init)
                     $('#remove-cart-item-'+data.product_id).remove()
+
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',

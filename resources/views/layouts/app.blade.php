@@ -192,7 +192,7 @@
 									</div>
 									<div class="cart_content">
 										<div class="cart_text"><a href="{{route('show.cart')}}">Cart</a></div>
-										<div class="cart_price">৳ {{numberFormat($subtotal_cart)}}</div>
+										<div class="cart_price" id="cart-subtotal">৳ {{numberFormat($subtotal_cart)}}</div>
 									</div>
                                 </div>
                                 @endguest

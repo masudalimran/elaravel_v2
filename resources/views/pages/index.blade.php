@@ -1517,6 +1517,16 @@
                         title: data.msg
                         })
                         // console.log("asddddddddddddddddddddddddddddddddddddddddddd = "+ data.cart_count)
+                        let arr =  data.cart_subtotal;
+                        let total = 0;
+                        arr.forEach(element => {
+                            total += element.price
+                        });
+
+                        console.log("Cart subtotal:          ", (data.cart_subtotal))
+                        console.log("total:          ",  total)
+
+                        $("#cart-subtotal").text(total);
                         $("#cart-count").text(data.cart_count);
                    },
 

@@ -27,6 +27,8 @@ class CartController extends Controller
         $data['price']=$product->selling_price - $product->discount_price;
         $data['image']=$product->image_1;
 
+
+
         if(Auth::check()){
                 if($check_cart){
                     return response(json_encode([
@@ -36,9 +38,14 @@ class CartController extends Controller
                 }else{
                     DB::table('cart')->insert($data);
                     $cart_count =  DB::table('cart')->where('user_id',$userId)->count();
+                    $cart_subtotal=DB::table('cart')
+                    ->select('cart.price')
+                    ->where('user_id',$userId)
+                    ->get();
                     return response(json_encode([
                         "msg" => "Product added to Cart",
-                        "cart_count" => $cart_count
+                        "cart_count" => $cart_count,
+                        'cart_subtotal' => $cart_subtotal
                     ]), 200, ["Content-Type" => "application/json"]);
 
                 }
@@ -132,12 +139,15 @@ class CartController extends Controller
         ->where('user_id',$userId)
         ->get();
 
+        $cart_count =  DB::table('cart')->where('user_id',$userId)->count();
+
         return response(json_encode([
             "msg" => "Item removed Successfully",
             "final_cart" => $final_cart,
             "product_id" => $product_id,
             // "coupon_minus" => $coupon_minus,
             "active_coupon_percentage" => $active_coupon_percentage_final,
+            "cart_count" => $cart_count,
             "coupon_input" => $active_coupon,
             // "cart_total" => $cart_total,
             // 'cart_total_after_coupon' => $cart_total_after_coupon
@@ -159,11 +169,14 @@ class CartController extends Controller
         ->where('user_id',$userId)
         ->get();
 
+        $cart_count =  DB::table('cart')->where('user_id',$userId)->count();
+
         // $new_cart_price = $price;
 
         return response(json_encode([
             "msg" => "Item removed Successfully",
             "product_id" => $product_id,
+            "cart_count" => $cart_count,
             "final_cart" => $final_cart,
             // "new_cart_price" => $new_cart_price
         ]), 200, ["Content-Type" => "application/json"]);
