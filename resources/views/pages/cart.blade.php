@@ -225,6 +225,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log("quntity change total",total)
                 $("#cart-subtotal-in-cart-page").text(total)
                 $('#cart-subtotal-with-coupon').text(total)
+                $("#cart-subtotal").text(total);
                 _this.total_init = total;
                 _this.function1(userId, _this.total_init);
 
@@ -259,6 +260,12 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 $('#cart-subtotal-with-coupon').text(cart_total)
                 $('#coupon_name').text(data.coupon_input)
                 $('#coupon_percentage').text(data.coupon_percentage+'%')
+                $("#cart-subtotal").text(cart_total);
+
+
+
+
+
 
 
                 _this.total_init = total
@@ -300,8 +307,10 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log(data.final_cart)
                 let arr =  data.final_cart;
                 let total = 0;
+                let number_of_item_in_cart= 0;
                 arr.forEach(element => {
                     total += element.price*element.qty
+                    number_of_item_in_cart++
                 });
                 console.log("Total =======================================================================:", total)
                     let coupon_minus = total * (data.active_coupon_percentage/100)
@@ -317,6 +326,12 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     $('#coupon_name').text(data.coupon_input)
                     $('#coupon_percentage').text(data.active_coupon_percentage+'%')
                     $("#cart-subtotal-in-cart-page").text(total);
+
+                    $("#cart-subtotal").text(cart_total);
+                    $("#cart-count").text(number_of_item_in_cart);
+                    console.log("Cart total:  "+cart_total)
+                    console.log("Number Of item in cart:  "+number_of_item_in_cart)
+
                     $('#remove-cart-item-'+data.product_id).remove()
 
 
@@ -351,13 +366,20 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log(data.final_cart)
                 let arr =  data.final_cart;
                 let total = 0;
+                let number_of_item_in_cart = 0;
                 arr.forEach(element => {
                     total += element.price*element.qty
+                    number_of_item_in_cart++
                 });
 
                     _this.total_init = total;
                     $('#cart-subtotal-in-cart-page').text(_this.total_init)
                     $('#cart-subtotal-with-coupon').text(_this.total_init)
+
+                    $("#cart-subtotal").text(total);
+                    $("#cart-count").text(number_of_item_in_cart);
+                    console.log("Number Of item in cart:  "+number_of_item_in_cart)
+
                     $('#remove-cart-item-'+data.product_id).remove()
 
                     const Toast = Swal.mixin({
