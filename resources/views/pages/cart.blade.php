@@ -235,7 +235,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     }
     function function1(userId, total){//button click on coupon
         let _this = this
-        console.log("function 1 userID, total =======================================================================:", userId, total, _this.total_init)
+        console.log("function 1 userID, total =======================================================================:", userId, total, this.total_init)
         event.preventDefault();
         this.function2(userId, total)
     }
@@ -243,7 +243,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     function function2(userId, total){
         // event.preventDefault();
         let _this = this
-        console.log("function 2 userID, total =======================================================================:", userId, total, _this.total_init)
+        console.log("function 2 userID, total =======================================================================:", userId, total, this.total_init)
         $.ajax({
             url: "{{  url('cart/coupon/add/') }}/"+userId+'/'+total,
             type:"POST",
@@ -253,7 +253,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log("Updated Coupon =======================================================================:", data.coupon_minus)
                 console.log("Updated Coupon =======================================================================:", data.coupon_input)
                 $('#updated_coupon').text(data.coupon_minus)
-                let cart_total = _this.total_init - data.coupon_minus
+                let cart_total = total - data.coupon_minus
+                _this.total_init = total;
                 console.log("Updated cart total =======================================================================:", cart_total)
                 $('#cart-subtotal-with-coupon').text(cart_total)
                 $('#coupon_name').text(data.coupon_input)
