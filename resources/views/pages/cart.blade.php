@@ -207,7 +207,9 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         console.log(subtotal)
         $('#product-subtotal-'+productId).text(subtotal)
 
-        console.log('===============================================', productId, qty)
+
+
+        console.log('===============================================', productId, qty, this.coupon_percentage_init)
         event.preventDefault();
         let _this = this
         $.ajax({
@@ -226,7 +228,14 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log("quntity change coupon minus",coupon_minus_init)
                 $("#cart-subtotal-in-cart-page").text(total)
                 $("#cart-subtotal").text(total);
-                let coupon_add_when_qty_change  = (total * _this.coupon_percentage_init)/100
+                console.log("coupon percentage init:  "+ _this.coupon_percentage_init)
+                let coupon_add_when_qty_change
+                if(_this.coupon_percentage_init){
+                    coupon_add_when_qty_change  = (total * _this.coupon_percentage_init)/100
+                }else{
+                    coupon_add_when_qty_change = 0
+                }
+                console.log("coupon percentage init:  "+ _this.coupon_percentage_init)
                 $('#updated_coupon').text(coupon_add_when_qty_change)
                 let order_total = total - coupon_add_when_qty_change
                 $('#cart-subtotal-with-coupon').text(order_total)
@@ -266,12 +275,6 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 $('#coupon_name').text(data.coupon_input)
                 $('#coupon_percentage').text(data.coupon_percentage+'%')
                 $("#cart-subtotal").text(cart_total);
-
-
-
-
-
-
 
                 _this.total_init = total
                 _this.coupon_minus_init = (data.coupon_minus)
@@ -408,8 +411,12 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     }
 
     function checkout(){
+        // var str = $("#cart-subtotal-with-coupon").val();
+        // alert(str);
+        // cart-subtotal-with-coupon
         // event.preventDefault();
-        console.log("Inside Checkout")
+
+        console.log("Inside Checkout",document.getElementById('cart-subtotal-with-coupon').value)
     }
 
 </script>
