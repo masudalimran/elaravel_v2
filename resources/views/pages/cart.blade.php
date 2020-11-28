@@ -223,9 +223,13 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     total += element.price*element.qty
                 });
                 console.log("quntity change total",total)
+                console.log("quntity change coupon minus",coupon_minus_init)
                 $("#cart-subtotal-in-cart-page").text(total)
-                $('#cart-subtotal-with-coupon').text(total)
                 $("#cart-subtotal").text(total);
+                let coupon_add_when_qty_change  = (total * _this.coupon_percentage_init)/100
+                $('#updated_coupon').text(coupon_add_when_qty_change)
+                let order_total = total - coupon_add_when_qty_change
+                $('#cart-subtotal-with-coupon').text(order_total)
                 _this.total_init = total;
                 _this.function1(userId, _this.total_init);
 
@@ -254,6 +258,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 console.log("Updated Coupon =======================================================================:", data.coupon_minus)
                 console.log("Updated Coupon =======================================================================:", data.coupon_input)
                 $('#updated_coupon').text(data.coupon_minus)
+                _this.coupon_minus_init = data.coupon_minus
                 let cart_total = total - data.coupon_minus
                 _this.total_init = total;
                 console.log("Updated cart total =======================================================================:", cart_total)
@@ -320,6 +325,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     // _this.total_init = total;
                     console.log("Coupon to be minus =======================================================================:", coupon_minus)
                     $('#updated_coupon').text(coupon_minus)
+                    _this.coupon_minus_init = coupon_minus
                     let cart_total = total - coupon_minus
                     console.log("cart total =======================================================================:",cart_total)
                     $('#cart-subtotal-with-coupon').text(cart_total)
