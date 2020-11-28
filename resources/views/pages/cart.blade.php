@@ -158,7 +158,7 @@
 
                     <div class="cart_buttons">
                         <a href="{{url('remove/cart/'.$userId.'/'.$active_coupon)}}"><button type="button" class="button cart_button_clear" style="color: red">Cancel Cart</button></a>
-                        <button onclick="checkout()" type="submit" class="button cart_button_checkout">Checkout</button>
+                        <button onclick="checkout({{($sum_total)- ($coupon_minus)}})" type="submit" class="button cart_button_checkout">Checkout</button>
                     </div>
                 </div>
             {{-- </form> --}}
@@ -199,6 +199,14 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     let coupon_percentage_init = 0
     let coupon_input_init = 0
     let total_init = 0
+    let order_total_cart_init
+    order_total_cart_init = 0
+
+    // function when_site_load(order_total_cart){
+    //     this.order_total_cart_init = order_total_cart
+
+    //     console.log("order_total_cart_init:   "+this.order_total_cart_init)
+    // }
 
 
     function qty_change(productId , qty, price, userId) {
@@ -239,6 +247,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 $('#updated_coupon').text(coupon_add_when_qty_change)
                 let order_total = total - coupon_add_when_qty_change
                 $('#cart-subtotal-with-coupon').text(order_total)
+                _this.order_total_cart_init = order_total
                 _this.total_init = total;
                 _this.function1(userId, _this.total_init);
 
@@ -272,6 +281,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 _this.total_init = total;
                 console.log("Updated cart total =======================================================================:", cart_total)
                 $('#cart-subtotal-with-coupon').text(cart_total)
+                _this.order_total_cart_init = cart_total
                 $('#coupon_name').text(data.coupon_input)
                 $('#coupon_percentage').text(data.coupon_percentage+'%')
                 $("#cart-subtotal").text(cart_total);
@@ -332,6 +342,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     let cart_total = total - coupon_minus
                     console.log("cart total =======================================================================:",cart_total)
                     $('#cart-subtotal-with-coupon').text(cart_total)
+                    _this.order_total_cart_init = cart_total
                     $('#coupon_name').text(data.coupon_input)
                     $('#coupon_percentage').text(data.active_coupon_percentage+'%')
                     $("#cart-subtotal-in-cart-page").text(total);
@@ -384,6 +395,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     _this.total_init = total;
                     $('#cart-subtotal-in-cart-page').text(_this.total_init)
                     $('#cart-subtotal-with-coupon').text(_this.total_init)
+                    _this.order_total_cart_init = total
 
                     $("#cart-subtotal").text(total);
                     $("#cart-count").text(number_of_item_in_cart);
@@ -410,13 +422,16 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         });
     }
 
-    function checkout(){
-        // var str = $("#cart-subtotal-with-coupon").val();
-        // alert(str);
-        // cart-subtotal-with-coupon
-        // event.preventDefault();
-
-        console.log("Inside Checkout",document.getElementById('cart-subtotal-with-coupon').value)
+    function checkout(order_total, order_total_cart_init){
+      let order_total_for_checkout
+      console.log("order total", order_total)
+      if(this.order_total_cart_init){
+        order_total_for_checkout = this.order_total_cart_init
+          console.log("Inside Checkout if", order_total_for_checkout)
+      }else{
+        order_total_for_checkout = order_total
+        console.log("Inside Checkout else", order_total_for_checkout)
+      }
     }
 
 </script>
