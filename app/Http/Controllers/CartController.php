@@ -182,8 +182,8 @@ class CartController extends Controller
         ]), 200, ["Content-Type" => "application/json"]);
     }
 
-    public function checkout(Request $request){
-        $a = $request->product_id;
+    public function checkout(){
+
         return response() -> json($a) ;
 
         // if(Auth::check()){
