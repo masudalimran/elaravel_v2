@@ -172,8 +172,8 @@
 </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
-        <div class="modal-dialog">
+    <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" >
+        <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Checkout</h5>
@@ -208,7 +208,7 @@
                       {{-- <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_district_n" id="checkout_district" aria-describedby="emailHelp" required> --}}
                     <div class="form-group">
                     <label for="exampleFormControlSelect1">District*</label>
-                        <select style="width: 100%" onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control" name="checkout_district_n" id="checkout_district">
+                        <select onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control" name="checkout_district_n" id="checkout_district">
                             <option><b>Select Shipping District</b></option>
                             <option>Dhaka (৳50)</option><span></span>
                             <option>Chittagong (৳350)</option>
@@ -248,6 +248,8 @@
         </div>
         </div>
     </div>
+    {{-- modal --}}
+
 {{-- scripts --}}
 <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('public/frontend/styles/bootstrap4/popper.js')}}"></script>
@@ -567,45 +569,46 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         if((js_district.value) == 'Dhaka (৳50)'){
             district_shipping_charge = 50
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         else if((js_district.value) == 'Chittagong (৳350)'){
             district_shipping_charge = 350
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         else if((js_district.value) == 'Barisal (৳300)'){
             district_shipping_charge = 300
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         else if((js_district.value) == 'Jessore (৳350)'){
             district_shipping_charge = 350
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         else if((js_district.value) == 'Rajshahi (৳450)'){
             district_shipping_charge = 450
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         else if((js_district.value) == 'Rangpur (৳400)'){
             district_shipping_charge = 400
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         else if((js_district.value) == 'Khulna (৳350)'){
             district_shipping_charge = 350
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         else if((js_district.value) == 'Sylhet (৳300)'){
             district_shipping_charge = 300
             $("#checkout_shipping_cost").text(district_shipping_charge);
-            console.log("js_postal_code: "+district_shipping_charge)
+            console.log("shipping charge: "+district_shipping_charge)
         }
         this.js_grand_total_init += district_shipping_charge
         $("#checkout_grand_total").text(this.js_grand_total_init);
+        console.log("grand total: "+this.js_grand_total_init)
 
     }
 
