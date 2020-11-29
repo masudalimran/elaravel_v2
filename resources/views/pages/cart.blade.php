@@ -183,63 +183,67 @@
             </div>
             <div class="modal-body">
 
-                <form>
+                    {{-- <p style="text-align: center">(*) marked fields are mandatory</p> --}}
                     {{-- imported from auth --}}
                     <div class="form-group">
                         <label for="exampleInputEmail1">User Name</label>
-                        <input type="text" class="form-control" id="checkout_username" aria-describedby="emailHelp" value="{{Auth::user()->name}}">
+                        <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_username_n" id="checkout_username" aria-describedby="emailHelp" value="{{Auth::user()->name}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="text" class="form-control" id="checkout_email" aria-describedby="emailHelp" value="{{Auth::user()->email}}">
+                        <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_email_n" id="checkout_email" aria-describedby="emailHelp" value="{{Auth::user()->email}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Phone</label>
-                        <input type="text" class="form-control" id="checkout_phone" aria-describedby="emailHelp" value="{{Auth::user()->phone}}">
+                        <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_phone_n" id="checkout_phone" aria-describedby="emailHelp" value="{{Auth::user()->phone}}">
                     </div>
                     {{-- imported from auth --}}
 
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Shipping Address</label>
-                      <input type="text" class="form-control" id="checkout_shipping_address" aria-describedby="emailHelp">
+                      <label for="exampleInputEmail1">Shipping Address*</label>
+                      <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_shipping_address_n" id="checkout_shipping_address" aria-describedby="emailHelp" required>
                     </div>
+                    {{-- <div class="form-group">
+                      <label for="exampleInputEmail1">District*</label> --}}
+                      {{-- <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_district_n" id="checkout_district" aria-describedby="emailHelp" required> --}}
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Distrcit</label>
-                      <input type="text" class="form-control" id="checkout_district" aria-describedby="emailHelp">
+                    <label for="exampleFormControlSelect1">District*</label>
+                        <select style="width: 100%" onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control" name="checkout_district_n" id="checkout_district">
+                            <option><b>Select Shipping District</b></option>
+                            <option>Dhaka (৳50)</option><span></span>
+                            <option>Chittagong (৳350)</option>
+                            <option>Barisal (৳300)</option>
+                            <option>Jessore (৳350)</option>
+                            <option>Rajshahi (৳450)</option>
+                            <option>Rangpur (৳400)</option>
+                            <option>Khulna (৳350)</option>
+                            <option>Sylhet (৳300)</option>
+                        </select>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Postal Code</label>
-                      <input type="text" class="form-control" id="checkout_postal_code" aria-describedby="emailHelp">
+                      <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_postal_code_n" id="checkout_postal_code" aria-describedby="emailHelp">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-
-                <div class="order_total">
-                    <div class="order_total_content text-md-right">
-                        <div class="order_total_title">Order Total</div>
+                <div class="order_total" style="height: auto">
+                    <div class="order_total_content text-md-right" >
+                        <div class="order_total_title  clearfix" >Order Total</div>
                         <div class="order_total_amount" id="checkout_order_total">{{numberFormat($sum_total)}}</div><br>
-                    </div>
-                </div>
 
-                <div class="order_total">
-                    <div class="order_total_content text-md-right">
-                        <div class="order_total_title">Vat (15%)</div>
+                        <div class="order_total_title  clearfix" >Vat (15%)</div>
                         <div class="order_total_amount" id="checkout_vat">{{numberFormat($sum_total)}}</div><br>
-                    </div>
-                </div>
 
-                <div class="order_total">
-                    <div class="order_total_content text-md-right">
-                        <div class="order_total_title">Shipping Cost</div>
-                        <div class="order_total_amount" id="checkout_shipping_cost">{{numberFormat($sum_total)}}</div><br>
+                        <div class="order_total_title  clearfix">Shipping Cost</div>
+                        <div class="order_total_amount" id="checkout_shipping_cost">0</div><br>
+
+                        <div class="order_total_title  clearfix">Grand Total</div>
+                        <div class="order_total_amount" id="checkout_grand_total">0</div><br>
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary">Continue to payment</button>
             </div>
         </div>
         </div>
@@ -503,24 +507,105 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         });
     }
 
+    var js_grand_total_init = 0
+
     function checkout(order_total, order_total_cart_init){
       let order_total_for_checkout
       console.log("order total", order_total)
-      if(this.order_total_cart_init){
-        order_total_for_checkout = this.order_total_cart_init
-          console.log("Inside Checkout if", order_total_for_checkout)
+        if(this.order_total_cart_init){
+            order_total_for_checkout = this.order_total_cart_init
+            this.js_grand_total_init = order_total_for_checkout
+            console.log("Inside Checkout if", order_total_for_checkout)
         }else{
             order_total_for_checkout = order_total
+            this.js_grand_total_init = order_total_for_checkout
             console.log("Inside Checkout else", order_total_for_checkout)
         }
         $("#checkout_order_total").text(order_total_for_checkout);
         let vat
         vat  = (order_total_for_checkout * 15)/100
         console.log("Checkout Vat", vat)
-      $("#checkout_vat").text(vat);
+        $("#checkout_vat").text(vat);
+        this.js_grand_total_init = order_total_for_checkout + vat
+        $("#checkout_grand_total").text(this.js_grand_total_init);
 
-      $("#checkout_shipping_cost").text(order_total_for_checkout);
+    }
 
+
+
+    function shipping_district(order_total, order_total_cart_init, js_grand_total_init){
+        console.log("grand total js:  "+ this.js_grand_total_init)
+
+        let order_total_for_checkout_modal
+        console.log("order total", order_total)
+            if(this.order_total_cart_init){
+                order_total_for_checkout = this.order_total_cart_init
+                console.log("Inside Checkout if", order_total_for_checkout_modal)
+            }else{
+                order_total_for_checkout = order_total
+                console.log("Inside Checkout else", order_total_for_checkout_modal)
+            }
+
+        js_username = document.getElementById('checkout_username').value
+        console.log("js_username: "+js_username)
+
+        js_email = document.getElementById('checkout_email').value
+        console.log("js_email: "+js_email)
+
+        js_phone = document.getElementById('checkout_phone').value
+        console.log("js_phone: "+js_phone)
+
+        js_shipping_address = document.getElementById('checkout_shipping_address').value
+        console.log("js_shipping_address: "+js_shipping_address)
+
+        js_district = document.getElementById('checkout_district')
+        console.log("js_district: "+js_district.value)
+
+        js_postal_code = document.getElementById('checkout_postal_code').value
+        console.log("js_postal_code: "+js_postal_code)
+
+        if((js_district.value) == 'Dhaka (৳50)'){
+            district_shipping_charge = 50
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        else if((js_district.value) == 'Chittagong (৳350)'){
+            district_shipping_charge = 350
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        else if((js_district.value) == 'Barisal (৳300)'){
+            district_shipping_charge = 300
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        else if((js_district.value) == 'Jessore (৳350)'){
+            district_shipping_charge = 350
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        else if((js_district.value) == 'Rajshahi (৳450)'){
+            district_shipping_charge = 450
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        else if((js_district.value) == 'Rangpur (৳400)'){
+            district_shipping_charge = 400
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        else if((js_district.value) == 'Khulna (৳350)'){
+            district_shipping_charge = 350
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        else if((js_district.value) == 'Sylhet (৳300)'){
+            district_shipping_charge = 300
+            $("#checkout_shipping_cost").text(district_shipping_charge);
+            console.log("js_postal_code: "+district_shipping_charge)
+        }
+        this.js_grand_total_init += district_shipping_charge
+        $("#checkout_grand_total").text(this.js_grand_total_init);
 
     }
 
