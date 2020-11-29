@@ -7,6 +7,10 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/cart_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/cart_responsive.css')}}">
 
+{{-- bootstrap --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+{{-- bootstrap --}}
+
 {{-- sweetalert2 css --}}
 <link rel="stylesheet" href="sweetalert2.min.css">
 {{-- sweetalert2 css --}}
@@ -17,7 +21,7 @@
     $sum_total =  0;
 @endphp
 
-<div class="cart_section">
+<div class="cart_section" >
     <div class="container">
         <div class="row">
             <div class="col-lg-12 offset-lg-0">
@@ -158,7 +162,7 @@
 
                     <div class="cart_buttons">
                         <a href="{{url('remove/cart/'.$userId.'/'.$active_coupon)}}"><button type="button" class="button cart_button_clear" style="color: red">Cancel Cart</button></a>
-                        <button onclick="checkout({{($sum_total)- ($coupon_minus)}})" type="submit" class="button cart_button_checkout">Checkout</button>
+                        <button onclick="checkout({{($sum_total)- ($coupon_minus)}})" type="submit" class="button cart_button_checkout" data-toggle="modal" data-target="#checkout_modal">Checkout</button>
                     </div>
                 </div>
             {{-- </form> --}}
@@ -166,6 +170,80 @@
         </div>
     </div>
 </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Checkout</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    {{-- imported from auth --}}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">User Name</label>
+                        <input type="text" class="form-control" id="checkout_username" aria-describedby="emailHelp" value="{{Auth::user()->name}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="text" class="form-control" id="checkout_email" aria-describedby="emailHelp" value="{{Auth::user()->email}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phone</label>
+                        <input type="text" class="form-control" id="checkout_phone" aria-describedby="emailHelp" value="{{Auth::user()->phone}}">
+                    </div>
+                    {{-- imported from auth --}}
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Shipping Address</label>
+                      <input type="text" class="form-control" id="checkout_shipping_address" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Distrcit</label>
+                      <input type="text" class="form-control" id="checkout_district" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Postal Code</label>
+                      <input type="text" class="form-control" id="checkout_postal_code" aria-describedby="emailHelp">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+
+                <div class="order_total">
+                    <div class="order_total_content text-md-right">
+                        <div class="order_total_title">Order Total</div>
+                        <div class="order_total_amount" id="checkout_order_total">{{numberFormat($sum_total)}}</div><br>
+                    </div>
+                </div>
+
+                <div class="order_total">
+                    <div class="order_total_content text-md-right">
+                        <div class="order_total_title">Vat (15%)</div>
+                        <div class="order_total_amount" id="checkout_vat">{{numberFormat($sum_total)}}</div><br>
+                    </div>
+                </div>
+
+                <div class="order_total">
+                    <div class="order_total_content text-md-right">
+                        <div class="order_total_title">Shipping Cost</div>
+                        <div class="order_total_amount" id="checkout_shipping_cost">{{numberFormat($sum_total)}}</div><br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
 {{-- scripts --}}
 <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('public/frontend/styles/bootstrap4/popper.js')}}"></script>
@@ -188,7 +266,10 @@
 
 {{-- Sweetalert 2 --}}
 
-
+{{-- bootstrap --}}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+{{-- bootstrap --}}
 
 <script type="text/javascript">
 src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"
@@ -428,10 +509,19 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
       if(this.order_total_cart_init){
         order_total_for_checkout = this.order_total_cart_init
           console.log("Inside Checkout if", order_total_for_checkout)
-      }else{
-        order_total_for_checkout = order_total
-        console.log("Inside Checkout else", order_total_for_checkout)
-      }
+        }else{
+            order_total_for_checkout = order_total
+            console.log("Inside Checkout else", order_total_for_checkout)
+        }
+        $("#checkout_order_total").text(order_total_for_checkout);
+        let vat
+        vat  = (order_total_for_checkout * 15)/100
+        console.log("Checkout Vat", vat)
+      $("#checkout_vat").text(vat);
+
+      $("#checkout_shipping_cost").text(order_total_for_checkout);
+
+
     }
 
 </script>
