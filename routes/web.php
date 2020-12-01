@@ -78,13 +78,17 @@ Route::post('update/product/photo/{id}','Admin\ProductController@update_product_
     //Blogs
 Route::get('admin/add/post','Admin\PostController@add_post')->name('add.blogpost');
 Route::post('admin/store/post','Admin\PostController@store_post')->name('store.blogpost');
+Route::post('admin/store/post/category','Admin\PostController@store_post_category')->name('store.blogpost.category');
 Route::get('admin/all/post','Admin\PostController@all_post')->name('all.blogpost');
 Route::get('delete/post/{id}','Admin\PostController@delete_post');
 Route::get('edit/post/{id}','Admin\PostController@edit_post');
 Route::post('update/post/{id}','Admin\PostController@update_post');
-
-
-
+Route::get('post/category','Admin\PostController@post_category');
+    //blogs
+Route::get('blog/post','BlogController@show_blog')->name('blog.post');
+Route::get('blog/post/bn','BlogController@bangla_blog')->name('language.bangla');
+Route::get('blog/post/en','BlogController@english_blog')->name('language.english');
+Route::get('change/source/language/{source_language}/{post_id}','BlogController@translate');
 
     //Get Sub Category By Ajax
 Route::get('get/subcategory/{category_id}','Admin\ProductController@get_subcategory');
@@ -116,6 +120,7 @@ Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
     //visitproduct
 Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
 Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
+
 
 
 

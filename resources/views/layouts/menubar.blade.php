@@ -44,7 +44,7 @@
 									<li><a href="/elaravel_v2/?/#home-cat-hot_new_arrivals">New Arrivals<i class="fas fa-chevron-down"></i></a></li>
 									<li><a href="/elaravel_v2/?/#home-cat-popular-categories">Brands<i class="fas fa-chevron-down"></i></a></li>
 									<li><a href="/elaravel_v2/?/#home-cat-buy-one-get-one">Buy 1 Get 1<i class="fas fa-chevron-down"></i></a></li>
-									<li><a href="/elaravel_v2/?/#home-cat-newsletter">Newsletter<i class="fas fa-chevron-down"></i></a></li>
+									<li><a href="{{route('blog.post')}}">Blogs<i class="fas fa-chevron-down"></i></a></li>
 									<li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
 								</ul>
 							</div>

@@ -102,9 +102,7 @@
                                     <div class="cart_item_name cart_info_col" style="max-width: 5%; min-width:5%;">
                                         <div class="cart_item_title" style="text-align: center">Action</div>
                                         <div class="cart_item_text" style="text-align: center">
-                                            {{-- <a href="{{url('remove/item/'.$item->product_id.'/'.$coupon_minus.'/'.$active_coupon)}}"> --}}
                                                 <button onclick="remove_cart_item({{$item->product_id}},{{$item->price}})" class="btn btn-sm btn-danger">X</button>
-                                            {{-- </a> --}}
                                         </div>
 
                                     </div>
@@ -152,11 +150,7 @@
                     <div class="order_total">
                         <div class="order_total_content text-md-right">
                             <div class="order_total_title">Order Total:</div>
-                            {{-- @if($coupon_minus != Null) --}}
                             <div class="order_total_amount" id="cart-subtotal-with-coupon">{{numberFormat(($sum_total)- ($coupon_minus))}}</div>
-                            {{-- @else --}}
-                            {{-- <div class="order_total_amount">{{numberFormat($sum_total)}}</div> --}}
-                            {{-- @endif --}}
                         </div>
                     </div>
 
@@ -243,7 +237,7 @@
 
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Continue to payment</button>
+            <button type="button" class="btn btn-success">Continue to payment</button>
             </div>
         </div>
         </div>
@@ -609,6 +603,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         this.js_grand_total_init += district_shipping_charge
         $("#checkout_grand_total").text(this.js_grand_total_init);
         console.log("grand total: "+this.js_grand_total_init)
+
+        // document.getElementById('checkout_shipping_address').validity.valid
 
     }
 

@@ -14,7 +14,9 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
         "laravel/socialite": "^5.1",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "paragonie/random_compat": "2.*",
+        "stichoza/google-translate-php": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

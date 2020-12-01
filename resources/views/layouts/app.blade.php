@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>BISMIB FASHION</title>
+    @php
+        $language = session()->get('lang');
+    @endphp
+<title>
+    @if ($language == 'bangla')
+    বিস্ মিব ফ্যাশন
+    @else
+    BISMIB FASHION
+    @endif
+</title>
 <meta name="csrf" value="{{ csrf_token() }}">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +26,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/responsive.css')}}">
 <link rel="stylesheet" type="text/css" href="'{{asset('public/frontend/styles/product_styles.css')}}'">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/product_responsive.css')}}">
+
+
 
 
 
@@ -52,17 +63,28 @@
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
+                        @if ($language == 'bangla')
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('public/frontend/images/phone.png')}}" alt=""></div>+৮৮০ ১৩১৫৬৮৬১৪৭ </div>
+                        @else
 						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('public/frontend/images/phone.png')}}" alt=""></div>+880 1315686147</div>
+                        @endif
 						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('public/frontend/images/mail.png')}}" alt=""></div><a href="mailto:masudalimran92@gmail.com">masudalimran92@gmail.com</a></div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_menu">
-								<ul class="standard_dropdown top_bar_dropdown">
+								<ul class="standard_dropdown">
+
 									<li>
-										<a href="#">English<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">Bangla</a></li>
-											<li><a href="#">Chinese</a></li>
-											<li><a href="#">Russian</a></li>
+                                        @if ($language == 'bangla')
+                                            <a href="#">ভাষা <span style="text-transform: capitalize">({{$language}})</span><i class="fas fa-chevron-down"></i></a>
+                                        @else
+                                            <a href="#">Language <span style="text-transform: capitalize">({{$language}})<i class="fas fa-chevron-down"></i></a>
+                                        @endif
+                                        <ul>
+											<li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.english')}}">English</i></a></li>
+											<li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.bangla')}}">বাংলা</i></a></li>
+											<li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian (OFFLINE) </del></a>
+
+                                            </li>
 										</ul>
 									</li>
 									{{-- <li>
@@ -79,17 +101,27 @@
 								<div class="user_icon"><img src="{{asset('public/frontend/images/user.svg')}}" alt=""></div>
                                 {{-- guest start --}}
                                 @guest
-								    <div><a href="{{route('login')}}">Log in | Register</a></div>
+                                    <div><a href="{{route('login')}}">
+                                        @if ($language == 'bangla')
+                                        লগ ইন । রেজিস্টার
+                                        @else
+                                        Log in | Register
+                                        @endif
+                                    </a></div>
+
                                 @else
                                     <div class="top_bar_menu">
                                         <ul class="standard_dropdown top_bar_dropdown">
                                             <li>
-                                                <div><a href="{{route('home')}}">Profile ({{Auth::user()->name}})</a></div>
+                                                <div><a href="{{route('home')}}">@if ($language == 'bangla') প্রোফাইল  @else Profile @endif
+                                                    ({{Auth::user()->name}})</a></div>
                                                 <ul>
-                                                    <li><a href="#">Checkout</a></li>
-                                                    <li><a href="{{route('show.wishlist')}}">Wishlist</a></li>
-                                                    <li><a href="{{route('show.cart')}}">Cart</a></li>
-                                                    <li><a href="{{route('user.logout')}}">Logout</a></li>
+                                                    <li><a href="#">
+                                                        @if ($language == 'bangla') চেকআউট @else Checkout @endif
+                                                    </a></li>
+                                                    <li><a href="{{route('show.wishlist')}}">@if ($language == 'bangla') উইশ লিস্ট @else Wishlist  @endif</a></li>
+                                                    <li><a href="{{route('show.cart')}}">@if ($language == 'bangla') কার্ট @else Cart  @endif</a></li>
+                                                    <li><a href="{{route('user.logout')}}">@if ($language == 'bangla') লগ আউট @else Logout  @endif</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -112,7 +144,13 @@
 					<!-- Logo -->
 					<div class="col-lg-2 col-sm-3 col-3 order-1">
 						<div class="logo_container">
-							<div class="logo"><a href="{{url('/')}}">BISMIB FASHION</a></div>
+                            <div class="logo"><a href="{{url('/')}}">
+                                @if ($language == 'bangla')
+                                        বিস্ মিব ফ্যাশন
+                                        @else
+                                        BISMIB FASHION
+                                        @endif
+                            </a></div>
 						</div>
 					</div>
 
@@ -129,10 +167,10 @@
 										<input type="search" required="required" class="header_search_input" placeholder="Search for products...">
 										<div class="custom_dropdown">
 											<div class="custom_dropdown_list">
-												<span class="custom_dropdown_placeholder clc">All Categories</span>
+												<span class="custom_dropdown_placeholder clc">@if ($language == 'bangla') সকল ক্যাটাগরি  @else All Categories @endif</span>
 												<i class="fas fa-chevron-down"></i>
 												<ul class="custom_list clc">
-                                                    <li><a class="clc" href="#">All Categories</a></li>
+                                                    <li><a class="clc" href="#">@if ($language == 'bangla') সকল ক্যাটাগরি  @else All Categories  @endif</a></li>
 
 													@foreach($category as $v_category)
 														<li>
@@ -164,7 +202,7 @@
                             <div class="wishlist d-flex flex-row align-items-center justify-content-end">
 								<div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
 								<div class="wishlist_content">
-									<div class="wishlist_text"><a href="{{route('show.wishlist')}}">Wishlist</a></div>
+									<div class="wishlist_text"><a href="{{route('show.wishlist')}}">@if ($language == 'bangla') উইশলিস্ট @else Wishlist @endif</a></div>
 									<div class="wishlist_count" id="wishlist-count">{{count($wishlist)}}</div>
 								</div>
                             </div>
@@ -191,7 +229,7 @@
 										<div class="cart_count" ><span id="cart-count">{{count($cart)}}</span></div>
 									</div>
 									<div class="cart_content">
-										<div class="cart_text"><a href="{{route('show.cart')}}">Cart</a></div>
+										<div class="cart_text"><a href="{{route('show.cart')}}">@if ($language == 'bangla') কার্ট @else Cart @endif</a></div>
 										<div class="cart_price" id="cart-subtotal">৳ {{numberFormat($subtotal_cart)}}</div>
 									</div>
                                 </div>
@@ -214,13 +252,13 @@
 				<div class="col-lg-3 footer_col">
 					<div class="footer_column footer_contact">
 						<div class="logo_container">
-							<div class="logo"><a href="#">OneTech</a></div>
+							<div class="logo"><a href="#">@if ($language == 'bangla') বিস্ মিব ফ্যাশন @else BISMIB FASHION  @endif</a></div>
 						</div>
-						<div class="footer_title">Got Question? Call Us 24/7</div>
-						<div class="footer_phone">+38 068 005 3570</div>
+						<div class="footer_title">@if ($language == 'bangla') কোনো প্রশ্ন থাকলে জিজ্ঞেস করতে পারেন কল করুন ২৪/৭  @else Got Question? Call Us 24/7 @endif</div>
+						<div class="footer_phone">@if ($language == 'bangla') +৮৮০ ১৩১৫৬৮৬১৪৭ @else +880 1315686147 @endif </div>
 						<div class="footer_contact_text">
-							<p>17 Princess Road, London</p>
-							<p>Grester London NW18JR, UK</p>
+							<p>@if ($language == 'bangla') ঠিকানা: ৭তম ফ্লোর, <br> হাউস নম্বর: ডিসিসি 1, মোমিন স্মরণী রোড, @else Address: 7th Floor,<br> H# DCC 1, Momin Shoroni Road @endif</p>
+                            <p>@if ($language == 'bangla') নর্থ ইব্রাহিমপুর ঢাকা - ১২৬০, বাংলাদেশ @else North Ibrahimpur Dhaka-1206, Bangladesh @endif</p>
 						</div>
 						<div class="footer_social">
 							<ul>
@@ -346,6 +384,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       }
     @endif
  </script>
+
+
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
 

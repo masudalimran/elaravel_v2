@@ -119,4 +119,29 @@ class PostController extends Controller
         }
     }
 
+    public function post_category(){
+        return view('admin.blog.post_category');
+    }
+
+    public function store_post_category(Request $request){
+        // $validatedData = $request->validate([
+        //     'category_name_en' => 'required|unique:post_category',
+        //     'category_name_bn' => 'required|unique:post_category',
+        // ]);
+
+        $data=array();
+        $data['category_name_en']=$request->post_category_en;
+        $data['category_name_bn']=$request->post_category_bn;
+
+        DB::table('post_category')
+        ->insert($data);
+
+        $notification=array(
+            'messege'=>'Post Category Added successfully',
+            'alert-type'=>'success'
+            );
+        return Redirect()->back()->with($notification);
+        // return response() -> json("completed");
+    }
+
 }
