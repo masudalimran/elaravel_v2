@@ -15,13 +15,19 @@ class CartController extends Controller
         $userId = Auth::id();
         $check_cart = DB::table('cart')->where('user_id',$userId)->where('product_id',$id)->first();
         $product = DB::table('products')->where('id', $id)->first();
+
+        $color=$product->product_color;
+        $product_color = explode(',', $color);
+
+        $size=$product->product_size;
+        $product_size = explode(',', $size);
         $data=array();
         $data['user_id']=$userId;
         $data['product_id']=$product->id;
         $data['product_name']=$product->product_name;
         $data['qty']=1;
-        $data['product_size']=$product->product_size;
-        $data['product_color']=$product->product_color;
+        $data['product_size']=$product_size[0];
+        $data['product_color']=$product_color[0];
         $data['asking_price']=$product->selling_price;
         $data['discount_price']=$product->discount_price;
         $data['price']=$product->selling_price - $product->discount_price;
@@ -182,18 +188,44 @@ class CartController extends Controller
         ]), 200, ["Content-Type" => "application/json"]);
     }
 
-    public function checkout(){
+    // public function checkout(){
 
-        // return response() -> json($a) ;
+    //     // return response() -> json($a) ;
 
-        // if(Auth::check()){
-        //     $notification = array(
-        //         'messege'=>'Login First',
-        //         'alert-type'=>'success'
-        // );
-        // return Redirect()->route('home')->with($notification);
+    //     // if(Auth::check()){
+    //     //     $notification = array(
+    //     //         'messege'=>'Login First',
+    //     //         'alert-type'=>'success'
+    //     // );
+    //     // return Redirect()->route('home')->with($notification);
 
-        // }
+    //     // }
+    // }
+    public function change_size($product_id, $size){
+        $userId = Auth::id();
+        $data = array();
+        $data['product_size'] = $size;
+        $updated_size = DB::table('cart')
+        ->where('user_Id',$userId)
+        ->where('product_id',$product_id)
+        ->update($data);
+        return response(json_encode([
+            "msg" => "Size Changed Successfully",
+        ]), 200, ["Content-Type" => "application/json"]);
+
+    }
+
+    public function change_color($product_id, $color){
+        $userId = Auth::id();
+        $data = array();
+        $data['product_color'] = $color;
+        $updated_color = DB::table('cart')
+        ->where('user_Id',$userId)
+        ->where('product_id',$product_id)
+        ->update($data);
+        return response(json_encode([
+            "msg" => "Color Changed Successfully",
+        ]), 200, ["Content-Type" => "application/json"]);
     }
 
     public function update_cart($product_id, $qty){

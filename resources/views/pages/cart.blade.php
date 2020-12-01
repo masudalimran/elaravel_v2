@@ -30,8 +30,8 @@
                     <div class="cart_title">Shopping Cart</div>
 
 
-            <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
-                @csrf
+            {{-- <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
+                @csrf --}}
                 @foreach ($cart as $item)
                     @php
                         $color=$item->product_color;
@@ -61,9 +61,9 @@
                                     <div class="cart_item_color cart_info_col" style="max-width: 10%; min-width:10%;">
                                         <div class="cart_item_title" style="text-align: center">Color</div>
                                         <div class="cart_item_text">
-                                            <select class="form-control input-sm" id="exampleFormControlSelect1" name="color">
-                                                @foreach($product_color as $color)
-                                                <option value="{{ $item->product_color }}">{{ $color }}</option>
+                                            <select onchange="change_color({{$item->product_id}}, this.value)" class="form-control input-sm" id="cart_product_color">
+                                                @foreach($product_color as $colors)
+                                                    <option value="{{ $colors }}">{{ $colors }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -72,9 +72,9 @@
                                     <div class="cart_item_color cart_info_col" style="max-width: 7%; min-width:7%;">
                                         <div class="cart_item_title" style="text-align: center">Size</div>
                                         <div class="cart_item_text" >
-                                            <select class="form-control input-lg" id="exampleFormControlSelect1" name="size">
-                                                @foreach($product_size as $size)
-                                                    <option value="{{ $item->product_size }}">{{ $size }}</option>
+                                            <select onchange="change_size({{$item->product_id}}, this.value)" class="form-control input-lg" id="exampleFormControlSelect1">
+                                                @foreach($product_size as $sizes)
+                                                    <option value="{{ $sizes }}">{{ $sizes }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -157,7 +157,7 @@
                         <button onclick="checkout({{($sum_total)- ($coupon_minus)}})" type="submit" class="button cart_button_checkout" data-toggle="modal" data-target="#checkout_modal">Checkout</button>
                     </div>
                 </div>
-            </form>
+            {{-- </form> --}}
             </div>
         </div>
     </div>
@@ -201,7 +201,7 @@
                     <div class="form-group">
                     <label for="exampleFormControlSelect1">District*</label>
                         <select onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control" name="checkout_district_n" id="checkout_district">
-                            <option><b>Select Shipping District</b></option>
+                            <option>Select Shipping District</option>
                             <option>Dhaka (৳50)</option><span></span>
                             <option>Chittagong (৳350)</option>
                             <option>Barisal (৳300)</option>
@@ -235,7 +235,7 @@
 
             </div>
             <div class="modal-footer">
-            <button data-toggle="modal" data-target="#Payment_modal" type="button" class="btn btn-success" data-dismiss="modal">Continue To Payment</button>
+            <button onclick="check_checkout()" data-toggle="modal" data-target="#Payment_modal" type="button" class="btn btn-success" data-dismiss="modal">Continue To Payment</button>
             </div>
         </div>
         </div>
@@ -543,25 +543,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         $("#checkout_vat").text(vat);
         this.js_grand_total_init = order_total_for_checkout + vat
         $("#checkout_grand_total").text(this.js_grand_total_init);
-        // function change_color_size();
     }
-
-    // function change_color_size(){
-    //     event.preventDefault();
-    //     let _this = this
-    //     $.ajax({
-    //         url: "{{  url('cart/Color/Size/update/') }}/",
-    //         type:"POST",
-    //         data: $('#checkout_form').serialize(),
-    //         dataType:"json",
-    //         console.log("YO MAMA");
-    //         success:function(data) {
-
-    //         }
-    //     });
-    // }
-
-
 
     function shipping_district(order_total, order_total_cart_init, js_grand_total_init){
         console.log("grand total js:  "+ this.js_grand_total_init)
@@ -639,6 +621,80 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         console.log("grand total: "+this.js_grand_total_init)
 
         // document.getElementById('checkout_shipping_address').validity.valid
+
+    }
+
+    function change_color(product_id_color, color){
+        console.log(product_id_color);
+        console.log(color);
+        $.ajax({
+            url: "{{  url('change/color/database') }}/"+product_id_color+'/'+color,
+            type:"GET",
+            dataType:"json",
+            success:function(data) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+                })
+                Toast.fire({
+                icon: 'success',
+                title: data.msg
+                })
+            }
+        })
+    }
+    function change_size(product_id_size, size){
+        console.log(product_id_size);
+        console.log(size);
+        $.ajax({
+            url: "{{  url('change/size/database') }}/"+product_id_size+'/'+size,
+            type:"GET",
+            dataType:"json",
+            success:function(data) {
+                const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+                })
+                Toast.fire({
+                icon: 'success',
+                title: data.msg
+                })
+            }
+        })
+    }
+
+    function check_checkout(){
+        // document.getElementById("checkout_district").required = true;
+        console.log('required test')
+        document.getElementById("checkout_shipping_address").required = true;
+
+        // js_district = document.getElementById('checkout_district')
+        // console.log("js_district: "+js_district.value)
+
+        // js_shipping_address = document.getElementById('checkout_shipping_address').value
+        // console.log("js_shipping_address: "+js_shipping_address)
+        // if(js_district.value == 'Select Shipping District'){
+        //     alert('Please Select District');
+
+        //     if(js_district.value == 'Select Shipping District'){
+        //         alert('Please Type Your Shipping Address');
+        //     }
+        // }
+
 
     }
 

@@ -115,9 +115,11 @@ Route::get('remove/cart/{user_id}/{active_coupon}','CartController@remove_cart')
 Route::get('remove/cart/item/coupon/{product_id}/{price}/{coupon_minus}/{active_coupon_percentage}/{coupon_input}/{cart_total}','CartController@remove_item_with_coupon');
 Route::get('remove/cart/item/{product_id}/{price}/{cart_total}','CartController@remove_item_without_coupon');
 Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
+Route::get('change/size/database/{product_id}/{size}','CartController@change_size');
+Route::get('change/color/database/{product_id}/{color}','CartController@change_color');
 
     //checkout
-Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
+// Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
 
     //visitproduct
 Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
