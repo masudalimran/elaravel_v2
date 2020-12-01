@@ -86,9 +86,11 @@ Route::post('update/post/{id}','Admin\PostController@update_post');
 Route::get('post/category','Admin\PostController@post_category');
     //blogs
 Route::get('blog/post','BlogController@show_blog')->name('blog.post');
+Route::get('blog/post/details/{id}','BlogController@blog_details')->name('blog.details');
 Route::get('blog/post/bn','BlogController@bangla_blog')->name('language.bangla');
 Route::get('blog/post/en','BlogController@english_blog')->name('language.english');
-Route::get('change/source/language/{source_language}/{post_id}','BlogController@translate');
+Route::get('change/source/language/en/{source_language}','BlogController@translate_en');
+Route::get('change/source/language/bn/{source_language}','BlogController@translate_bn');
 
     //Get Sub Category By Ajax
 Route::get('get/subcategory/{category_id}','Admin\ProductController@get_subcategory');
@@ -116,14 +118,9 @@ Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
     //checkout
 Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
 
-
     //visitproduct
 Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
 Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
-
-
-
-
 
 //customer profile related routes
 

@@ -21,7 +21,7 @@
     $sum_total =  0;
 @endphp
 
-<div class="cart_section" >
+<div class="cart_section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 offset-lg-0">
@@ -33,7 +33,6 @@
             {{-- <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
                 @csrf --}}
                 @foreach ($cart as $item)
-
                     @php
                         $color=$item->product_color;
                         $product_color = explode(',', $color);
@@ -41,7 +40,6 @@
                         $size=$item->product_size;
                         $product_size = explode(',', $size);
                     @endphp
-
 
                     <div class="cart_items">
                         <ul class="cart_list">
