@@ -172,7 +172,7 @@
         console.log(id);
         if(id) {
                $.ajax({
-                   url: "{{  url('/cart/product/add/') }}/"+id,
+                   url: "{{  url('cart/product/details/add/') }}/"+id,
                    type:"POST",
                    data: $('#cart-content').serialize(),
                    dataType:"json",

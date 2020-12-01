@@ -27,8 +27,6 @@ class CartController extends Controller
         $data['price']=$product->selling_price - $product->discount_price;
         $data['image']=$product->image_1;
 
-
-
         if(Auth::check()){
                 if($check_cart){
                     return response(json_encode([
@@ -56,6 +54,8 @@ class CartController extends Controller
 
         }
     }
+
+
 
     public function show_cart(){
         $userId = Auth::id();
@@ -184,7 +184,7 @@ class CartController extends Controller
 
     public function checkout(){
 
-        return response() -> json($a) ;
+        // return response() -> json($a) ;
 
         // if(Auth::check()){
         //     $notification = array(

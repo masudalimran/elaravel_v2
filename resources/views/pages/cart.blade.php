@@ -30,8 +30,8 @@
                     <div class="cart_title">Shopping Cart</div>
 
 
-            {{-- <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
-                @csrf --}}
+            <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
+                @csrf
                 @foreach ($cart as $item)
                     @php
                         $color=$item->product_color;
@@ -72,9 +72,9 @@
                                     <div class="cart_item_color cart_info_col" style="max-width: 7%; min-width:7%;">
                                         <div class="cart_item_title" style="text-align: center">Size</div>
                                         <div class="cart_item_text" >
-                                            <select class="form-control input-lg" id="exampleFormControlSelect1" name="color">
+                                            <select class="form-control input-lg" id="exampleFormControlSelect1" name="size">
                                                 @foreach($product_size as $size)
-                                                <option value="{{ $item->product_size }}">{{ $size }}</option>
+                                                    <option value="{{ $item->product_size }}">{{ $size }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -157,13 +157,13 @@
                         <button onclick="checkout({{($sum_total)- ($coupon_minus)}})" type="submit" class="button cart_button_checkout" data-toggle="modal" data-target="#checkout_modal">Checkout</button>
                     </div>
                 </div>
-            {{-- </form> --}}
+            </form>
             </div>
         </div>
     </div>
 </div>
 
-    <!-- Modal -->
+    <!-- Modal 1 -->
     <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" >
         <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -235,12 +235,33 @@
 
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-success">Continue to payment</button>
+            <button data-toggle="modal" data-target="#Payment_modal" type="button" class="btn btn-success" data-dismiss="modal">Continue To Payment</button>
             </div>
         </div>
         </div>
     </div>
-    {{-- modal --}}
+    {{-- modal 1 --}}
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="Payment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select Payment Method</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            ...
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Proceed</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal 2-->
 
 {{-- scripts --}}
 <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
@@ -522,8 +543,23 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         $("#checkout_vat").text(vat);
         this.js_grand_total_init = order_total_for_checkout + vat
         $("#checkout_grand_total").text(this.js_grand_total_init);
-
+        // function change_color_size();
     }
+
+    // function change_color_size(){
+    //     event.preventDefault();
+    //     let _this = this
+    //     $.ajax({
+    //         url: "{{  url('cart/Color/Size/update/') }}/",
+    //         type:"POST",
+    //         data: $('#checkout_form').serialize(),
+    //         dataType:"json",
+    //         console.log("YO MAMA");
+    //         success:function(data) {
+
+    //         }
+    //     });
+    // }
 
 
 

@@ -115,16 +115,13 @@ Route::get('remove/cart/{user_id}/{active_coupon}','CartController@remove_cart')
 Route::get('remove/cart/item/coupon/{product_id}/{price}/{coupon_minus}/{active_coupon_percentage}/{coupon_input}/{cart_total}','CartController@remove_item_with_coupon');
 Route::get('remove/cart/item/{product_id}/{price}/{cart_total}','CartController@remove_item_without_coupon');
 Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
+
     //checkout
 Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
 
     //visitproduct
 Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
 Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
+Route::post('cart/product/details/add/{product_id}','VisitProductController_f@AddCart_from_details');
 
-//customer profile related routes
-
-
-
-
-
+    //customer profile related routes

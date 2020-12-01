@@ -85,20 +85,20 @@
                             @endif
                             @if ($language == 'bangla')
                                 {{-- <div class="blog_text">{!!substr($item->details_bn, 0, 220)!!} .......................</div> --}}
-                                <div class="blog_text" id="translated-{{$item->id}}" >
+                                <div class="blog_text" id="translated-{{$item->id}}">
                                     {!!substr($item->details_bn, 0, 280)!!}
                                     <span>.......................</span>
                                     <i onclick="change_lang_bn('{{$item->details_bn}}',{{$item->id}})" class="fas fa-align-right fa-language" title="Translate To English"></i>
                                 </div>
                             @elseif($language == 'english')
-                                <div class="blog_text" id="translated-{{$item->id}}" >
+                                <div class="blog_text" id="translated-{{$item->id}}">
                                     {!!substr($item->details_en, 0, 120)!!}
                                     <span>.......................</span>
                                     <i onclick="change_lang_en('{{$item->details_en}}',{{$item->id}})" class="fas fa-align-right fa-language" title="Translate To Bengali"></i>
                                 </div>
                             @endif
                             @if ($language == 'bangla')
-                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">আরো পড়ুন </a></div>
+                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">আরো পড়ুন</a></div>
                             @else
                                 <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">Continue Reading</a></div>
                             @endif
