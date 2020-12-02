@@ -15,11 +15,48 @@
 <link rel="stylesheet" href="sweetalert2.min.css">
 {{-- sweetalert2 css --}}
 
+{{-- strip css --}}
+<style type="text/css">
+    /**
+    * The CSS shown here will not be introduced in the Quickstart guide, but shows
+    * how you can use CSS to style your Element's container.
+    */
+    .StripeElement {
+    box-sizing: border-box;
+
+    height: 40px;
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: white;
+
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+    }
+
+    .StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+    }
+
+    .StripeElement--invalid {
+    border-color: #fa755a;
+    }
+
+    .StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+    }
+</style>
+{{-- strip css --}}
+
 {{-- styles --}}
 @php
     $userId = Auth::id();
     $sum_total =  0;
-@endphp
+    @endphp
 
 <div class="cart_section">
     <div class="container">
@@ -30,25 +67,25 @@
                     <div class="cart_title">Shopping Cart</div>
 
 
-            {{-- <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
-                @csrf --}}
-                @foreach ($cart as $item)
-                    @php
+                    {{-- <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
+                        @csrf --}}
+                        @foreach ($cart as $item)
+                        @php
                         $color=$item->product_color;
                         $product_color = explode(',', $color);
 
                         $size=$item->product_size;
                         $product_size = explode(',', $size);
-                    @endphp
+                        @endphp
 
-                    <div class="cart_items">
-                        <ul class="cart_list">
-                            <li class="cart_item clearfix" id="remove-cart-item-{{$item->id}}">
-                                <div class="cart_item_image">
-                                    <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
-                                         <img src="{{asset($item->image)}}" alt="">
-                                    </a>
-                                </div>
+<div class="cart_items">
+    <ul class="cart_list">
+        <li class="cart_item clearfix" id="remove-cart-item-{{$item->id}}">
+            <div class="cart_item_image">
+                <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
+                    <img src="{{asset($item->image)}}" alt="">
+                </a>
+            </div>
                                 <div class="cart_item_info d-flex flex-sm-row flex-column justify-content-between">
                                     <div class="cart_item_name cart_info_col" style="max-width: 10%; min-width:10%;">
                                         <div class="cart_item_title">Product Name</div>
@@ -163,7 +200,7 @@
     </div>
 </div>
 
-    <!-- Modal 1 -->
+    <!-- Modal 1 checkout_modal -->
     <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" >
         <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -242,26 +279,75 @@
     </div>
     {{-- modal 1 --}}
 
-    <!-- Modal 2 -->
+    <!-- Modal 2 Payment_modal-->
     <div class="modal fade" id="Payment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" >
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Select Payment Method</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card" style="width: 100%;">
+                        {{-- <div class="card-header">
+                        Featured
+                        </div> --}}
+                        <ul class="list-group list-group-horizontal d-flex justify-content-around mr-auto ml-auto">
+                            <li class="list-group-item " ><input type="radio"  id="stripe_id" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <h5 style="text-align: center; color: violet">Pay With Stripe</h5></li>
+                            <li class="list-group-item " ><input type="radio" id="paypal_id" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <h5 style="text-align: center; color: blue">Pay With Paypal</h5></li>
+                            <li class="list-group-item " ><input type="radio" id="mollie_id" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <h5 style="text-align: center; color: red">Pay With Mollie</h5></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="" type="button" class="btn btn-primary">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal 2-->
+
+{{-- modal 3 payment form for stripe --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            ...
+            <form action="/charge" method="post" id="payment-form">
+                <div class="form-row">
+                    <label for="card-element">
+                        Credit or debit card
+                    </label>
+                    <div id="card-element">
+                        <!-- A Stripe Element will be inserted here. -->
+                    </div>
+
+                    <!-- Used to display form errors. -->
+                    <div id="card-errors" role="alert"></div>
+                </div>
+
+                <button class="btn btn-primary">Submit Payment</button>
+            </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Proceed</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
+      </div>
     </div>
-</div>
-</div>
-<!-- Modal 2-->
+  </div>
+
+{{-- modal 3 payment form --}}
 
 {{-- scripts --}}
 <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
@@ -280,6 +366,8 @@
 {{-- sweetalert2 --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 {{-- sweetalert2 --}}
+
+<script src="https://js.stripe.com/v3/"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
@@ -695,9 +783,81 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         //     }
         // }
 
-
     }
+
+    // Create a Stripe client.
+var stripe = Stripe('pk_test_51HtX6kENsc8UGICB2eMhVw8wycsh6piKz66jh4sStGFPjscmocs8dy24byUhDfWZCWnCiVkRA2lirl2VAh45FN4d006F3tRwqM');
+
+// Create an instance of Elements.
+var elements = stripe.elements();
+
+// Custom styling can be passed to options when creating an Element.
+// (Note that this demo uses a wider set of styles than the guide below.)
+var style = {
+  base: {
+    color: '#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
+
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
+
+// Handle real-time validation errors from the card Element.
+card.on('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+// Handle form submission.
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the user if there was an error.
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server.
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+
+// Submit the form with the token ID.
+function stripeTokenHandler(token) {
+  // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+
+  // Submit the form
+  form.submit();
+}
+
 
 </script>
 
 @endsection
+
