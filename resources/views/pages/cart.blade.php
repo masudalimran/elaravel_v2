@@ -272,7 +272,7 @@
 
             </div>
             <div class="modal-footer">
-            <button onclick="check_checkout()" data-toggle="modal" data-target="#Payment_modal" type="button" class="btn btn-success" data-dismiss="modal">Continue To Payment</button>
+                <button onclick="check_checkout()"  type="button" class="btn btn-success" >Continue To Payment</button>
             </div>
         </div>
         </div>
@@ -280,7 +280,7 @@
     {{-- modal 1 --}}
 
     <!-- Modal 2 Payment_modal-->
-    <div class="modal fade" id="Payment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" >
+    <div class="modal fade" id="Payment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -294,18 +294,18 @@
                         {{-- <div class="card-header">
                         Featured
                         </div> --}}
-                        <ul class="list-group list-group-horizontal d-flex justify-content-around mr-auto ml-auto">
-                            <li class="list-group-item " ><input type="radio"  id="stripe_id" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
+                        <ul class="list-group list-group-horizontal d-flex justify-content-around mr-auto ml-auto" id="payment">
+                            <li class="list-group-item " ><input type="radio" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: violet">Pay With Stripe</h5></li>
-                            <li class="list-group-item " ><input type="radio" id="paypal_id" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <li class="list-group-item " ><input type="radio" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: blue">Pay With Paypal</h5></li>
-                            <li class="list-group-item " ><input type="radio" id="mollie_id" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <li class="list-group-item " ><input type="radio" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: red">Pay With Mollie</h5></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="" type="button" class="btn btn-primary">Proceed</button>
+                    <button onclick="payment_method_selection()" type="button" class="btn btn-primary">Proceed</button>
                 </div>
             </div>
         </div>
@@ -313,11 +313,11 @@
 <!-- Modal 2-->
 
 {{-- modal 3 payment form for stripe --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="payment_stripe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Pay With Stripe</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -335,18 +335,12 @@
                     <!-- Used to display form errors. -->
                     <div id="card-errors" role="alert"></div>
                 </div>
-
                 <button class="btn btn-primary">Submit Payment</button>
             </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
-
 {{-- modal 3 payment form --}}
 
 {{-- scripts --}}
@@ -766,98 +760,190 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     }
 
     function check_checkout(){
-        // document.getElementById("checkout_district").required = true;
         console.log('required test')
-        document.getElementById("checkout_shipping_address").required = true;
+        js_shipping_address = document.getElementById('checkout_shipping_address').value
+        console.log("js_shipping_address: "+js_shipping_address)
 
-        // js_district = document.getElementById('checkout_district')
-        // console.log("js_district: "+js_district.value)
+        js_district = document.getElementById('checkout_district')
+        console.log("js_district: "+js_district.value)
 
-        // js_shipping_address = document.getElementById('checkout_shipping_address').value
-        // console.log("js_shipping_address: "+js_shipping_address)
-        // if(js_district.value == 'Select Shipping District'){
-        //     alert('Please Select District');
+        var js_district_name
 
-        //     if(js_district.value == 'Select Shipping District'){
-        //         alert('Please Type Your Shipping Address');
-        //     }
-        // }
+        if(js_district.value == 'Select Shipping District'){
+            alert('Please Select District');
+        }else {
+            if(js_shipping_address){
+                console.log("INSIDE NOT NULL (if)")
+
+
+                if((js_district.value) == 'Dhaka (৳50)'){
+                    js_district_name = 'Dhaka';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                else if((js_district.value) == 'Chittagong (৳350)'){
+                    js_district_name = 'Chittagong';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                else if((js_district.value) == 'Barisal (৳300)'){
+                    js_district_name = 'Barisal';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                else if((js_district.value) == 'Jessore (৳350)'){
+                    js_district_name = 'Jessore';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                else if((js_district.value) == 'Rajshahi (৳450)'){
+                    js_district_name = 'Rajshahi';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                else if((js_district.value) == 'Rangpur (৳400)'){
+                    js_district_name = 'Rangpur';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                else if((js_district.value) == 'Khulna (৳350)'){
+                    js_district_name = 'Khulna';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                else if((js_district.value) == 'Sylhet (৳300)'){
+                    js_district_name = 'Sylhet';
+                    console.log("shipping charge: "+district_shipping_charge)
+                }
+                    // event.preventDefault();
+                $.ajax({
+                    url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address,
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data) {
+                        console.log('ajax after shipping address selection successfull');
+                        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'success',
+                        title: data.msg
+                        })
+
+
+                    }
+                })
+                $("button").attr("data-toggle","modal");
+                $("button").attr("data-dismiss","modal");
+                $("button").attr("data-target","#Payment_modal");
+
+
+
+            }else {
+                console.log("INSIDE NULL (else)")
+                alert('Please Type Your Shipping Address');
+            }
+        }
 
     }
 
-    // Create a Stripe client.
-var stripe = Stripe('pk_test_51HtX6kENsc8UGICB2eMhVw8wycsh6piKz66jh4sStGFPjscmocs8dy24byUhDfWZCWnCiVkRA2lirl2VAh45FN4d006F3tRwqM');
+    function payment_method_selection(){
+        console.log("inside payment method selection")
+        selected_payment_method = $("input[name='selected']:checked").val();
+        console.log("inside payment method selection value of selected: "+ selected_payment_method)
 
-// Create an instance of Elements.
-var elements = stripe.elements();
-
-// Custom styling can be passed to options when creating an Element.
-// (Note that this demo uses a wider set of styles than the guide below.)
-var style = {
-  base: {
-    color: '#32325d',
-    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-    fontSmoothing: 'antialiased',
-    fontSize: '16px',
-    '::placeholder': {
-      color: '#aab7c4'
+        if(selected_payment_method == 'stripe'){
+            $("button").attr("data-toggle","modal");
+            $("button").attr("data-dismiss","modal");
+            $("button").attr("data-target","#payment_stripe");
+        }else if(selected_payment_method == 'paypal'){
+            $("button").attr("data-toggle","modal");
+            $("button").attr("data-dismiss","modal");
+            $("button").attr("data-target","#payment_paypal");
+        }else if(selected_payment_method == 'mollie'){
+            $("button").attr("data-toggle","modal");
+            $("button").attr("data-dismiss","modal");
+            $("button").attr("data-target","#payment_mollie");
+        }
     }
-  },
-  invalid: {
-    color: '#fa755a',
-    iconColor: '#fa755a'
-  }
-};
+</script>
 
-// Create an instance of the card Element.
-var card = elements.create('card', {style: style});
+{{-- Payment script --}}
+<script>
+        // Create a Stripe client.
+        var stripe = Stripe('pk_live_51HtX6kENsc8UGICBHgXiHGGO2CFozsOTN4STTj4blT1nlEtNEiTjnPUxtul8uqyuKUkGQ2ShUSwgwGEW7iitfwJb00WFBGyMNq');
 
-// Add an instance of the card Element into the `card-element` <div>.
-card.mount('#card-element');
+        // Create an instance of Elements.
+        var elements = stripe.elements();
 
-// Handle real-time validation errors from the card Element.
-card.on('change', function(event) {
-  var displayError = document.getElementById('card-errors');
-  if (event.error) {
-    displayError.textContent = event.error.message;
-  } else {
-    displayError.textContent = '';
-  }
-});
+        // Custom styling can be passed to options when creating an Element.
+        // (Note that this demo uses a wider set of styles than the guide below.)
+        var style = {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+    };
 
-// Handle form submission.
-var form = document.getElementById('payment-form');
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
+    // Create an instance of the card Element.
+    var card = elements.create('card', {style: style});
 
-  stripe.createToken(card).then(function(result) {
-    if (result.error) {
-      // Inform the user if there was an error.
-      var errorElement = document.getElementById('card-errors');
-      errorElement.textContent = result.error.message;
-    } else {
-      // Send the token to your server.
-      stripeTokenHandler(result.token);
+    // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.on('change', function(event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission.
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    // Inform the user if there was an error.
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send the token to your server.
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        // Submit the form with the token ID.
+        function stripeTokenHandler(token) {
+        // Insert the token ID into the form so it gets submitted to the server
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+
+        // Submit the form
+        form.submit();
     }
-  });
-});
-
-// Submit the form with the token ID.
-function stripeTokenHandler(token) {
-  // Insert the token ID into the form so it gets submitted to the server
-  var form = document.getElementById('payment-form');
-  var hiddenInput = document.createElement('input');
-  hiddenInput.setAttribute('type', 'hidden');
-  hiddenInput.setAttribute('name', 'stripeToken');
-  hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
-
-  // Submit the form
-  form.submit();
-}
-
 
 </script>
+{{-- Payment script --}}
 
 @endsection
 

@@ -69,6 +69,8 @@
                                     if(Auth::user()->provider_id){
                                     echo strtoupper("ID : ".substr(Auth::user()->provider_id,-4));
                                     }
+                                    echo strtoupper("District : ".Auth::user()->shipping_district."<br>");
+                                    echo strtoupper("Address : ".Auth::user()->shipping_address."<br>");
                                 @endphp
                             </h5>
                         </div>

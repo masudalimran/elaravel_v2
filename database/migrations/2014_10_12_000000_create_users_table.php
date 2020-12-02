@@ -16,6 +16,8 @@ class CreateUsersTable extends Migration
         $table->increments('id');
         $table->string('name');
         $table->string('email')->unique()->nullable();
+        $table->string('shipping_address');
+        $table->string('shipping_district');
         $table->string('provider');
         $table->string('provider_id');
         $table->timestamp('email_verified_at')->nullable();
