@@ -146,7 +146,8 @@
             // $("#translated-"+id).remove();
             // document.getElementById(translated-id).innerHTML = "";
             // $("#translated-"+id).removeData();
-            $("#translated-"+id).text(sub_a);
+            // $("#translated-"+id).text(sub_a);
+            document.getElementById("translated-"+id).innerHTML = sub_a+'.............';
         }
 
     });
@@ -171,7 +172,8 @@
             // $("#translated-"+id).remove();
             // document.getElementById(translated-id).innerHTML = "";
             // $("#translated-"+id).removeData();
-            $("#translated-"+id).text(sub_a);
+            // $("#translated-"+id).text(sub_a);
+            document.getElementById("translated-"+id).innerHTML = sub_a+'.............';
         }
 
     });

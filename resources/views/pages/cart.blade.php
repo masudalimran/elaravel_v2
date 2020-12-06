@@ -63,6 +63,22 @@
         <div class="row">
             <div class="col-lg-12 offset-lg-0">
                 <div class="cart_container">
+                    <form action="{{route('payment.charge')}}" method="post" id="payment-form">
+                        {{--  --}}
+                        @csrf
+                        <div class="form-row">
+                            <label for="card-element">
+                                Credit or debit card
+                            </label>
+                            <div id="card-element">
+                                <!-- A Stripe Element will be inserted here. -->
+                            </div>
+
+                            <!-- Used to display form errors. -->
+                            <div id="card-errors" role="alert"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Payment</button>
+                    </form>
 
                     <div class="cart_title">Shopping Cart</div>
 
@@ -98,7 +114,7 @@
                                     <div class="cart_item_color cart_info_col" style="max-width: 10%; min-width:10%;">
                                         <div class="cart_item_title" style="text-align: center">Color</div>
                                         <div class="cart_item_text">
-                                            <select onchange="change_color({{$item->product_id}}, this.value)" class="form-control input-sm" id="cart_product_color">
+                                            <select onchange="change_color({{$item->product_id}}, this.value)" class="form-control input-sm select-100" id="cart_product_color">
                                                 @foreach($product_color as $colors)
                                                     <option value="{{ $colors }}">{{ $colors }}</option>
                                                 @endforeach
@@ -109,7 +125,7 @@
                                     <div class="cart_item_color cart_info_col" style="max-width: 7%; min-width:7%;">
                                         <div class="cart_item_title" style="text-align: center">Size</div>
                                         <div class="cart_item_text" >
-                                            <select onchange="change_size({{$item->product_id}}, this.value)" class="form-control input-lg" id="exampleFormControlSelect1">
+                                            <select onchange="change_size({{$item->product_id}}, this.value)" class="form-control input-lg select-100" id="exampleFormControlSelect1">
                                                 @foreach($product_size as $sizes)
                                                     <option value="{{ $sizes }}">{{ $sizes }}</option>
                                                 @endforeach
@@ -237,7 +253,7 @@
                       {{-- <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_district_n" id="checkout_district" aria-describedby="emailHelp" required> --}}
                     <div class="form-group">
                     <label for="exampleFormControlSelect1">District*</label>
-                        <select onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control" name="checkout_district_n" id="checkout_district">
+                        <select onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control select-30" name="checkout_district_n" id="checkout_district" style="width: 100% !important">
                             <option>Select Shipping District</option>
                             <option>Dhaka (৳50)</option><span></span>
                             <option>Chittagong (৳350)</option>
@@ -324,7 +340,8 @@
         </div>
         <div class="modal-body">
 
-            <form action="{{route('payment.charge')}}" method="post" id="payment-form">
+            <form action="{{route('payment.charge')}}" method="post">
+                {{-- id="payment-form" --}}
                 @csrf
                 <div class="form-row">
                     <label for="card-element">
@@ -337,7 +354,7 @@
                     <!-- Used to display form errors. -->
                     <div id="card-errors" role="alert"></div>
                 </div>
-                <button class="btn btn-primary">Submit Payment</button>
+                <button type="submit" class="btn btn-primary">Submit Payment</button>
             </form>
 
         </div>
@@ -345,6 +362,11 @@
     </div>
   </div>
 {{-- modal 3 payment form --}}
+
+
+
+
+
 
 {{-- scripts --}}
 <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
@@ -390,8 +412,9 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     function qty_change(productId , qty, price, userId) {
         // $("#cart-subtotal").text(0)
         let subtotal = qty * price;
-        console.log(subtotal)
-        $('#product-subtotal-'+productId).text(subtotal)
+        console.log(' =================subtotal =================================='+this.numberWithCommas(subtotal))
+
+        $('#product-subtotal-'+productId).text(this.numberWithCommas(subtotal))
 
 
 
@@ -412,8 +435,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 });
                 console.log("quntity change total",total)
                 console.log("quntity change coupon minus",coupon_minus_init)
-                $("#cart-subtotal-in-cart-page").text(total)
-                $("#cart-subtotal").text(total);
+                $("#cart-subtotal-in-cart-page").text(_this.numberWithCommas(total))
+                $("#cart-subtotal").text(_this.numberWithCommas(total));
                 console.log("coupon percentage init:  "+ _this.coupon_percentage_init)
                 let coupon_add_when_qty_change
                 if(_this.coupon_percentage_init){
@@ -422,9 +445,9 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     coupon_add_when_qty_change = 0
                 }
                 console.log("coupon percentage init:  "+ _this.coupon_percentage_init)
-                $('#updated_coupon').text(coupon_add_when_qty_change)
+                $('#updated_coupon').text(_this.numberWithCommas(coupon_add_when_qty_change))
                 let order_total = total - coupon_add_when_qty_change
-                $('#cart-subtotal-with-coupon').text(order_total)
+                $('#cart-subtotal-with-coupon').text(_this.numberWithCommas(order_total))
                 _this.order_total_cart_init = order_total
                 _this.total_init = total;
                 _this.function1(userId, _this.total_init);
@@ -453,15 +476,15 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             success:function(data) {
                 console.log("Updated Coupon =======================================================================:", data.coupon_minus)
                 console.log("Updated Coupon =======================================================================:", data.coupon_input)
-                $('#updated_coupon').text(data.coupon_minus)
+                $('#updated_coupon').text(_this.numberWithCommas(data.coupon_minus))
                 _this.coupon_minus_init = data.coupon_minus
                 let cart_total = total - data.coupon_minus
                 _this.total_init = total;
                 console.log("Updated cart total =======================================================================:", cart_total)
-                $('#cart-subtotal-with-coupon').text(cart_total)
+                $('#cart-subtotal-with-coupon').text(_this.numberWithCommas(cart_total))
                 _this.order_total_cart_init = cart_total
                 $('#coupon_name').text(data.coupon_input)
-                $('#coupon_percentage').text(data.coupon_percentage+'%')
+                $('#coupon_percentage').text(_this.numberWithCommas(data.coupon_percentage)+'%')
                 $("#cart-subtotal").text(cart_total);
 
                 _this.total_init = total
@@ -571,8 +594,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 });
 
                     _this.total_init = total;
-                    $('#cart-subtotal-in-cart-page').text(_this.total_init)
-                    $('#cart-subtotal-with-coupon').text(_this.total_init)
+                    $('#cart-subtotal-in-cart-page').text(_this.numberWithCommas(_this.total_init))
+                    $('#cart-subtotal-with-coupon').text(_this.numberWithCommas(_this.total_init))
                     _this.order_total_cart_init = total
 
                     $("#cart-subtotal").text(total);
@@ -614,13 +637,13 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             this.js_grand_total_init = order_total_for_checkout
             console.log("Inside Checkout else", order_total_for_checkout)
         }
-        $("#checkout_order_total").text(order_total_for_checkout);
+        $("#checkout_order_total").text(this.numberWithCommas(order_total_for_checkout));
         let vat
         vat  = (order_total_for_checkout * 15)/100
         console.log("Checkout Vat", vat)
-        $("#checkout_vat").text(vat);
+        $("#checkout_vat").text(this.numberWithCommas(vat));
         this.js_grand_total_init = order_total_for_checkout + vat
-        $("#checkout_grand_total").text(this.js_grand_total_init);
+        $("#checkout_grand_total").text(this.numberWithCommas(this.js_grand_total_init));
     }
 
     function shipping_district(order_total, order_total_cart_init, js_grand_total_init){
@@ -695,7 +718,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             console.log("shipping charge: "+district_shipping_charge)
         }
         this.js_grand_total_init += district_shipping_charge
-        $("#checkout_grand_total").text(this.js_grand_total_init);
+        $("#checkout_grand_total").text(this.numberWithCommas(this.js_grand_total_init));
         console.log("grand total: "+this.js_grand_total_init)
 
         // document.getElementById('checkout_shipping_address').validity.valid
@@ -864,10 +887,79 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         }
     }
 
+    function numberWithCommas(number, decimals=0) {
+                var decimalNumbers = '';
+                if ((number.toString()).indexOf('.')>=0)  // if string/number has '.' , like 5.5, .56, 0.6
+                {
+                    decimalNumbers = (number.toString()).substr( (number.toString()).indexOf('.'));
+                    decimalNumbers = decimalNumbers.substr( 1, decimals);
+                }
+                else
+                {
+                    decimalNumbers = '';
+                    for (var i = 2; i <=decimals ; i++)
+                    {
+                        decimalNumbers = decimalNumbers+'0';
+                    }
+                }
+                // return decimalNumbers;
+                number = parseInt(number);
+                number = number.toString();
+                // // reverse
+                number = this.reverseString(number.toString());
+                var n = '';
+                var stringlength = number.length;
+                for (i = 0; i < stringlength; i++)
+                {
+                    if (i%2==0 && i!=stringlength-1 && i>1)
+                    {
+                        n = n+number[i]+',';
+                    }
+                    else
+                    {
+                        n = n+number[i];
+                    }
+                }
+                number = n;
+                // // reverse
+                number = this.reverseString(number);
+                (decimals!=0)? number=(number+'.'+decimalNumbers) : number ;
+                return number;
+            }
+
+
+            function reverseString(str) {
+                // Step 1. Use the split() method to return a new array
+                var splitString = str.split(""); // var splitString = "hello".split("");
+                // ["h", "e", "l", "l", "o"]
+                // Step 2. Use the reverse() method to reverse the new created array
+                var reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
+                // ["o", "l", "l", "e", "h"]
+                // Step 3. Use the join() method to join all elements of the array into a string
+                var joinArray = reverseArray.join(""); // var joinArray = ["o", "l", "l", "e", "h"].join("");
+                // "olleh"
+                //Step 4. Return the reversed string
+                return joinArray; // "olleh"
+            }
+            // ====================Number related=============================
+            // ====================Number related=============================
+
 </script>
 
 {{-- Payment script --}}
 <script>
+
+        // $(function(){
+        //     $('#payment-form').on('submit', function(e){
+        //     e.preventDefault();
+        //     $.post('{{route('payment.charge')}}',
+        //         $('#payment-form').serialize(),
+        //         function(data, status, xhr){
+        //             console.log("inside form ")
+        //             // do something here with response;
+        //         });
+        //     });
+        // });
         // Create a Stripe client.
         var stripe = Stripe('pk_live_51HtX6kENsc8UGICBHgXiHGGO2CFozsOTN4STTj4blT1nlEtNEiTjnPUxtul8uqyuKUkGQ2ShUSwgwGEW7iitfwJb00WFBGyMNq');
 
@@ -941,6 +1033,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 
 </script>
 {{-- Payment script --}}
+
+
 
 @endsection
 

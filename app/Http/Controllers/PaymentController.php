@@ -26,7 +26,8 @@ class PaymentController extends Controller
         'metadata' => ['order_id' => '6735'],
         ]);
 
-        dd($charge);
+        //  dd('charge');
+        // return response()->json("adsadsadsad");
 
 
 

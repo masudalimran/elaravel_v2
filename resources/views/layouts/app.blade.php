@@ -45,6 +45,22 @@
 {{-- Sweetalert --}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 
+{{-- select --}}
+<style>
+.select-30{
+    width: 30% !important;
+}
+
+.select-100{
+    width: 100% !important;
+}
+
+.select-20{
+    width: 20% !important;
+}
+
+</style>
+
 
 
 </head>
@@ -396,6 +412,52 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+
+{{-- <script type="text/javascript">
+// ====================Number related=============================
+            // ====================Number related=============================
+            function numberWithCommas(number, decimals=0) {
+                var decimalNumbers = '';
+                if ((number.toString()).indexOf('.')>=0)  // if string/number has '.' , like 5.5, .56, 0.6
+                {
+                    decimalNumbers = (number.toString()).substr( (number.toString()).indexOf('.'));
+                    decimalNumbers = decimalNumbers.substr( 1, decimals);
+                }
+                else
+                {
+                    decimalNumbers = '';
+                    for (var i = 2; i <=decimals ; i++)
+                    {
+                        decimalNumbers = decimalNumbers+'0';
+                    }
+                }
+                // return decimalNumbers;
+                number = parseInt(number);
+                number = number.toString();
+                // // reverse
+                number = this.reverseString(number.toString());
+                var n = '';
+                var stringlength = number.length;
+                for (i = 0; i < stringlength; i++)
+                {
+                    if (i%2==0 && i!=stringlength-1 && i>1)
+                    {
+                        n = n+number[i]+',';
+                    }
+                    else
+                    {
+                        n = n+number[i];
+                    }
+                }
+                number = n;
+                // // reverse
+                number = this.reverseString(number);
+                (decimals!=0)? number=(number+'.'+decimalNumbers) : number ;
+                return number;
+            },
+            // ====================Number related=============================
+            // ====================Number related=============================
+</script> --}}
 
 
 
