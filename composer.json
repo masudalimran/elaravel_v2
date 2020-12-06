@@ -16,7 +16,8 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^1.0",
         "paragonie/random_compat": "2.*",
-        "stichoza/google-translate-php": "^4.1"
+        "stichoza/google-translate-php": "^4.1",
+        "stripe/stripe-php": "^7.66"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

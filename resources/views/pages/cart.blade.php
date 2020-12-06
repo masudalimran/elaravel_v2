@@ -323,7 +323,9 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/charge" method="post" id="payment-form">
+
+            <form action="{{route('payment.charge')}}" method="post" id="payment-form">
+                @csrf
                 <div class="form-row">
                     <label for="card-element">
                         Credit or debit card
@@ -337,6 +339,7 @@
                 </div>
                 <button class="btn btn-primary">Submit Payment</button>
             </form>
+
         </div>
       </div>
     </div>
@@ -383,13 +386,6 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     let total_init = 0
     let order_total_cart_init
     order_total_cart_init = 0
-
-    // function when_site_load(order_total_cart){
-    //     this.order_total_cart_init = order_total_cart
-
-    //     console.log("order_total_cart_init:   "+this.order_total_cart_init)
-    // }
-
 
     function qty_change(productId , qty, price, userId) {
         // $("#cart-subtotal").text(0)
@@ -809,31 +805,31 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                     // event.preventDefault();
-                $.ajax({
-                    url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address,
-                    type:"GET",
-                    dataType:"json",
-                    success:function(data) {
-                        console.log('ajax after shipping address selection successfull');
-                        const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                        })
-                        Toast.fire({
-                        icon: 'success',
-                        title: data.msg
-                        })
+                // $.ajax({
+                //     url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address,
+                //     type:"GET",
+                //     dataType:"json",
+                //     success:function(data) {
+                //         console.log('ajax after shipping address selection successfull');
+                //         const Toast = Swal.mixin({
+                //         toast: true,
+                //         position: 'top-end',
+                //         showConfirmButton: false,
+                //         timer: 2000,
+                //         timerProgressBar: true,
+                //         didOpen: (toast) => {
+                //             toast.addEventListener('mouseenter', Swal.stopTimer)
+                //             toast.addEventListener('mouseleave', Swal.resumeTimer)
+                //         }
+                //         })
+                //         Toast.fire({
+                //         icon: 'success',
+                //         title: data.msg
+                //         })
 
 
-                    }
-                })
+                //     }
+                // })
                 $("button").attr("data-toggle","modal");
                 $("button").attr("data-dismiss","modal");
                 $("button").attr("data-target","#Payment_modal");
@@ -867,6 +863,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             $("button").attr("data-target","#payment_mollie");
         }
     }
+
 </script>
 
 {{-- Payment script --}}

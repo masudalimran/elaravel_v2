@@ -121,6 +121,7 @@ Route::get('update/shipping/info/{district}/{address}','CartController@update_sh
 
     //checkout
 // Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
+Route::post('user/stripe/charge/','PaymentController@stripe_charge')->name('payment.charge');
 
     //visitproduct
 Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
