@@ -99,7 +99,7 @@
                                             <ul>
                                                 <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.english')}}">English</i></a></li>
                                                 <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.bangla')}}">বাংলা</i></a></li>
-                                                <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian (OFFLINE) </del></a>
+                                                <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian1 (OFFLINE) </del></a>
 
                                                 </li>
                                             </ul>
@@ -112,7 +112,7 @@
                                             <ul>
                                                 <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.english')}}">English</i></a></li>
                                                 <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.bangla')}}">বাংলা</i></a></li>
-                                                <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian (OFFLINE) </del></a>
+                                                <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian1 (OFFLINE) </del></a>
 
                                                 </li>
                                             </ul>
