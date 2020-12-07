@@ -20,16 +20,16 @@ class BlogController extends Controller
     }
 
     public function bangla_blog(){
-        Session::get('lang');
-        session()->forget('lang');
+        // Session::get('lang');
+        // session()->forget('lang');
         Session::put('lang','bangla');
         return redirect()->back();
 
     }
 
     public function english_blog(){
-        Session::get('lang');
-        session()->forget('lang');
+        // Session::get('lang');
+        // session()->forget('lang');
         Session::put('lang','english');
         return redirect()->back();
     }

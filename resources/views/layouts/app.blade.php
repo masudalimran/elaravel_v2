@@ -90,34 +90,16 @@
 								<ul class="standard_dropdown">
 
 									<li>
-                                        @guest
-                                            @if ($language == 'bangla')
-                                                <a href="#">ভাষা <span style="text-transform: capitalize">({{$language}})</span><i class="fas fa-chevron-down"></i></a>
-                                            @else
-                                                <a href="#">Language <span style="text-transform: capitalize">({{$language}})<i class="fas fa-chevron-down"></i></a>
-                                            @endif
-                                            <ul>
-                                                <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.english')}}">English</i></a></li>
-                                                <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.bangla')}}">বাংলা</i></a></li>
-                                                <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian1 (OFFLINE) </del></a>
-
-                                                </li>
-                                            </ul>
+                                        @if ($language == 'bangla')
+                                            <a href="#">ভাষা <span style="text-transform: capitalize">({{$language}})</span><i class="fas fa-chevron-down"></i></a>
                                         @else
-                                            @if ($language == 'bangla')
-                                                <a href="#">ভাষা <span style="text-transform: capitalize">({{$language}})</span><i class="fas fa-chevron-down"></i></a>
-                                            @else
-                                                <a href="#">Language <span style="text-transform: capitalize">({{$language}})<i class="fas fa-chevron-down"></i></a>
-                                            @endif
-                                            <ul>
-                                                <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.english')}}">English</i></a></li>
-                                                <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.bangla')}}">বাংলা</i></a></li>
-                                                <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian1 (OFFLINE) </del></a>
-
-                                                </li>
-                                            </ul>
-                                        @endguest
-
+                                            <a href="#">Language <span style="text-transform: capitalize">(ENGLISH)<i class="fas fa-chevron-down"></i></a>
+                                        @endif
+                                        <ul>
+                                            <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.english')}}">English<i class="fas fa-chevron-down"></i></a></li>
+                                            <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.bangla')}}">বাংলা<i class="fas fa-chevron-down"></i></a></li>
+                                            <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian1 (OFFLINE) </del><i class="fas fa-chevron-down"></i></a></li>
+                                        </ul>
 									</li>
 								</ul>
 							</div>

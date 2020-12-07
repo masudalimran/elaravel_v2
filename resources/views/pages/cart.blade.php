@@ -63,8 +63,14 @@
         <div class="row">
             <div class="col-lg-12 offset-lg-0">
                 <div class="cart_container">
-                    <form action="{{route('payment.charge')}}" method="post" id="payment-form">
-                        {{--  --}}
+
+
+
+
+
+
+
+                    {{-- <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
                         @csrf
                         <div class="form-row">
                             <label for="card-element">
@@ -78,7 +84,14 @@
                             <div id="card-errors" role="alert"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit Payment</button>
-                    </form>
+                    </form> --}}
+
+
+
+
+
+
+
 
                     <div class="cart_title">Shopping Cart</div>
 
@@ -311,8 +324,23 @@
                         Featured
                         </div> --}}
                         <ul class="list-group list-group-horizontal d-flex justify-content-around mr-auto ml-auto" id="payment">
-                            <li class="list-group-item " ><input type="radio" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
-                            <h5 style="text-align: center; color: violet">Pay With Stripe</h5></li>
+                            <li class="list-group-item text-center" ><input type="radio" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
+                                <?php
+                                require('show/config.php');
+                            ?>
+                            <form action="submit.php" method="post">
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="{{$publishable_key}}"
+                                    data-amount="50000"
+                                    data-name="BISMIB FASHION"
+                                    data-description="Payment With Stripe"
+                                    data-image="https://image.shutterstock.com/image-vector/real-estate-logo-260nw-1615688014.jpg"
+                                    data-currency="BDT"
+                                    data-email="info@bismibtechnology.com"
+                                    >
+                                </script>
+                            </form>
+                            {{-- <h5 style="text-align: center; color: violet">Pay With Stripe</h5></li> --}}
                             <li class="list-group-item " ><input type="radio" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: blue">Pay With Paypal</h5></li>
                             <li class="list-group-item " ><input type="radio" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
@@ -338,10 +366,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body text-center">
 
-            <form action="{{route('payment.charge')}}" method="post">
-                {{-- id="payment-form" --}}
+            {{-- <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
                 @csrf
                 <div class="form-row">
                     <label for="card-element">
@@ -355,7 +382,9 @@
                     <div id="card-errors" role="alert"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Payment</button>
-            </form>
+            </form> --}}
+
+
 
         </div>
       </div>
@@ -960,6 +989,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         //         });
         //     });
         // });
+
+
         // Create a Stripe client.
         var stripe = Stripe('pk_live_51HtX6kENsc8UGICBHgXiHGGO2CFozsOTN4STTj4blT1nlEtNEiTjnPUxtul8uqyuKUkGQ2ShUSwgwGEW7iitfwJb00WFBGyMNq');
 
