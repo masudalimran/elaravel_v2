@@ -72,35 +72,6 @@
             <div class="col-lg-12 offset-lg-0">
                 <div class="cart_container">
 
-
-
-
-
-
-
-                    {{-- <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
-                        @csrf
-                        <div class="form-row">
-                            <label for="card-element">
-                                Credit or debit card
-                            </label>
-                            <div id="card-element">
-                                <!-- A Stripe Element will be inserted here. -->
-                            </div>
-
-                            <!-- Used to display form errors. -->
-                            <div id="card-errors" role="alert"></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Payment</button>
-                    </form> --}}
-
-
-
-
-
-
-
-
                     <div class="cart_title">Shopping Cart</div>
 
 
@@ -232,6 +203,37 @@
                     </div>
                 </div>
             {{-- </form> --}}
+
+
+            {{-- <div > --}}
+                <br>
+                <br>
+                <br>
+                <div class="card" id="payment_stripe" style="display: none">
+                    <div class="card-header">
+                      Pay Us Through Stripe here
+                    </div>
+                    <div class="card-body">
+                        <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
+                            @csrf
+                            <div class="form-row">
+                                <label for="card-element">
+                                    Enter Your Credit or Debit Card Information Here
+                                </label>
+                                <div id="card-element">
+                                    <!-- A Stripe Element will be inserted here. -->
+                                </div>
+
+                                <!-- Used to display form errors. -->
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Payment</button>
+                        </form>
+                    </div>
+                  </div>
+            {{-- </div> --}}
+
+
             </div>
         </div>
     </div>
@@ -332,12 +334,14 @@
                         Featured
                         </div> --}}
                         <ul class="list-group list-group-horizontal d-flex justify-content-around mr-auto ml-auto" id="payment">
-                            <li class="list-group-item text-center" ><img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <li class="list-group-item " ><input type="radio" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <h5 style="text-align: center; color: violet">Pay With Stripe</h5></li>
+                            {{-- <li class="list-group-item text-center" ><img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br> --}}
                                 <?php
                                     require('show/config.php');
                                 ?>
-                            <form action="submit.php" method="post">
-                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            {{-- <form action="submit.php" method="post"> --}}
+                                {{-- <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="{{$publishable_key}}"
                                     data-amount="{{$total_cost}}"
                                     data-name="{{Auth::user()->name}}"
@@ -345,20 +349,19 @@
                                     data-image="https://image.shutterstock.com/image-vector/real-estate-logo-260nw-1615688014.jpg"
                                     data-currency="BDT"
                                     data-email="{{Auth::user()->email}}"
-                                    {{-- data-billingAddress="{{$shipping_address + $shipping_district}}" --}}
                                     >
-                                </script>
-                            </form>
-                            <li class="list-group-item " ><img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
+                                </script> --}}
+                            {{-- </form> --}}
+                            <li class="list-group-item " ><input type="radio" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: blue">Pay With Paypal</h5></li>
                             <li class="list-group-item " ><input type="radio" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: red">Pay With Mollie</h5></li>
                         </ul>
                     </div>
                 </div>
-                {{-- <div class="modal-footer">
-                    <button onclick="payment_method_selection()" type="button" class="btn btn-primary">Proceed</button>
-                </div> --}}
+                <div class="modal-footer">
+                    <button id="payment_method_selection_button" onclick="payment_method_selection()" type="button" class="btn btn-primary" data-dismiss="modal">Proceed</button>
+                </div>
             </div>
         </div>
     </div>
@@ -375,7 +378,7 @@
           </button>
         </div>
         <div class="modal-body text-center">
-
+            {{-- form start --}}
             {{-- <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
                 @csrf
                 <div class="form-row">
@@ -391,14 +394,15 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Payment</button>
             </form> --}}
-
-
-
+            {{-- form end --}}
         </div>
       </div>
     </div>
   </div>
 {{-- modal 3 payment form --}}
+
+
+
 
 
 
@@ -914,7 +918,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             }else {
                 $("#shipping_address_error_messege").css("display", "inline");
                 $("#shipping_district_error_messege").css("display", "none");
-                document.getElementById('shipping_information_div').scrollIntoView();
+                document.getElementById('shipping_information_div').scrollIntoView({behavior: "smooth"});
                 console.log("INSIDE NULL (else)")
                 // alert('Please Type Your Shipping Address');
             }
@@ -928,17 +932,19 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         console.log("inside payment method selection value of selected: "+ selected_payment_method)
 
         if(selected_payment_method == 'stripe'){
-            $("button").attr("data-toggle","modal");
-            $("button").attr("data-dismiss","modal");
-            $("button").attr("data-target","#payment_stripe");
+            // $("button").attr("data-toggle","modal");
+            // $("button").attr("data-target","#payment_stripe");
+            // $("#payment_method_selection_button").attr("data-dismiss","modal");
+            $("#payment_stripe").css("display", "block");
+            document.getElementById('payment_stripe').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         }else if(selected_payment_method == 'paypal'){
-            $("button").attr("data-toggle","modal");
-            $("button").attr("data-dismiss","modal");
-            $("button").attr("data-target","#payment_paypal");
+            // $("button").attr("data-toggle","modal");
+            // $("button").attr("data-dismiss","modal");
+            // $("button").attr("data-target","#payment_paypal");
         }else if(selected_payment_method == 'mollie'){
-            $("button").attr("data-toggle","modal");
-            $("button").attr("data-dismiss","modal");
-            $("button").attr("data-target","#payment_mollie");
+            // $("button").attr("data-toggle","modal");
+            // $("button").attr("data-dismiss","modal");
+            // $("button").attr("data-target","#payment_mollie");
         }
     }
 
@@ -1004,7 +1010,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 {{-- Payment script --}}
 <script>
         // Create a Stripe client.
-        var stripe = Stripe('pk_live_51HtX6kENsc8UGICBHgXiHGGO2CFozsOTN4STTj4blT1nlEtNEiTjnPUxtul8uqyuKUkGQ2ShUSwgwGEW7iitfwJb00WFBGyMNq');
+        var stripe = Stripe('pk_test_51HvdxJBuHtSEnNpzJiI5UWLlMYBJjDhwuCUCu5bTg6ZiOmadkfh6uZEJ1YNpCQK5liQDNy5Vt3Dsa97xoUo2iTux00dUo10b8e');
 
         // Create an instance of Elements.
         var elements = stripe.elements();
@@ -1076,8 +1082,6 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 
 </script>
 {{-- Payment script --}}
-
-
 
 @endsection
 
