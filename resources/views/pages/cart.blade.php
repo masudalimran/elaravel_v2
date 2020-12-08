@@ -56,7 +56,15 @@
 @php
     $userId = Auth::id();
     $sum_total =  0;
-    @endphp
+    $total_cost = 0;
+
+    $total_cost = DB::table('payments')
+    ->orderBy('id', 'desc')
+    ->pluck('total_cost')
+    ->first();
+
+
+@endphp
 
 <div class="cart_section">
     <div class="container">
@@ -331,13 +339,13 @@
                             <form action="submit.php" method="post">
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="{{$publishable_key}}"
-                                    data-amount="{{$sum_total}}"
+                                    data-amount="{{$total_cost}}"
                                     data-name="{{Auth::user()->name}}"
                                     data-description="Payment With Stripe"
                                     data-image="https://image.shutterstock.com/image-vector/real-estate-logo-260nw-1615688014.jpg"
                                     data-currency="BDT"
                                     data-email="{{Auth::user()->email}}"
-                                    data-phone="{{Auth::user()->phone}}"
+                                    {{-- data-billingAddress="{{$shipping_address + $shipping_district}}" --}}
                                     >
                                 </script>
                             </form>

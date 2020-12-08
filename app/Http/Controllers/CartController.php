@@ -279,7 +279,7 @@ class CartController extends Controller
         // ->update($data);
 
         return response(json_encode([
-            "msg" => "THank YOU",
+            "msg" => "Thank You For Shopping",
         ]), 200, ["Content-Type" => "application/json"]);
     }
 }

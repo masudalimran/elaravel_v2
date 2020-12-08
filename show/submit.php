@@ -1,6 +1,30 @@
 <?php
 require('config.php');
 
+$db = mysqli_connect('localhost','root','','elaravel_v2')
+or die('Error connecting to MySQL server.');
+
+echo '<pre>';
+print_r($db);
+
+$total_cost_query = "SELECT total_cost FROM payments ORDER BY id DESC LIMIT 1;";
+mysqli_query($db, $total_cost_query) or die('Error querying database.');
+
+
+$result = mysqli_query($db, $total_cost_query);
+
+echo '<pre>';
+print_r($result);
+
+$row = mysqli_fetch_array($result);
+echo '<pre>';
+print_r($row);
+
+// while ($row = mysqli_fetch_array($result)) {
+//  echo $row['total_cost'];
+// //   . ' ' . $row['last_name'] . ': ' . $row['email'] . ' ' . $row['city'] .'<br />';
+// }
+
 echo '<pre>';
 print_r($_POST);
 
@@ -10,7 +34,8 @@ if(isset($_POST['stripeToken'])){
 	$token=$_POST['stripeToken'];
 
 	$data = \Stripe\Charge::create(array(
-		"amount" =>50000,
+		"amount" => (int) $row[0],
+		// "amount" => 500000,
 		"currency" => "BDT",
 		"description" => "Payment With Stripe",
 		"source" => $token,

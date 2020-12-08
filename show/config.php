@@ -1,6 +1,23 @@
 <?php
+// namespace show;
+// use Illuminate\Support\Facades\DB;
 require('stripe-php-master/init.php');
 
+// $total_cost = 0;
+// $total_cost = DB::table('payments')
+// ->orderBy('id', 'desc')
+// ->pluck('total_cost')
+// ->first();
+
+// $shipping_address = DB::table('users')
+// ->orderBy('id', 'desc')
+// ->pluck('shipping_address')
+// ->first();
+
+// $shipping_district = DB::table('users')
+// ->orderBy('id', 'desc')
+// ->pluck('shipping_district')
+// ->first();
 
 
 $publishable_key =
