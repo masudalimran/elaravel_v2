@@ -250,15 +250,23 @@ class CartController extends Controller
             "final_cart" => $final_cart
         ]), 200, ["Content-Type" => "application/json"]);
     }
-    public function update_shipping_info($district, $shipping_address){
+    public function update_shipping_info($district, $shipping_address, $coupon_minus, $shipping_cost, $grand_total){
         $userId = Auth::id();
-        // $data = array();
-        // $data['shipping_district'] = $district;
-        // $data['shipping_address'] = $shipping_address;
+        $data = array();
+        $data['shipping_district'] = $district;
+        $data['shipping_address'] = $shipping_address;
 
-        // $updated_shipping_info = DB::table('users')
-        // ->where('user_Id',$userId)
-        // ->update(['shipping_district' => $district]);
+        $updated_shipping_info = DB::table('users')
+        ->where('id',$userId)
+        ->update($data);
+
+        DB::table('payments')
+        ->insert([
+            'user_id' => $userId,
+            'coupon_discount' => $coupon_minus,
+            'shipping_cost' => $shipping_cost,
+            'total_cost' =>  $grand_total
+        ]);
 
         // $userId = Auth::id();
         // $data[] =array();
@@ -270,8 +278,8 @@ class CartController extends Controller
         // ->where('id',$userId)
         // ->update($data);
 
-        // return response(json_encode([
-        //     "msg" => "THank YOU",
-        // ]), 200, ["Content-Type" => "application/json"]);
+        return response(json_encode([
+            "msg" => "THank YOU",
+        ]), 200, ["Content-Type" => "application/json"]);
     }
 }

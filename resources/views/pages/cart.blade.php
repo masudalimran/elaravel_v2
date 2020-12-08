@@ -243,7 +243,7 @@
 
                     {{-- <p style="text-align: center">(*) marked fields are mandatory</p> --}}
                     {{-- imported from auth --}}
-                    <div class="form-group">
+                    <div class="form-group" id="shipping_information_div">
                         <label for="exampleInputEmail1">User Name</label>
                         <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_username_n" id="checkout_username" aria-describedby="emailHelp" value="{{Auth::user()->name}}">
                     </div>
@@ -258,14 +258,14 @@
                     {{-- imported from auth --}}
 
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Shipping Address*</label>
+                      <label for="exampleInputEmail1">Shipping Address*</label><p id="shipping_address_error_messege" style="display: none; color: red"><b> Please Enter Your Shipping Address</b></p>
                       <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_shipping_address_n" id="checkout_shipping_address" aria-describedby="emailHelp" required>
                     </div>
                     {{-- <div class="form-group">
                       <label for="exampleInputEmail1">District*</label> --}}
                       {{-- <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_district_n" id="checkout_district" aria-describedby="emailHelp" required> --}}
                     <div class="form-group">
-                    <label for="exampleFormControlSelect1">District*</label>
+                    <label for="exampleFormControlSelect1">District*</label><p id="shipping_district_error_messege" style="display: none; color: red"><b> Please Select Your Shipping Dsitrict</b></p>
                         <select onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control select-30" name="checkout_district_n" id="checkout_district" style="width: 100% !important">
                             <option>Select Shipping District</option>
                             <option>Dhaka (৳50)</option><span></span>
@@ -324,33 +324,33 @@
                         Featured
                         </div> --}}
                         <ul class="list-group list-group-horizontal d-flex justify-content-around mr-auto ml-auto" id="payment">
-                            <li class="list-group-item text-center" ><input type="radio" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <li class="list-group-item text-center" ><img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
                                 <?php
-                                require('show/config.php');
-                            ?>
+                                    require('show/config.php');
+                                ?>
                             <form action="submit.php" method="post">
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="{{$publishable_key}}"
-                                    data-amount="50000"
-                                    data-name="BISMIB FASHION"
+                                    data-amount="{{$sum_total}}"
+                                    data-name="{{Auth::user()->name}}"
                                     data-description="Payment With Stripe"
                                     data-image="https://image.shutterstock.com/image-vector/real-estate-logo-260nw-1615688014.jpg"
                                     data-currency="BDT"
-                                    data-email="info@bismibtechnology.com"
+                                    data-email="{{Auth::user()->email}}"
+                                    data-phone="{{Auth::user()->phone}}"
                                     >
                                 </script>
                             </form>
-                            {{-- <h5 style="text-align: center; color: violet">Pay With Stripe</h5></li> --}}
-                            <li class="list-group-item " ><input type="radio" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <li class="list-group-item " ><img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: blue">Pay With Paypal</h5></li>
                             <li class="list-group-item " ><input type="radio" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: red">Pay With Mollie</h5></li>
                         </ul>
                     </div>
                 </div>
-                <div class="modal-footer">
+                {{-- <div class="modal-footer">
                     <button onclick="payment_method_selection()" type="button" class="btn btn-primary">Proceed</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -431,12 +431,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"
 
 src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 
-    let coupon_minus_init = 0
-    let coupon_percentage_init = 0
-    let coupon_input_init = 0
-    let total_init = 0
-    let order_total_cart_init
-    order_total_cart_init = 0
+    var coupon_minus_init = 0
+    var coupon_percentage_init = 0
+    var coupon_input_init = 0
+    var total_init = 0
+    var order_total_cart_init
+    var order_total_cart_init = 0
 
     function qty_change(productId , qty, price, userId) {
         // $("#cart-subtotal").text(0)
@@ -815,73 +815,88 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         js_district = document.getElementById('checkout_district')
         console.log("js_district: "+js_district.value)
 
+        js_coupon_minus = this.coupon_minus_init
+        console.log("coupon minus value "+this.coupon_minus_init)
+        js_grand_total = this.js_grand_total_init
+        console.log("grand_total:   "+this.js_grand_total_init)
+
+
         var js_district_name
+        var shipping_cost
 
         if(js_district.value == 'Select Shipping District'){
-            alert('Please Select District');
+            // alert('Please Select District');
+            $("#shipping_district_error_messege").css("display", "inline");
+            document.getElementById('shipping_information_div').scrollIntoView();
         }else {
+            $("#shipping_address_error_messege").css("display", "none");
+            $("#shipping_district_error_messege").css("display", "none");
             if(js_shipping_address){
                 console.log("INSIDE NOT NULL (if)")
-
-
                 if((js_district.value) == 'Dhaka (৳50)'){
                     js_district_name = 'Dhaka';
+                    shipping_cost=50;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                 else if((js_district.value) == 'Chittagong (৳350)'){
                     js_district_name = 'Chittagong';
+                    shipping_cost=350;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                 else if((js_district.value) == 'Barisal (৳300)'){
                     js_district_name = 'Barisal';
+                    shipping_cost+=300;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                 else if((js_district.value) == 'Jessore (৳350)'){
                     js_district_name = 'Jessore';
+                    shipping_cost=350;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                 else if((js_district.value) == 'Rajshahi (৳450)'){
                     js_district_name = 'Rajshahi';
+                    shipping_cost=450;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                 else if((js_district.value) == 'Rangpur (৳400)'){
                     js_district_name = 'Rangpur';
+                    shipping_cost=400;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                 else if((js_district.value) == 'Khulna (৳350)'){
                     js_district_name = 'Khulna';
+                    shipping_cost=350;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                 else if((js_district.value) == 'Sylhet (৳300)'){
                     js_district_name = 'Sylhet';
+                    shipping_cost=300;
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                     // event.preventDefault();
-                // $.ajax({
-                //     url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address,
-                //     type:"GET",
-                //     dataType:"json",
-                //     success:function(data) {
-                //         console.log('ajax after shipping address selection successfull');
-                //         const Toast = Swal.mixin({
-                //         toast: true,
-                //         position: 'top-end',
-                //         showConfirmButton: false,
-                //         timer: 2000,
-                //         timerProgressBar: true,
-                //         didOpen: (toast) => {
-                //             toast.addEventListener('mouseenter', Swal.stopTimer)
-                //             toast.addEventListener('mouseleave', Swal.resumeTimer)
-                //         }
-                //         })
-                //         Toast.fire({
-                //         icon: 'success',
-                //         title: data.msg
-                //         })
-
-
-                //     }
-                // })
+                $.ajax({
+                    url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address+'/'+js_coupon_minus+'/'+shipping_cost+'/'+js_grand_total,
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data) {
+                        console.log('ajax after shipping address selection successfull');
+                        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+                        Toast.fire({
+                        icon: 'success',
+                        title: data.msg
+                        })
+                    }
+                })
                 $("button").attr("data-toggle","modal");
                 $("button").attr("data-dismiss","modal");
                 $("button").attr("data-target","#Payment_modal");
@@ -889,8 +904,11 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 
 
             }else {
+                $("#shipping_address_error_messege").css("display", "inline");
+                $("#shipping_district_error_messege").css("display", "none");
+                document.getElementById('shipping_information_div').scrollIntoView();
                 console.log("INSIDE NULL (else)")
-                alert('Please Type Your Shipping Address');
+                // alert('Please Type Your Shipping Address');
             }
         }
 
@@ -977,20 +995,6 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 
 {{-- Payment script --}}
 <script>
-
-        // $(function(){
-        //     $('#payment-form').on('submit', function(e){
-        //     e.preventDefault();
-        //     $.post('{{route('payment.charge')}}',
-        //         $('#payment-form').serialize(),
-        //         function(data, status, xhr){
-        //             console.log("inside form ")
-        //             // do something here with response;
-        //         });
-        //     });
-        // });
-
-
         // Create a Stripe client.
         var stripe = Stripe('pk_live_51HtX6kENsc8UGICBHgXiHGGO2CFozsOTN4STTj4blT1nlEtNEiTjnPUxtul8uqyuKUkGQ2ShUSwgwGEW7iitfwJb00WFBGyMNq');
 

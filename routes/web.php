@@ -117,7 +117,7 @@ Route::get('remove/cart/item/{product_id}/{price}/{cart_total}','CartController@
 Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
 Route::get('change/size/database/{product_id}/{size}','CartController@change_size');
 Route::get('change/color/database/{product_id}/{color}','CartController@change_color');
-Route::get('update/shipping/info/{district}/{address}','CartController@update_shipping_info');
+Route::get('update/shipping/info/{district}/{address}/{coupon}/{shipping_cost}/{grand_total}','CartController@update_shipping_info');
 
     //checkout
 // Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
