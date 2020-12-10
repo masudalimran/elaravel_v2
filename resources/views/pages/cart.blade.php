@@ -833,6 +833,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         console.log("grand_total:   "+this.js_grand_total_init)
 
 
+
+
         var js_district_name
         var shipping_cost
 
@@ -886,6 +888,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                     console.log("shipping charge: "+district_shipping_charge)
                 }
                     // event.preventDefault();
+                var _this = this
                 $.ajax({
                     url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address+'/'+js_coupon_minus+'/'+shipping_cost+'/'+js_grand_total,
                     type:"GET",
@@ -947,6 +950,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             // $("button").attr("data-target","#payment_mollie");
         }
     }
+
 
     function numberWithCommas(number, decimals=0) {
                 var decimalNumbers = '';

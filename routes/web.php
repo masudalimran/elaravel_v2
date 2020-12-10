@@ -119,7 +119,8 @@ Route::get('change/size/database/{product_id}/{size}','CartController@change_siz
 Route::get('change/color/database/{product_id}/{color}','CartController@change_color');
 Route::get('update/shipping/info/{district}/{address}/{coupon}/{shipping_cost}/{grand_total}','CartController@update_shipping_info');
 
-    //checkout
+
+//checkout
 // Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
 Route::post('user/stripe/charge/','PaymentController@stripe_charge')->name('payment.charge');
 

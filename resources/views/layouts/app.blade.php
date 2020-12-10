@@ -222,6 +222,7 @@
                                 @php
                                 $cart=DB::table('cart')
                                 ->where('user_id',Auth::id())
+                                ->where('cart_id',NULL)
                                 ->get();
 
                                 $subtotal_cart = 0;

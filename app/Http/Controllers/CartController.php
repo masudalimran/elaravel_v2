@@ -13,7 +13,7 @@ class CartController extends Controller
     //
     public function add_cart($id){
         $userId = Auth::id();
-        $check_cart = DB::table('cart')->where('user_id',$userId)->where('product_id',$id)->first();
+        $check_cart = DB::table('cart')->where('user_id',$userId)->where('cart_id',NULL)->where('product_id',$id)->first();
         $product = DB::table('products')->where('id', $id)->first();
 
         $color=$product->product_color;
@@ -41,9 +41,10 @@ class CartController extends Controller
 
                 }else{
                     DB::table('cart')->insert($data);
-                    $cart_count =  DB::table('cart')->where('user_id',$userId)->count();
+                    $cart_count =  DB::table('cart')->where('cart_id',NULL)->where('user_id',$userId)->count();
                     $cart_subtotal=DB::table('cart')
                     ->select('cart.price')
+                    ->where('cart_id',NULL)
                     ->where('user_id',$userId)
                     ->get();
                     return response(json_encode([
@@ -69,6 +70,7 @@ class CartController extends Controller
         ->leftjoin('products','cart.product_id','=','products.id')
         ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
         ->where('user_id',$userId)
+        ->where('cart_id',NULL)
         ->get();
 
         $coupon_minus=0;
@@ -93,6 +95,7 @@ class CartController extends Controller
             ->leftjoin('products','cart.product_id','=','products.id')
             ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
             ->where('user_id',$user_id)
+            ->where('cart_id',NULL)
             ->get();
             // return response() -> json($coupon_minus) ;
             $active_coupon = $coupon_data;
@@ -113,12 +116,14 @@ class CartController extends Controller
     public function remove_cart($id,$active_coupon){
         DB::table('cart')
         ->where('user_id',$id)
+        ->where('cart_id',NULL)
         ->delete();
 
         $cart=DB::table('cart')
         ->leftjoin('products','cart.product_id','=','products.id')
         ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
         ->where('user_id',$id)
+        ->where('cart_id',NULL)
         ->get();
         $active_coupon=0;
         $coupon_minus=0;
@@ -132,6 +137,7 @@ class CartController extends Controller
         DB::table('cart')
         ->where('user_id',$userId)
         ->where('product_id',$product_id)
+        ->where('cart_id',NULL)
         ->delete();
         // $coupon_minus = $coupon_minus_final;
         // $coupon_minus-=($product_price*($active_coupon_percentage_final/100));
@@ -143,6 +149,7 @@ class CartController extends Controller
         ->leftjoin('products','cart.product_id','=','products.id')
         ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
         ->where('user_id',$userId)
+        ->where('cart_id',NULL)
         ->get();
 
         $cart_count =  DB::table('cart')->where('user_id',$userId)->count();
@@ -167,15 +174,17 @@ class CartController extends Controller
         DB::table('cart')
         ->where('user_id',$userId)
         ->where('product_id',$product_id)
+        ->where('cart_id',NULL)
         ->delete();
 
         $final_cart=DB::table('cart')
         ->leftjoin('products','cart.product_id','=','products.id')
         ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
         ->where('user_id',$userId)
+        ->where('cart_id',NULL)
         ->get();
 
-        $cart_count =  DB::table('cart')->where('user_id',$userId)->count();
+        $cart_count =  DB::table('cart')->where('user_id',$userId)->where('cart_id',NULL)->count();
 
         // $new_cart_price = $price;
 
@@ -208,6 +217,7 @@ class CartController extends Controller
         $updated_size = DB::table('cart')
         ->where('user_Id',$userId)
         ->where('product_id',$product_id)
+        ->where('cart_id',NULL)
         ->update($data);
         return response(json_encode([
             "msg" => "Size Changed Successfully",
@@ -222,6 +232,7 @@ class CartController extends Controller
         $updated_color = DB::table('cart')
         ->where('user_Id',$userId)
         ->where('product_id',$product_id)
+        ->where('cart_id',NULL)
         ->update($data);
         return response(json_encode([
             "msg" => "Color Changed Successfully",
@@ -235,12 +246,14 @@ class CartController extends Controller
         //->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
         ->where('user_id',$userId)
         ->where('product_id',$product_id)
+        ->where('cart_id',NULL)
         ->update(['qty'=>$qty]);
 
         $final_cart=DB::table('cart')
         ->leftjoin('products','cart.product_id','=','products.id')
         ->select('products.*','cart.user_id','cart.product_id','cart.product_name','cart.qty','cart.asking_price','cart.price','cart.image')
         ->where('user_id',$userId)
+        ->where('cart_id',NULL)
         ->get();
 
         $coupon_minus=0;
@@ -256,27 +269,27 @@ class CartController extends Controller
         $data['shipping_district'] = $district;
         $data['shipping_address'] = $shipping_address;
 
-        $updated_shipping_info = DB::table('users')
+        DB::table('users')
         ->where('id',$userId)
         ->update($data);
+
+        $cart_master_id = DB::table('cart_master')
+        ->where('user_id',$userId)
+        ->max('id');
+
+        DB::table('payments')
+        ->where('user_id',$userId)
+        ->where('cart_id',NULL)
+        ->delete();
 
         DB::table('payments')
         ->insert([
             'user_id' => $userId,
+            'cart_id'=> $cart_master_id,
             'coupon_discount' => $coupon_minus,
             'shipping_cost' => $shipping_cost,
             'total_cost' =>  $grand_total
         ]);
-
-        // $userId = Auth::id();
-        // $data[] =array();
-        // $data['shipping_district'] = $district;
-        // $data['shipping_address'] = $shipping_address;
-        // dd($data);
-
-        // DB::table('users')
-        // ->where('id',$userId)
-        // ->update($data);
 
         return response(json_encode([
             "msg" => "Thank You For Shopping",

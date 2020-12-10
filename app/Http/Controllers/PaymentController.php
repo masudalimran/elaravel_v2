@@ -22,23 +22,32 @@ class PaymentController extends Controller
 
         // Inputted By Me
         $userId = Auth::id();
+        DB::table('cart_master')
+        ->insert(['user_id'=>$userId, 'is_checkout'=>1]);
+
+        $cart_master_id = DB::table('cart_master')
+        ->where('user_id',$userId)
+        ->max('id');
+
+        DB::table('cart')
+        ->where('user_id',$userId)
+        ->where('cart_id',NULL)
+        ->update(['cart_id'=> $cart_master_id]);
+
         $payment_data = DB::table('payments')
         ->where('user_id',$userId)
         ->orderBy('id','desc')
         ->first();
+        // Inputted By Me
 
         $charge = \Stripe\Charge::create([
-        'amount' => $payment_data[5],
+        'amount' => intval($payment_data->total_cost),
         'currency' => 'bdt',
-        'description' => 'BISMIB FASHION DESC',
+        'description' => 'PAID TO BISMIB FASHION',
         'source' => $token,
-        'metadata' => ['order_id' => '6735'],
+        'metadata' => ['order_id' => '6735','coupon' => $payment_data->coupon_discount, 'shipping_cost' => $payment_data->shipping_cost],
         ]);
 
         dd($charge);
-        // // return response()->json("adsadsadsad");
-
-
-
     }
 }
