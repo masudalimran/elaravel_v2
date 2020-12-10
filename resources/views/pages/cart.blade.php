@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="sweetalert2.min.css">
 {{-- sweetalert2 css --}}
 
-{{-- strip css --}}
+{{-- stripe css --}}
 <style type="text/css">
     /**
     * The CSS shown here will not be introduced in the Quickstart guide, but shows
@@ -50,7 +50,7 @@
     background-color: #fefde5 !important;
     }
 </style>
-{{-- strip css --}}
+{{-- stripe css --}}
 
 {{-- styles --}}
 @php
@@ -66,14 +66,72 @@
 
 @endphp
 
+{{-- ================================================================================================ --}}
+{{--
+<div class="cart_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="cart_container">
+                    <div class="cart_title text-center">Thank You Shopping With BISMIB FASHION</div>
+                    <h4 style="text-align: center; color: red">Your Payment Has Been Received Successfully</h4>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                          Paid With Stripe
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title">User Name</h5>
+                          <p class="card-text">Paid Successfully {{$charge->amount}}</p>
+                          <p class="card-text">Token Number</p>
+                          <a href="{{url('/')}}" class="btn btn-primary">Go To Home Page</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                          2 days ago
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+{{-- ================================================================================================ --}}
+
 <div class="cart_section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 offset-lg-0">
-                <div class="cart_container">
+
+                    {{-- <div > --}}
+                    {{-- <div class="card" id="payment_stripe" style="display: none">
+                        <div class="card-header">
+                          Pay Us Through Stripe here
+                        </div>
+                        <div class="card-body">
+                            <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
+                                @csrf
+                                <div class="form-row">
+                                    <label for="card-element">
+                                        Enter Your Credit or Debit Card Information Here
+                                    </label>
+                                    <div id="card-element">
+                                        <!-- A Stripe Element will be inserted here. -->
+                                    </div>
+
+                                    <!-- Used to display form errors. -->
+                                    <div id="card-errors" role="alert"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Payment</button>
+                            </form>
+                        </div>
+                    </div> --}}
+                    {{-- </div> --}}
+
+                <div class="cart_container" id="shopping_cart_content" style="display: block">
 
                     <div class="cart_title">Shopping Cart</div>
-
 
                     {{-- <form action="{{route('user.checkout')}}" method="post" id="checkout_form">
                         @csrf --}}
@@ -86,14 +144,14 @@
                         $product_size = explode(',', $size);
                         @endphp
 
-<div class="cart_items">
-    <ul class="cart_list">
-        <li class="cart_item clearfix" id="remove-cart-item-{{$item->id}}">
-            <div class="cart_item_image">
-                <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
-                    <img src="{{asset($item->image)}}" alt="">
-                </a>
-            </div>
+                    <div class="cart_items">
+                        <ul class="cart_list">
+                            <li class="cart_item clearfix" id="remove-cart-item-{{$item->id}}">
+                                <div class="cart_item_image">
+                                    <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
+                                        <img src="{{asset($item->image)}}" alt="">
+                                    </a>
+                                </div>
                                 <div class="cart_item_info d-flex flex-sm-row flex-column justify-content-between">
                                     <div class="cart_item_name cart_info_col" style="max-width: 10%; min-width:10%;">
                                         <div class="cart_item_title">Product Name</div>
@@ -203,36 +261,6 @@
                     </div>
                 </div>
             {{-- </form> --}}
-
-
-            {{-- <div > --}}
-                <br>
-                <br>
-                <br>
-                <div class="card" id="payment_stripe" style="display: none">
-                    <div class="card-header">
-                      Pay Us Through Stripe here
-                    </div>
-                    <div class="card-body">
-                        <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
-                            @csrf
-                            <div class="form-row">
-                                <label for="card-element">
-                                    Enter Your Credit or Debit Card Information Here
-                                </label>
-                                <div id="card-element">
-                                    <!-- A Stripe Element will be inserted here. -->
-                                </div>
-
-                                <!-- Used to display form errors. -->
-                                <div id="card-errors" role="alert"></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit Payment</button>
-                        </form>
-                    </div>
-                  </div>
-            {{-- </div> --}}
-
 
             </div>
         </div>
@@ -352,6 +380,7 @@
                                     >
                                 </script> --}}
                             {{-- </form> --}}
+
                             <li class="list-group-item " ><input type="radio" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
                             <h5 style="text-align: center; color: blue">Pay With Paypal</h5></li>
                             <li class="list-group-item " ><input type="radio" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
@@ -400,13 +429,6 @@
     </div>
   </div>
 {{-- modal 3 payment form --}}
-
-
-
-
-
-
-
 
 
 {{-- scripts --}}
@@ -938,8 +960,12 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             // $("button").attr("data-toggle","modal");
             // $("button").attr("data-target","#payment_stripe");
             // $("#payment_method_selection_button").attr("data-dismiss","modal");
-            $("#payment_stripe").css("display", "block");
-            document.getElementById('payment_stripe').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+
+            window.location.href = '/elaravel_v2/pay_with_stripe'
+
+            // $("#payment_stripe").css("display", "block");
+            // $("#shopping_cart_content").css("display", "none");
+            // document.getElementById('payment_stripe').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         }else if(selected_payment_method == 'paypal'){
             // $("button").attr("data-toggle","modal");
             // $("button").attr("data-dismiss","modal");
@@ -1008,6 +1034,8 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             }
             // ====================Number related=============================
             // ====================Number related=============================
+
+
 
 </script>
 

@@ -285,7 +285,7 @@ class CartController extends Controller
         DB::table('payments')
         ->insert([
             'user_id' => $userId,
-            'cart_id'=> $cart_master_id,
+            'cart_id' => $cart_master_id,
             'coupon_discount' => $coupon_minus,
             'shipping_cost' => $shipping_cost,
             'total_cost' =>  $grand_total

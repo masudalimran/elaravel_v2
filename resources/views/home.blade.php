@@ -54,7 +54,7 @@
 
                 <div class="col-4">
                     <div class="card" style="width: 18rem;">
-                        <img src="{{asset('public/yo.webp')}}" class="card-img-top" style="height: 50%; width: 80%; margin-left: 10%; margin-top: 5%; ">
+                        <img src="{{asset('public/yo.webp')}}" class="card-img-top" style="height: 50%; width: 80%; margin-left: 10%; margin-top: 5%;">
                         <div class="card-body">
                             <h5 class="card-title text-left">
                                 @php

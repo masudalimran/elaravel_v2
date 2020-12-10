@@ -123,6 +123,8 @@ Route::get('update/shipping/info/{district}/{address}/{coupon}/{shipping_cost}/{
 //checkout
 // Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
 Route::post('user/stripe/charge/','PaymentController@stripe_charge')->name('payment.charge');
+Route::get('pay_with_stripe','PaymentController@pay_with_stripe');
+Route::get('pay_with_stripe2','PaymentController@pay_with_stripe2')->name('pay_with_stripe2');
 
     //visitproduct
 Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
