@@ -3,8 +3,8 @@
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
-            <a class="breadcrumb-item" href="index.html">Admin Panel</a>
-            <a class="breadcrumb-item" href="index.html">Product</a>
+            <a class="breadcrumb-item" href="#">Admin Panel</a>
+            <a class="breadcrumb-item" href="#">Product</a>
             <span class="breadcrumb-item active">Product List</span>
         </nav>
 

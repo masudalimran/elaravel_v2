@@ -118,6 +118,18 @@
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+        <span class="menu-item-label">Cart</span>
+        <i class="menu-item-arrow fa fa-angle-down"></i>
+      </div><!-- menu-item -->
+    </a><!-- sl-menu-link -->
+    <ul class="sl-menu-sub nav flex-column">
+      {{-- <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li> --}}
+      <li class="nav-item"><a href="{{route('all.cart')}}" class="nav-link">Cart Information</a></li>
+    </ul>
+
+    <a href="#" class="sl-menu-link">
+      <div class="sl-menu-item">
+        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
         <span class="menu-item-label">Blogs</span>
         <i class="menu-item-arrow fa fa-angle-down"></i>
       </div><!-- menu-item -->
@@ -438,7 +450,7 @@
         var link = $(this).attr("href");
            swal({
              title: "Do you Want to delete?",
-             text: "Once Delete, This will be Permanently Deleted!",
+             text: "Once Deleted, You Cannot Go Back!",
              icon: "warning",
              buttons: true,
              dangerMode: true,

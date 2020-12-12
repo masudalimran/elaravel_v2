@@ -687,6 +687,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     }
 
     var js_grand_total_init = 0
+    var js_vat= 0
 
     function checkout(order_total, order_total_cart_init){
       let order_total_for_checkout
@@ -705,6 +706,7 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         vat  = (order_total_for_checkout * 15)/100
         console.log("Checkout Vat", vat)
         $("#checkout_vat").text(this.numberWithCommas(vat));
+        this.js_vat = vat;
         this.js_grand_total_init = order_total_for_checkout + vat
         $("#checkout_grand_total").text(this.numberWithCommas(this.js_grand_total_init));
     }
@@ -911,8 +913,9 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
                 }
                     // event.preventDefault();
                 var _this = this
+                console.log("Vat============"+js_vat)
                 $.ajax({
-                    url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address+'/'+js_coupon_minus+'/'+shipping_cost+'/'+js_grand_total,
+                    url: "{{  url('update/shipping/info') }}/"+js_district_name+'/'+js_shipping_address+'/'+js_coupon_minus+'/'+js_vat+'/'+shipping_cost+'/'+js_grand_total,
                     type:"GET",
                     dataType:"json",
                     success:function(data) {

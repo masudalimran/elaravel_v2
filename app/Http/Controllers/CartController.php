@@ -263,7 +263,7 @@ class CartController extends Controller
             "final_cart" => $final_cart
         ]), 200, ["Content-Type" => "application/json"]);
     }
-    public function update_shipping_info($district, $shipping_address, $coupon_minus, $shipping_cost, $grand_total){
+    public function update_shipping_info($district, $shipping_address, $coupon_minus, $vat, $shipping_cost, $grand_total){
         $userId = Auth::id();
         $data = array();
         $data['shipping_district'] = $district;
@@ -273,9 +273,9 @@ class CartController extends Controller
         ->where('id',$userId)
         ->update($data);
 
-        $cart_master_id = DB::table('cart_master')
-        ->where('user_id',$userId)
-        ->max('id');
+        // $cart_master_id = DB::table('cart_master')
+        // ->where('user_id',$userId)
+        // ->max('id');
 
         DB::table('payments')
         ->where('user_id',$userId)
@@ -285,8 +285,9 @@ class CartController extends Controller
         DB::table('payments')
         ->insert([
             'user_id' => $userId,
-            'cart_id' => $cart_master_id,
+            // 'cart_id' => $cart_master_id+1,
             'coupon_discount' => $coupon_minus,
+            'vat' => $vat,
             'shipping_cost' => $shipping_cost,
             'total_cost' =>  $grand_total
         ]);

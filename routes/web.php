@@ -75,6 +75,11 @@ Route::get('edit/product/{id}','Admin\ProductController@edit_product');
 Route::post('update/product/without_photo/{id}','Admin\ProductController@update_product_without_photo');
 Route::post('update/product/photo/{id}','Admin\ProductController@update_product_photo');
 
+    //Cart
+Route::get('admin/cart/all','Admin\AdminCartController@index_cart')->name('all.cart');
+Route::get('delete/cart/{id}','Admin\AdminCartController@delete_cart');
+Route::get('admin/cart/details/{cart_id}','Admin\AdminCartController@cart_details')->name('all.cart.details');
+
     //Blogs
 Route::get('admin/add/post','Admin\PostController@add_post')->name('add.blogpost');
 Route::post('admin/store/post','Admin\PostController@store_post')->name('store.blogpost');
@@ -117,7 +122,7 @@ Route::get('remove/cart/item/{product_id}/{price}/{cart_total}','CartController@
 Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
 Route::get('change/size/database/{product_id}/{size}','CartController@change_size');
 Route::get('change/color/database/{product_id}/{color}','CartController@change_color');
-Route::get('update/shipping/info/{district}/{address}/{coupon}/{shipping_cost}/{grand_total}','CartController@update_shipping_info');
+Route::get('update/shipping/info/{district}/{address}/{coupon}/{vat}/{shipping_cost}/{grand_total}','CartController@update_shipping_info');
 
 
 //checkout

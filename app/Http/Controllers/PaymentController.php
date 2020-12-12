@@ -23,7 +23,7 @@ class PaymentController extends Controller
         // Inputted By Me
         $userId = Auth::id();
         DB::table('cart_master')
-        ->insert(['user_id'=>$userId, 'is_checkout'=>1]);
+        ->insert(['user_id'=>$userId, 'is_checkout'=>1, 'is_paid'=>1]);
 
         $cart_master_id = DB::table('cart_master')
         ->where('user_id',$userId)
@@ -36,8 +36,9 @@ class PaymentController extends Controller
 
         DB::table('payments')
         ->where('user_id',$userId)
-        ->where('cart_id',$cart_master_id)
-        ->update(['paid_with'=>'Stripe']);
+        ->where('cart_id', NULL)
+        ->orderBy('id','desc')
+        ->update(['paid_with'=>'Stripe', 'cart_id' => $cart_master_id]);
 
         $payment_data = DB::table('payments')
         ->where('user_id',$userId)
