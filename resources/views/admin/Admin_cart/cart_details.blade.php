@@ -5,7 +5,7 @@
         <nav class="breadcrumb sl-breadcrumb">
             <a class="breadcrumb-item" href="{{url('admin/home')}}">Admin Panel</a>
             <a class="breadcrumb-item" href="{{route('all.cart')}}">Cart</a>
-            <a class="breadcrumb-item" href="{{route('all.cart.details')}}">Cart_details</a>
+            <a class="breadcrumb-item" href="#">Cart_details</a>
             <span class="breadcrumb-item active">Cart Information</span>
         </nav>
 
@@ -26,40 +26,43 @@
                             <tr>
                                 <th class="wd-5p">ID</th>
                                 <th class="wd-20p">User</th>
-                                <th class="wd-5p">Cart ID</th>
-                                <th class="wd-5p">Coupon Discount</th>
-                                <th class="wd-5p">Shipping Cost</th>
-                                <th class="wd-5p">Vat</th>
-                                <th class="wd-5p">Total Cost</th>
-                                <th class="wd-8p">Paid With</th>
-                                <th class="wd-5p">Is Paid</th>
-                                <th class="wd-5p">Created At</th>
+                                <th class="wd-10p">Cart ID</th>
+                                <th class="wd-10p">Product ID</th>
+                                <th class="wd-20p">Product Name</th>
+                                <th class="wd-5p">Qty</th>
+                                <th class="wd-10p">Size</th>
+                                <th class="wd-10p">Color</th>
+                                <th class="wd-8p">Asking Price</th>
+                                <th class="wd-8p">Discount</th>
+                                <th class="wd-8p">Sub Total</th>
+                                <th class="wd-8p">Image</th>
+                                <th class="wd-8p">Created At</th>
+                                <th class="wd-8p">Updated At</th>
                                 <th class="wd-20p">Action</th>
                             </tr>
                         </thead>
                         {{-- {{dd($index_product)}} --}}
                         <tbody>
-                            @foreach ($index_cart as $row)
+                            @foreach ($cart_details as $row)
                             <tr>
-
                                 <td>{{$row->id}}</td>
                                 <td>{{$row->name}}</td>
                                 <td>{{$row->cart_id}}</td>
-                                <td>{{numberformat($row->coupon_discount)}}</td>
-                                <td>{{numberformat($row->shipping_cost)}}</td>
-                                <td>{{numberformat($row->vat)}}</td>
-                                <td><span class="badge badge-warning">{{numberformat($row->total_cost)}}</span></td>
-                                <td>{{$row->paid_with}}</td>
-                                <td>
-                                    @if ($row->is_checkout == 1)
-                                        <span class="badge badge-success">Paid</span>
-                                    @else
-                                        <span class="badge badge-danger">Not Paid</span>
-                                    @endif
-                                </td>
+                                <td>{{$row->product_id}}</td>
+                                <td>{{$row->product_name}}</td>
+                                <td>{{$row->qty}}</td>
+                                <td>{{$row->product_size}}</td>
+                                <td>{{$row->product_color}}</td>
+                                <td>{{numberformat($row->asking_price)}}</td>
+                                <td>{{numberformat($row->discount_price)}}</td>
+                                <td>{{numberformat($row->price)}}</td>
+                                <td><img src="{{asset($row->image)}}" style="height:60px; width:80px"></td>
                                 <td>{{$row->created_at}}</td>
+                                <td>{{$row->updated_at}}</td>
+
                                 <td style="white-space: nowrap;">
-                                    <a href="{{URL::to('delete/product/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
+                                    <a href="{{URL::to('edit/cart/item'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
+                                    <a href="{{URL::to('delete/cart/item'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
                                 </td>
                             </tr>
                             @endforeach
