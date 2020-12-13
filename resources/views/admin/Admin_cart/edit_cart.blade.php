@@ -28,8 +28,8 @@
                 {{-- start Table Part --}}
 
                     <div class="card pd-20 pd-sm-40">
-                        {{-- <form action="{{url('update/cart/'.$product->id)}}" method="post" enctype="multipart/form-data">
-                            @csrf --}}
+                        <form action="{{url('update/cart/'.$product->id)}}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-layout">
                                 <div class="row mg-b-25">
                                     <div class="col-lg-4">
@@ -78,14 +78,14 @@
                                         <label class="form-control-label" style="margin-left: 12%"> Image </label>
                                         <br>
                                         <img src="{{URL::to($product->image)}}" id="cart_image" style="height: 100px; width: 120px; margin-left: 5%">
-                                        <p style="margin-left: 10%;color: red">OLD IMAGE</p>
+                                        {{-- <p style="margin-left: 10%;color: red">OLD IMAGE</p> --}}
+                                        <br><br>
                                         <label class="custom-file" style="display: inline-block">
                                             <input type="file" id="file" class="custom-file-input" name="image"
                                                 onchange="readURL1(this);" accept="image">
-                                            <input type="hidden" name="old_1" value="{{$product->image}}">
+                                            <input type="hidden" name="old_image" value="{{$product->image}}">
                                             <span class="custom-file-control"></span>
                                         </label><br><br>
-
                                     </div>
 
                                 <div class="form-layout-footer" style="margin-top:auto; margin-left:auto;">
@@ -93,7 +93,7 @@
                                 </div><!-- form-layout-footer -->
 
                             </div><!-- form-layout -->
-                        {{-- </form> --}}
+                        </form>
 
 
                     </div>
@@ -101,4 +101,20 @@
             <!-- card -->
 
         </div><!-- sl-pagebody -->
+
+    <script type="text/javascript">
+        function readURL1(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#cart_image')
+                        .attr('src', e.target.result)
+                        .width(100)
+                        .height(100);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
 @endsection

@@ -46,7 +46,7 @@
                           <a href="{{url('/')}}" class="btn btn-primary">Go To Home Page</a>
                         </div>
                         <div class="card-footer text-muted">
-                            Created At: {{$payments->created_at}}
+                            Created At: {{YmdTodmYPmdMyPM($payments->created_at)}}
                         </div>
                     </div>
 

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class AdminCartController extends Controller
 {
@@ -66,4 +69,36 @@ class AdminCartController extends Controller
         return view('admin.Admin_cart.edit_cart',compact('product'));
     }
 
+    public function update_cart(Request $request, $id){
+        // dd($request->old_image);
+        $data=array();
+
+        $data['product_name']=$request->product_name;
+        $data['qty']=$request->qty;
+        $data['product_size']=$request->product_size;
+        $data['product_color']=$request->product_color;
+        $data['asking_price']=$request->asking_price;
+        $data['discount_price']=$request->discount_price;
+        $price = $request->asking_price - $request->discount_price;
+        $data['price']=$price;
+
+        if($request->image == NULL){
+            $image=$request->old_image;
+            $data['image']=$image;
+        }else{
+            unlink($request->old_image);
+            $image=$request->image;
+            $image_name = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            Image::make($image)->resize(300,300)->save('public/media/product/'.$image_name);
+            $data['image']='public/media/product/'.$image_name;
+        }
+
+
+        DB::table('cart')->where('id',$id)->update($data);
+        $notification=array(
+            'messege'=>'Cart Updated Successfully',
+            'alert-type'=>'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
 }

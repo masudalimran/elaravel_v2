@@ -75,12 +75,13 @@ Route::get('edit/product/{id}','Admin\ProductController@edit_product');
 Route::post('update/product/without_photo/{id}','Admin\ProductController@update_product_without_photo');
 Route::post('update/product/photo/{id}','Admin\ProductController@update_product_photo');
 
-    //Cart
+//Cart
 Route::get('admin/cart/all','Admin\AdminCartController@index_cart')->name('all.cart');
 Route::get('delete/cart/{id}','Admin\AdminCartController@delete_cart');
 Route::get('admin/cart/details/{cart_id}','Admin\AdminCartController@cart_details')->name('all.cart.details');
 Route::get('delete/cart/item/{id}','Admin\AdminCartController@delete_cart_item');
 Route::get('edit/cart/item/{id}','Admin\AdminCartController@edit_cart_item');
+Route::post('update/cart/{id}','Admin\AdminCartController@update_cart');
 
     //Blogs
 Route::get('admin/add/post','Admin\PostController@add_post')->name('add.blogpost');
