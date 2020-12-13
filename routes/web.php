@@ -80,7 +80,7 @@ Route::get('admin/cart/all','Admin\AdminCartController@index_cart')->name('all.c
 Route::get('delete/cart/{id}','Admin\AdminCartController@delete_cart');
 Route::get('admin/cart/details/{cart_id}','Admin\AdminCartController@cart_details')->name('all.cart.details');
 Route::get('delete/cart/item/{id}','Admin\AdminCartController@delete_cart_item');
-Route::get('edit/cart/item/{cart_id}','Admin\AdminCartController@edit_cart_item');
+Route::get('edit/cart/item/{id}','Admin\AdminCartController@edit_cart_item');
 
     //Blogs
 Route::get('admin/add/post','Admin\PostController@add_post')->name('add.blogpost');

@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 class AdminCartController extends Controller
 {
     //
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index_cart(){
 
         $index_cart=DB::table('payments')
@@ -54,9 +60,9 @@ class AdminCartController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function edit_cart_item($cart_id){
-        $product=DB::table('cart')->where('cart_id',$cart_id)->first();
-
+    public function edit_cart_item($id){
+        $product=DB::table('cart')->where('id',$id)->first();
+        // dd($product);
         return view('admin.Admin_cart.edit_cart',compact('product'));
     }
 
