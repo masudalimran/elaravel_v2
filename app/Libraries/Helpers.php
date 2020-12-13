@@ -130,6 +130,7 @@
         }
     }
 
+
     function YmdTodmYPmgiA($datetime)
     {
         if ($datetime) {
@@ -144,6 +145,16 @@
     {
         if ($datetime) {
             $date = \Carbon\Carbon::parse($datetime)->format('d M, y ');
+            return $date;
+        } else {
+            return '';
+        }
+    }
+
+    function YmdTodmYPmdMyPM($datetime)
+    {
+        if ($datetime) {
+            $date = \Carbon\Carbon::parse($datetime)->format('d M, y g:i A');
             return $date;
         } else {
             return '';

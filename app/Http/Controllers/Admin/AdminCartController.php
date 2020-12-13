@@ -45,19 +45,19 @@ class AdminCartController extends Controller
     }
 
     public function delete_cart_item($id){
-        dd($id);
-        // DB::table('cart')->where('id',$id)->delete();
-        // $notification=array(
-        //     'messege'=>'Cart Deleted successfully',
-        //     'alert-type'=>'error'
-        // );
-        // return Redirect()->back()->with($notification);
+        // dd($id);
+        DB::table('cart')->where('id',$id)->delete();
+        $notification=array(
+            'messege'=>'Cart Deleted successfully',
+            'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
     }
 
     public function edit_cart_item($cart_id){
         $product=DB::table('cart')->where('cart_id',$cart_id)->first();
 
-        return view('admin.product.edit_product',compact('product'));
+        return view('admin.Admin_cart.edit_cart',compact('product'));
     }
 
 }

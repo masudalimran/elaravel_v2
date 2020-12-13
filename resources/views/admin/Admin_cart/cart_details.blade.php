@@ -57,17 +57,30 @@
                                 <td>{{numberformat($row->discount_price)}}</td>
                                 <td>{{numberformat($row->price)}}</td>
                                 <td><img src="{{asset($row->image)}}" style="height:60px; width:80px"></td>
-                                <td>{{$row->created_at}}</td>
-                                <td>{{$row->updated_at}}</td>
+                                <td>{{YmdTodmYPmdMyPM($row->created_at)}}</td>
+                                <td>{{YmdTodmYPmdMyPM($row->updated_at)}}</td>
 
                                 <td style="white-space: nowrap;">
-                                    <a href="{{URL::to('edit/cart/item'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
-                                    <a href="{{URL::to('delete/cart/item'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
+                                    <a href="{{URL::to('edit/cart/item/'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
+                                    <a href="{{URL::to('delete/cart/item/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <br>
+                    <div class="card">
+                        <div class="card-header" style="text-align: center; color:red">
+                          <h3> Paid With {{$row->paid_with}}</h3>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-text" style="text-align: center; color:black">Coupon Discount: {{numberformat($row->coupon_discount)}}</h5>
+                            <h5 class="card-text" style="text-align: center; color:black">Shipping Cost: {{numberformat($row->shipping_cost)}}</h5>
+                            <h5 class="card-text" style="text-align: center; color:black">Vat: {{numberformat($row->vat)}}</h5>
+                            <h4 class="card-title" style="text-align: center; color:Blue">Total Cost: {{numberformat($row->total_cost)}}</h4>
+                            <h5 class="card-title" style="text-align: center"></h5>
+                        </div>
+                      </div>
                 </div><!-- table-wrapper -->
             </div><!-- card -->
         </div><!-- sl-pagebody -->

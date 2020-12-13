@@ -56,7 +56,7 @@
                                         <span class="badge badge-danger">Not Paid</span>
                                     @endif
                                 </td>
-                                <td>{{$row->created_at}}</td>
+                                <td>{{YmdTodmYPmdMyPM($row->created_at)}}</td>
                                 <td style="white-space: nowrap;">
                                     <a href="{{URL::to('delete/cart/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
                                 </td>

@@ -12,14 +12,14 @@
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
-            <a class="breadcrumb-item" href="index.html">Admin Panel</a>
-            <a class="breadcrumb-item" href="index.html">Product</a>
-            <span class="breadcrumb-item active">Edit Product</span>
+            <a class="breadcrumb-item" href="{{url('admin/home')}}">Admin Panel</a>
+            <a class="breadcrumb-item" href="{{route('all.cart')}}">Cart</a>
+            <span class="breadcrumb-item active">Edit Cart</span>
         </nav>
 
         <div class="sl-pagebody">
             <div class="sl-page-title">
-                <h5>Edit Products here</h5>
+                <h5>Edit Cart here</h5>
                 <p>Here below you can edit products</p>
             </div><!-- sl-page-title -->
 
@@ -28,8 +28,8 @@
                 {{-- start Table Part --}}
 
                     <div class="card pd-20 pd-sm-40">
-                        <form action="{{url('update/product/without_photo/'.$product->id)}}" method="post" >
-                            @csrf
+                        {{-- <form action="{{url('update/cart/'.$product->id)}}" method="post" >
+                            @csrf --}}
                             <div class="form-layout">
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6">
@@ -258,7 +258,7 @@
                                     <button class="btn btn-info mg-r-5" type="submit">Update Product</button>
                                 </div><!-- form-layout-footer -->
                             </div><!-- form-layout -->
-                        </form>
+                        {{-- </form> --}}
 
 
                     </div>
