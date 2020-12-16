@@ -41,9 +41,16 @@
                             @foreach ($index_cart as $row)
                             <tr>
 
-                                <td><a href="{{route('all.cart.details',[$row->cart_id])}}">{{$row->id}}</a></td>
+                                <td>
+                                    @if ($row->cart_id == Null)
+                                        {{$row->id}}
+                                    @else
+                                        <a href="{{route('all.cart.details',(int) $row->cart_id)}}">{{$row->id}}</a>
+                                    @endif
+                                </td>
+                                {{-- {{dd($row->cart_id)}} --}}
                                 <td>{{$row->name}}</td>
-                                <td><a href="{{route('all.cart.details',[$row->cart_id])}}">{{$row->cart_id}}</a></td>
+                                <td><a href="{{route('all.cart.details',(int) $row->cart_id)}}">{{$row->cart_id}}</a></td>
                                 <td>{{numberformat($row->coupon_discount)}}</td>
                                 <td>{{numberformat($row->shipping_cost)}}</td>
                                 <td>{{numberformat($row->vat)}}</td>
