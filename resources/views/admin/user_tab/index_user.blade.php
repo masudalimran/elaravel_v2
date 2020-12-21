@@ -44,7 +44,7 @@
                             @foreach ($index_user as $row)
                             <tr>
                                 <td>{{$row->id}}</td>
-                                <td>{{$row->name}}</td>
+                                <td><a href="{{route('user.details',$row->id)}}">{{$row->name}}</a></td>
                                 <td>{{$row->phone}}</td>
                                 <td>{{$row->email}}</td>
                                 <td>{{$row->email_verified_at}}</td>

@@ -86,6 +86,7 @@ Route::get('admin/browse/cart/by/user','Admin\AdminCartController@cart_by_user')
 
 //user
 Route::get('admin/show/users/all','Admin\AdminUserController@index_user')->name('all.user');
+Route::get('admin/user/details/{user_id}','Admin\AdminUserController@user_details')->name('user.details');
 
 
     //Blogs
