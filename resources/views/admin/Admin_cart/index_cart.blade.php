@@ -49,7 +49,7 @@
                                     @endif
                                 </td>
                                 {{-- {{dd($row->cart_id)}} --}}
-                                <td>{{$row->name}}</td>
+                                <td><a href="{{route('browse.cart.by.user',$row->name)}}">{{$row->name}}</a></td>
                                 <td><a href="{{route('all.cart.details',(int) $row->cart_id)}}">{{$row->cart_id}}</a></td>
                                 <td>{{numberformat($row->coupon_discount)}}</td>
                                 <td>{{numberformat($row->shipping_cost)}}</td>

@@ -30,7 +30,6 @@ class AdminCartController extends Controller
 
     //Delete cart
     public function delete_cart($id){
-
         DB::table('payments')->where('id',$id)->delete();
         $notification=array(
             'messege'=>'Cart Deleted successfully',
@@ -101,4 +100,15 @@ class AdminCartController extends Controller
         );
         return Redirect()->back()->with($notification);
     }
+
+    public function cart_by_user(){
+        $cart_by_user=DB::table('cart')
+        ->leftJoin('users','cart.user_id', '=', 'users.id')
+        ->leftJoin('payments','cart.cart_id', '=', 'payments.cart_id')
+        ->select('users.name','cart.*','payments.coupon_discount','payments.shipping_cost','payments.vat','payments.total_cost','payments.paid_with','payments.created_at')
+        // ->where('cart.cart_id',$cart_id)
+        ->get();
+        return view('admin.Admin_cart.cart_by_user',compact('cart_by_user'));
+    }
+
 }

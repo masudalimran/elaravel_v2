@@ -82,6 +82,7 @@ Route::get('admin/cart/details/{cart_id}','Admin\AdminCartController@cart_detail
 Route::get('delete/cart/item/{id}','Admin\AdminCartController@delete_cart_item');
 Route::get('edit/cart/item/{id}','Admin\AdminCartController@edit_cart_item');
 Route::post('update/cart/{id}','Admin\AdminCartController@update_cart');
+Route::get('admin/browse/cart/by/user','Admin\AdminCartController@cart_by_user')->name('browse.cart.by.user');
 
 //user
 Route::get('admin/show/users/all','Admin\AdminUserController@index_user')->name('all.user');
