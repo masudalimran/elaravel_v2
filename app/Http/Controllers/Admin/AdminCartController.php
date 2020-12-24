@@ -102,16 +102,17 @@ class AdminCartController extends Controller
     }
 
     public function cart_by_user(){
-        // $cart_by_user=DB::table('cart')
-        // ->leftJoin('users','cart.user_id', '=', 'users.id')
-        // ->leftJoin('payments','cart.cart_id', '=', 'payments.cart_id')
-        // ->select('users.name','cart.*','payments.coupon_discount','payments.shipping_cost','payments.vat','payments.total_cost','payments.paid_with','payments.created_at')
-        // // ->where('cart.cart_id',$cart_id)
-        // ->get();
-        // return view('admin.user_tab.index_user',compact('index_user'));
 
         $cart_by_user=DB::table('users')
                     ->get();
+
+        return view('admin.Admin_cart.cart_by_user',compact('cart_by_user'));
+    }
+
+    public function cart_details_by_user($user_id){
+        // dd($user_id);
+
+
         return view('admin.Admin_cart.cart_by_user',compact('cart_by_user'));
     }
 

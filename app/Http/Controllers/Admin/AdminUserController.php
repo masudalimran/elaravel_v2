@@ -25,9 +25,7 @@ class AdminUserController extends Controller
                     ->where('id',$user_id)
                     ->first();
 
-        $cart_details=DB::table('cart_master')
-                    ->leftjoin('')
-                    ->where('id',$user_id)
         return view('admin.user_tab.user_details',compact('user_details'));
     }
+
 }
