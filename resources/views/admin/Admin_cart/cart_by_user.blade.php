@@ -9,7 +9,9 @@
 
             var userId = button.data('userid') ;
             var userName = button.data('username') ;
-            var _this = this;
+            var cart_id = button.data('cart_id');
+            console.log("cart id ==========="+ cart_id);
+            // var _this = this;
 
             $('#modal-username').text(userName)
 
@@ -36,11 +38,11 @@
 
                         markup = markup
                                 +"<tr>"
-                                    + "<td>"+el.id+"</td>"
+                                    + "<td>"+"<a target='_blank' href='{{URL::to('admin/cart/details/')}}/"+cart_id+"'>"+el.id+"</td>"
 
-                                    +"<td>"+"<a target='_blank' href='{{URL::to('admin/browse/cart/by/single_user')}}/"+_this.userId+"'>"+el.name+"</a>"+"</td>"
+                                    +"<td>"+"<a target='_blank' href='{{URL::to('admin/browse/cart/by/single_user')}}/"+userId+"'>"+el.name+"</a>"+"</td>"
 
-                                    + "<td>"+el.cart_id+"</td>"
+                                    + "<td>"+"<a target='_blank' href='{{URL::to('admin/cart/details/')}}/"+cart_id+"'>"+el.cart_id+"</td>"
                                     + "<td>"+el.coupon_discount+"</td>"
                                     + "<td>"+el.shipping_cost+"</td>"
                                     + "<td>"+el.vat+"</td>"
