@@ -82,13 +82,16 @@ Route::get('admin/cart/details/{cart_id}','Admin\AdminCartController@cart_detail
 Route::get('delete/cart/item/{id}','Admin\AdminCartController@delete_cart_item');
 Route::get('edit/cart/item/{id}','Admin\AdminCartController@edit_cart_item');
 Route::post('update/cart/{id}','Admin\AdminCartController@update_cart');
-Route::get('admin/browse/cart/by/user','Admin\AdminCartController@cart_by_user')->name('browse.cart.by.user');
+Route::get('admin/browse/cart/by/user/','Admin\AdminCartController@cart_by_user')->name('browse.cart.by.user');
+Route::get('admin/browse/cart/by/single_user/{user_id}','Admin\AdminCartController@cart_by_single_user')->name('browse.cart.by.single_user');
 Route::get('admin/cart/details/by/user/{id}','Admin\AdminCartController@cart_details_by_user')->name('cart.details.by.user');
 
 //user
 Route::get('admin/show/users/all','Admin\AdminUserController@index_user')->name('all.user');
 Route::get('admin/user/details/{user_id}','Admin\AdminUserController@user_details')->name('user.details');
 
+//show user by id
+Route::get('show_orders_by_user_id/{user_id}', 'Admin\ApiController@show_orders_by_user_id')->name('show_orders_by_user_id');
 
     //Blogs
 Route::get('admin/add/post','Admin\PostController@add_post')->name('add.blogpost');
@@ -147,3 +150,7 @@ Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
 Route::post('cart/product/details/add/{product_id}','VisitProductController_f@AddCart_from_details');
 
     //customer profile related routes
+
+
+
+

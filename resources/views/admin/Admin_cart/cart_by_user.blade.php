@@ -1,5 +1,78 @@
 @extends('admin.admin_layouts')
 @section('admin_content')
+
+<script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#exampleModalLong').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) ;
+
+            var userId = button.data('userid') ;
+            var userName = button.data('username') ;
+            var _this = this;
+
+            $('#modal-username').text(userName)
+
+
+
+            $.ajax({
+                url: "{!! URL::to('show_orders_by_user_id') !!}/"+userId,
+                type:"GET",
+                dataType:"json",
+                success:function(data) {
+                    console.log(data);
+                    console.log(data.data);
+
+                    var markup ="";
+
+                    $(data.data).each(function(index, el) {
+
+                        var isPaid = "";
+                        if (el.is_checkout*1 === 1*1) {
+                            isPaid = '<span class="badge badge-success">Paid</span>';
+                        } else {
+                            isPaid = '<span class="badge badge-danger">Not Paid</span>';
+                        }
+
+                        markup = markup
+                                +"<tr>"
+                                    + "<td>"+el.id+"</td>"
+
+                                    +"<td>"+"<a target='_blank' href='{{URL::to('admin/browse/cart/by/single_user')}}/"+_this.userId+"'>"+el.name+"</a>"+"</td>"
+
+                                    + "<td>"+el.cart_id+"</td>"
+                                    + "<td>"+el.coupon_discount+"</td>"
+                                    + "<td>"+el.shipping_cost+"</td>"
+                                    + "<td>"+el.vat+"</td>"
+                                    + "<td>"+el.total_cost+"</td>"
+                                    + "<td>"+el.paid_with+"</td>"
+                                    + "<td>"+isPaid+"</td>"
+                                    + "<td>"+el.created_at+"</td>"
+                                    + "<td style='white-space: nowrap;' > "
+                                        +"<a href='{{URL::to('delete/cart/')}}/"+el.id+"' class='btn btn-sm btn-danger' id='delete'>Delete</a>"
+                                    +"</td>"
+                                +"</tr>";
+                    });
+
+                    $("#individual_user_orders tbody").empty();
+
+                    $("#individual_user_orders tbody").append(markup);
+
+                },
+                complete: function(){
+                    // $('#loader').css("visibility", "hidden");
+                }
+            });
+
+
+            var modal = $(this);
+
+            modal.find('.modal-title #modal-userid').text(userId);
+        });
+    });
+</script>
+
+
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
@@ -25,74 +98,22 @@
                         <thead>
                             <tr>
                                 <th class="wd-5p">ID</th>
-                                <th class="wd-80p">User</th>
+                                <th class="wd-20p">User</th>
+                                <th class="wd-10p">Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($cart_by_user as $row)
                             <tr>
                                 <td>{{$row->id}}</td>
-                                <td><a onclick="show_cart_by_user()" href="#">{{$row->name}}</a></td>
+                                <td><a href="#">{{$row->name}}</a></td>
+                                <td>
+                                <button data-userid="{{$row->id}}" data-username="{{strtoupper($row->name)}}" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                    View Carts
+                                </button>
+                                </td>
                             </tr>
-                            @php
-                            $index_cart=DB::table('payments')
-                                        ->leftJoin('cart_master','payments.cart_id', '=', 'cart_master.id')
-                                        ->leftJoin('users','payments.user_id', '=', 'users.id')
-                                        ->select('users.name','cart_master.is_checkout','payments.*')
-                                        ->get();
-                            @endphp
-                             <table id="datatable1" class="table display responsive nowrap">
-                                <thead>
-                                    <tr>
-                                        <th class="wd-5p">ID</th>
-                                        <th class="wd-20p">User</th>
-                                        <th class="wd-5p">Cart ID</th>
-                                        <th class="wd-5p">Coupon Discount</th>
-                                        <th class="wd-5p">Shipping Cost</th>
-                                        <th class="wd-5p">Vat</th>
-                                        <th class="wd-5p">Total Cost</th>
-                                        <th class="wd-8p">Paid With</th>
-                                        <th class="wd-5p">Is Paid</th>
-                                        <th class="wd-5p">Created At</th>
-                                        <th class="wd-20p">Action</th>
-                                    </tr>
-                                </thead>
-                                {{-- {{dd($index_product)}} --}}
-                                <tbody>
-                                    @foreach ($index_cart as $row)
-                                    <tr>
-
-                                        <td>
-                                            @if ($row->cart_id == Null)
-                                                {{$row->id}}
-                                            @else
-                                                <a href="{{route('all.cart.details',(int) $row->cart_id)}}">{{$row->id}}</a>
-                                            @endif
-                                        </td>
-                                        {{-- {{dd($row->cart_id)}} --}}
-                                        <td><a href="{{route('browse.cart.by.user',$row->name)}}">{{$row->name}}</a></td>
-                                        <td><a href="{{route('all.cart.details',(int) $row->cart_id)}}">{{$row->cart_id}}</a></td>
-                                        <td>{{numberformat($row->coupon_discount)}}</td>
-                                        <td>{{numberformat($row->shipping_cost)}}</td>
-                                        <td>{{numberformat($row->vat)}}</td>
-                                        <td><span class="badge badge-warning">{{numberformat($row->total_cost)}}</span></td>
-                                        <td>{{$row->paid_with}}</td>
-                                        <td>
-                                            @if ($row->is_checkout == 1)
-                                                <span class="badge badge-success">Paid</span>
-                                            @else
-                                                <span class="badge badge-danger">Not Paid</span>
-                                            @endif
-                                        </td>
-                                        <td>{{YmdTodmYPmdMyPM($row->created_at)}}</td>
-                                        <td style="white-space: nowrap;">
-                                            <a href="{{URL::to('delete/cart/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
-                                        </td>
-
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
                             @endforeach
                         </tbody>
 
@@ -101,13 +122,57 @@
             </div><!-- card -->
         </div><!-- sl-pagebody -->
 
+        {{-- MODAL start --}}
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog mw-100 w-75" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  {{-- <p class="modal-title w-100 text-center" id="modal-userid1">USER NAME</p> --}}
+                  <span class="modal-title  w-100 text-center" style="font-size: 40px;" for="" id="modal-username"></span>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                     <table id="individual_user_orders" class="table display responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th class="wd-5p">ID</th>
+                                <th class="wd-20p">User</th>
+                                <th class="wd-5p">Cart ID</th>
+                                <th class="wd-5p">Coupon Discount</th>
+                                <th class="wd-5p">Shipping Cost</th>
+                                <th class="wd-5p">Vat</th>
+                                <th class="wd-5p">Total Cost</th>
+                                <th class="wd-8p">Paid With</th>
+                                <th class="wd-5p">Is Paid</th>
+                                <th class="wd-5p">Created At</th>
+                                <th class="wd-20p">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- Modal end --}}
+
 
     </div><!-- sl-mainpanel -->
     <!-- ########## END: MAIN PANEL ########## -->
+
 
 <script type="text/javascript">
     function show_cart_by_user(){
         console.log("You you asdjihadskjghakdsgja")
     }
 </script>
+
+
 @endsection
