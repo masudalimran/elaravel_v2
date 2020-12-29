@@ -9,8 +9,8 @@
 
             var userId = button.data('userid') ;
             var userName = button.data('username') ;
-            var cart_id = button.data('cart_id');
-            console.log("cart id ==========="+ cart_id);
+            // var cart_id = button.data('cart_id');
+            // console.log("cart id ===========");
             // var _this = this;
 
             $('#modal-username').text(userName)
@@ -35,14 +35,15 @@
                         } else {
                             isPaid = '<span class="badge badge-danger">Not Paid</span>';
                         }
+                        console.log(el.cart_id);
 
                         markup = markup
                                 +"<tr>"
-                                    + "<td>"+"<a target='_blank' href='{{URL::to('admin/cart/details/')}}/"+cart_id+"'>"+el.id+"</td>"
+                                    + "<td>"+"<a target='_blank' href='{{URL::to('admin/cart/details/')}}/"+el.cart_id+"'>"+el.id+"</td>"
 
                                     +"<td>"+"<a target='_blank' href='{{URL::to('admin/browse/cart/by/single_user')}}/"+userId+"'>"+el.name+"</a>"+"</td>"
 
-                                    + "<td>"+"<a target='_blank' href='{{URL::to('admin/cart/details/')}}/"+cart_id+"'>"+el.cart_id+"</td>"
+                                    + "<td>"+"<a target='_blank' href='{{URL::to('admin/cart/details/')}}/"+el.cart_id+"'>"+el.cart_id+"</td>"
                                     + "<td>"+el.coupon_discount+"</td>"
                                     + "<td>"+el.shipping_cost+"</td>"
                                     + "<td>"+el.vat+"</td>"
@@ -57,7 +58,7 @@
                     });
 
                     $("#individual_user_orders tbody").empty();
-
+                    // console.log("markup    :"+markup);
                     $("#individual_user_orders tbody").append(markup);
 
                 },
