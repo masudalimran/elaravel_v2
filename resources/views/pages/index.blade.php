@@ -1438,6 +1438,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
+
 {{-- Sweetalert 2 --}}
 
 <script type="text/javascript">
