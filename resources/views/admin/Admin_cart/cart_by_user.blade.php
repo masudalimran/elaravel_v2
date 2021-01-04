@@ -33,7 +33,7 @@
                         if (el.is_checkout*1 === 1*1) {
                             isPaid = '<span class="badge badge-success">Paid</span>';
                         } else {
-                            isPaid = '<span class="badge badge-danger">Not Paid</span>';
+                            isPaid = '<span class="badge badge-danger">Pending</span>';
                         }
                         console.log(el.cart_id);
 
@@ -110,7 +110,7 @@
                             @foreach ($cart_by_user as $row)
                             <tr>
                                 <td>{{$row->id}}</td>
-                                <td><a href="#">{{$row->name}}</a></td>
+                                <td>{{$row->name}}</td>
                                 <td>
                                 <button data-userid="{{$row->id}}" data-username="{{strtoupper($row->name)}}" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                                     View Carts

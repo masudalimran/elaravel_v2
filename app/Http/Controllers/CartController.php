@@ -15,7 +15,7 @@ class CartController extends Controller
         $userId = Auth::id();
         $check_cart = DB::table('cart')->where('user_id',$userId)->where('cart_id',NULL)->where('product_id',$id)->first();
         $product = DB::table('products')->where('id', $id)->first();
-
+        // dd($check_cart);
         $color=$product->product_color;
         $product_color = explode(',', $color);
 

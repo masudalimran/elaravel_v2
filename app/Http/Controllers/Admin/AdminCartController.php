@@ -125,6 +125,18 @@ class AdminCartController extends Controller
         return view('admin.Admin_cart.cart_by_user',compact('cart_by_user'));
     }
 
+    public function pending_order(){
+        // dd("yo yo ");
+        $pending_order_var = DB::table('cart')
+                            ->leftJoin('cart_master','cart.cart_id','=','cart_master.id')
+                            ->leftJoin('users','cart.user_id','=','users.id')
+                            ->leftJoin('payments','cart.cart_id', '=', 'payments.cart_id')
+                            ->select('users.name','cart_master.is_checkout','cart.*','payments.coupon_discount','payments.shipping_cost','payments.vat','payments.total_cost','payments.paid_with','payments.created_at')
+                            ->where('cart.cart_id', NULL)
+                            ->get();
+        return view('admin.Admin_cart.Pending_cart',compact('pending_order_var'));
+    }
+
 
 
 }

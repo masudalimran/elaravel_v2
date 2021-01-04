@@ -85,6 +85,7 @@ Route::post('update/cart/{id}','Admin\AdminCartController@update_cart');
 Route::get('admin/browse/cart/by/user/','Admin\AdminCartController@cart_by_user')->name('browse.cart.by.user');
 Route::get('admin/browse/cart/by/single_user/{user_id}','Admin\AdminCartController@cart_by_single_user')->name('browse.cart.by.single_user');
 Route::get('admin/cart/details/by/user/{id}','Admin\AdminCartController@cart_details_by_user')->name('cart.details.by.user');
+Route::get('admin/cart/pending/order','Admin\AdminCartController@pending_order')->name('pending.order');
 
 //user
 Route::get('admin/show/users/all','Admin\AdminUserController@index_user')->name('all.user');

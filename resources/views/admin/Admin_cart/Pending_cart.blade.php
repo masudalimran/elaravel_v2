@@ -5,17 +5,17 @@
         <nav class="breadcrumb sl-breadcrumb">
             <a class="breadcrumb-item" href="{{url('admin/home')}}">Admin Panel</a>
             <a class="breadcrumb-item" href="{{route('all.cart')}}">Cart</a>
-            <span class="breadcrumb-item active">Cart Information</span>
+            <span class="breadcrumb-item active">Pending Order</span>
         </nav>
 
         <div class="sl-pagebody" style="  overflow-x: scroll !important; display: table; width: 100%; height: 100vh">
             <div class="sl-page-title">
-                <h5>Cart</h5>
-                <p>Here below is the Cart Information</p>
+                <h5>Pending Order</h5>
+                <p>These are the order that are pending.</p>
             </div><!-- sl-page-title -->
 
             <div class="card pd-20 pd-sm-40">
-                <h6 class="card-body-title">Here you can find all sort of Cart information</h6>
+                <h6 class="card-body-title">Here you can find all sort of Pending Order information</h6>
 
                 <p class="mg-b-20 mg-sm-b-30">All the information is here you will just have to look for it</p>
 
@@ -38,7 +38,7 @@
                         </thead>
                         {{-- {{dd($index_product)}} --}}
                         <tbody>
-                            @foreach ($index_cart as $row)
+                            @foreach ($pending_order_var as $row)
                             <tr>
 
                                 <td>

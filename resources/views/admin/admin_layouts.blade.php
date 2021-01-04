@@ -124,6 +124,7 @@
     </a><!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
         <li class="nav-item"><a href="{{route('all.cart')}}" class="nav-link">Cart Information</a></li>
+        <li class="nav-item"><a href="{{route('pending.order')}}" class="nav-link">Pending order</a></li>
         <li class="nav-item"><a href="{{route('browse.cart.by.user')}}" class="nav-link">Browse Cart Info By User</a></li>
         {{-- <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li> --}}
     </ul>

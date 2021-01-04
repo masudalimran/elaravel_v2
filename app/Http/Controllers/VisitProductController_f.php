@@ -30,7 +30,7 @@ class VisitProductController_f extends Controller
     public function AddCart(Request $request, $id)
     {
         $userId = Auth::id();
-        $check_cart = DB::table('cart')->where('user_id',$userId)->where('product_id',$id)->first();
+        $check_cart = DB::table('cart')->where('user_id',$userId)->where('cart_id',NULL)->where('product_id',$id)->first();
         $product = DB::table('products')->where('id', $id)->first();
         $data=array();
         $data['user_id']=$userId;
@@ -52,8 +52,16 @@ class VisitProductController_f extends Controller
 
                 }else{
                     DB::table('cart')->insert($data);
+                    $cart_count =  DB::table('cart')->where('cart_id',NULL)->where('user_id',$userId)->count();
+                    $cart_subtotal=DB::table('cart')
+                    ->select('cart.price')
+                    ->where('cart_id',NULL)
+                    ->where('user_id',$userId)
+                    ->get();
                     return response(json_encode([
-                        "msg" => "Product added to Cart"
+                        "msg" => "Product added to Cart",
+                        "cart_count" => $cart_count,
+                        'cart_subtotal' => $cart_subtotal
                     ]), 200, ["Content-Type" => "application/json"]);
 
                 }

@@ -191,7 +191,9 @@
                         Toast.fire({
                         icon: 'success',
                         title: data.msg
-                        })
+                        });
+                        $("#cart-subtotal").text(total);
+                        $("#cart-count").text(data.cart_count);
                    },
 
                    error:function(data) {
