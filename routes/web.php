@@ -8,6 +8,14 @@ Route::get('/', function () {return view('pages.index');});
 Auth::routes(['verify' => true]);
 Route::get('/welcome', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
+
+    //Order History
+Route::get('home/delete/cart/{id}','HomeController@delete_cart');
+Route::get('home/cart/details/{cart_id}','HomeController@cart_details')->name('home.all.cart.details');
+Route::get('home/delete/cart/item/{id}','HomeController@delete_cart_item');
+Route::get('home/edit/cart/item/{id}','HomeController@edit_cart_item');
+Route::post('home/update/cart/{id}','HomeController@update_cart');
+
 Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
 Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');

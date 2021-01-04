@@ -131,9 +131,14 @@ class AdminCartController extends Controller
                             ->leftJoin('cart_master','cart.cart_id','=','cart_master.id')
                             ->leftJoin('users','cart.user_id','=','users.id')
                             ->leftJoin('payments','cart.cart_id', '=', 'payments.cart_id')
-                            ->select('users.name','cart_master.is_checkout','cart.*','payments.coupon_discount','payments.shipping_cost','payments.vat','payments.total_cost','payments.paid_with','payments.created_at')
+                            ->select('users.name','users.id AS u_id','cart_master.is_checkout','cart.*','payments.coupon_discount','payments.shipping_cost','payments.vat','payments.total_cost','payments.paid_with','payments.created_at')
+                            ->groupBy('cart.id')
                             ->where('cart.cart_id', NULL)
                             ->get();
+
+        // $pending_order_var =  $pending_order_var->groupBy('cart_id');
+
+
         return view('admin.Admin_cart.Pending_cart',compact('pending_order_var'));
     }
 

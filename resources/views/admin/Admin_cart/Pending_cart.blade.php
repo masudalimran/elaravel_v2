@@ -8,6 +8,8 @@
             <span class="breadcrumb-item active">Pending Order</span>
         </nav>
 
+
+        {{dd($pending_order_var)}}
         <div class="sl-pagebody" style="  overflow-x: scroll !important; display: table; width: 100%; height: 100vh">
             <div class="sl-page-title">
                 <h5>Pending Order</h5>
