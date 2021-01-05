@@ -7,8 +7,8 @@
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
-            <a class="breadcrumb-item" href="index.html">Admin Panel</a>
-            <a class="breadcrumb-item" href="index.html">Product</a>
+            <a class="breadcrumb-item" href="{{url('admin/home')}}">Admin Panel</a>
+            <a class="breadcrumb-item" href="{{url('all.product')}}">Product</a>
             <span class="breadcrumb-item active">Add Product</span>
         </nav>
 

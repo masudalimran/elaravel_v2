@@ -126,6 +126,11 @@ Route::get('get/subcategory/{category_id}','Admin\ProductController@get_subcateg
 Route::get('admin/newsletter','Admin\NewsletterController@newsletter')->name('admin.newsletter');
 Route::get('delete/newsletter/{id}', 'Admin\NewsletterController@delete_newsletter');
 
+    //SEO
+Route::get('admin/Seo','Admin\SEO\SeoController@edit_seo')->name('admin.seo');
+Route::post('admin/Seo/update','Admin\SEO\SeoController@update_seo')->name('update.seo');
+
+
 //Frontend
     //newsletter
 Route::post('store/newsletter','FrontController@store_newsletter')->name('store.newsletter');
