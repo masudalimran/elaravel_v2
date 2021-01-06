@@ -268,8 +268,8 @@
 </div>
 
     <!-- Modal 1 checkout_modal -->
-    <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" >
-        <div class="modal-dialog modal-xl" role="document">
+    <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-xl" role="document" style="max-width: 80%;">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Checkout</h5>

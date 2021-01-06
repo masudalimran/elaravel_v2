@@ -133,7 +133,9 @@ Route::post('admin/Seo/update','Admin\SEO\SeoController@update_seo')->name('upda
     //Expense Sheet
 Route::get('admin/create/expense','Admin\Expense_sheet\ExpenseController@create_expense');
 Route::get('admin/view/expense','Admin\Expense_sheet\ExpenseController@view_expense_sheet');
-// Route::get('admin/create/expense','Admin\Expense_sheet\ExpenseController@create_expense');
+Route::post('admin/store/expense_category','Admin\Expense_sheet\ExpenseController@store_expense_category')->name('store.expense_category');
+Route::post('admin/store/expense_sheet','Admin\Expense_sheet\ExpenseController@store_expense_sheet')->name('store.expense_sheet');
+Route::get('admin/view/expense','Admin\Expense_sheet\ExpenseController@view_expense');
 
 
 //Frontend
