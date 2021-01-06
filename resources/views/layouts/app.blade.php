@@ -17,18 +17,21 @@
 @if ($language == 'bangla')
     <meta name="title"   content="{{DB::table('seo')->pluck('meta_title_bn')->first()}}" />
     <meta name="author"   content="{{DB::table('seo')->pluck('meta_author_bn')->first()}}" />
-    <meta name="tags"   content="{{DB::table('seo')->pluck('meta_tags_bn')->first()}}" />
+    <meta name="keywords"   content="{{DB::table('seo')->pluck('meta_tags_bn')->first()}}" />
     <meta name="description"   content="{{DB::table('seo')->pluck('meta_description_bn')->first()}}" />
-    <meta name="google-analytics"   content="{{DB::table('seo')->pluck('google_analytics_bn')->first()}}" />
-    <meta name="bing_analytics"   content="{{DB::table('seo')->pluck('bing_analytics_bn')->first()}}" />
+    <meta name="keywords"   content="{{DB::table('seo')->pluck('google_analytics_bn')->first()}}" />
+    <meta name="keywords"   content="{{DB::table('seo')->pluck('bing_analytics_bn')->first()}}" />
 @else
     <meta name="title"   content="{{DB::table('seo')->pluck('meta_title_en')->first()}}" />
     <meta name="author"   content="{{DB::table('seo')->pluck('meta_author_en')->first()}}" />
-    <meta name="tags"   content="{{DB::table('seo')->pluck('meta_tags_en')->first()}}" />
+    <meta name="keywords"   content="{{DB::table('seo')->pluck('meta_tags_en')->first()}}" />
     <meta name="description"   content="{{DB::table('seo')->pluck('meta_description_en')->first()}}" />
-    <meta name="google-analytics"   content="{{DB::table('seo')->pluck('google_analytics_en')->first()}}" />
-    <meta name="bing_analytics"   content="{{DB::table('seo')->pluck('bing_analytics_en')->first()}}" />
+    <meta name="keywords"   content="{{DB::table('seo')->pluck('google_analytics_en')->first()}}" />
+    <meta name="keywords"   content="{{DB::table('seo')->pluck('bing_analytics_en')->first()}}" />
 @endif
+
+<meta http-equiv="refresh" content="30">
+
 {{-- <meta name="description" content="OneTech shop project"> --}}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {{-- <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/bootstrap4/bootstrap.min.css')}}">

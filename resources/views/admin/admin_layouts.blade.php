@@ -118,7 +118,7 @@
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-        <span class="menu-item-label">Cart</span>
+        <span class="menu-item-label">Order Management</span>
         <i class="menu-item-arrow fa fa-angle-down"></i>
       </div><!-- menu-item -->
     </a><!-- sl-menu-link -->
@@ -132,11 +132,12 @@
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-        <span class="menu-item-label">User</span>
+        <span class="menu-item-label">User Role</span>
         <i class="menu-item-arrow fa fa-angle-down"></i>
       </div><!-- menu-item -->
     </a><!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
+        <li class="nav-item"><a href="{{route('all.user')}}" class="nav-link">Admin Information</a></li>
         <li class="nav-item"><a href="{{route('all.user')}}" class="nav-link">Users Information</a></li>
         {{-- <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li> --}}
     </ul>
@@ -167,6 +168,21 @@
       <li class="nav-item"><a href="page-signup.html" class="nav-link">Signup Page</a></li>
       <li class="nav-item"><a href="page-notfound.html" class="nav-link">404 Page Not Found</a></li>
     </ul>
+
+    <a href="#" class="sl-menu-link">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+          <span class="menu-item-label">BISMIB EXPENSE SHEET</span>
+          <i class="menu-item-arrow fa fa-angle-down"></i>
+        </div><!-- menu-item -->
+      </a><!-- sl-menu-link -->
+      <ul class="sl-menu-sub nav flex-column">
+        <li class="nav-item"><a href="{{url('admin/create/expense')}}" class="nav-link">Create Expense</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">View Expense Sheet</a></li>
+        {{-- <li class="nav-item"><a href="#" class="nav-link">Show Expense</a></li> --}}
+        {{-- <li class="nav-item"><a href="{{route('add.blogpost')}}" class="nav-link">Add Post</a></li>
+        <li class="nav-item"><a href="{{route('all.blogpost')}}" class="nav-link">All Post</a></li> --}}
+      </ul>
   </div><!-- sl-sideleft-menu -->
 
   <br>

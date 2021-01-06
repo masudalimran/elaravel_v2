@@ -130,6 +130,11 @@ Route::get('delete/newsletter/{id}', 'Admin\NewsletterController@delete_newslett
 Route::get('admin/Seo','Admin\SEO\SeoController@edit_seo')->name('admin.seo');
 Route::post('admin/Seo/update','Admin\SEO\SeoController@update_seo')->name('update.seo');
 
+    //Expense Sheet
+Route::get('admin/create/expense','Admin\Expense_sheet\ExpenseController@create_expense');
+Route::get('admin/view/expense','Admin\Expense_sheet\ExpenseController@view_expense_sheet');
+// Route::get('admin/create/expense','Admin\Expense_sheet\ExpenseController@create_expense');
+
 
 //Frontend
     //newsletter
