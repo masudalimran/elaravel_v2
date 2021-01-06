@@ -154,7 +154,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Comments (if any): </label>
-                                        <textarea id="mytextarea1" name="exp_category_details"
+                                        <textarea id="mytextarea1" name="exp_comment"
                                         placeholder="Category details..."></textarea>
                                     </div>
                                 </div><!-- col-4 -->

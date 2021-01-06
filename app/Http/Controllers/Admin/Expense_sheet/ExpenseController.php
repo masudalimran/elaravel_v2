@@ -58,10 +58,10 @@ class ExpenseController extends Controller
         $image=array();
         $data['exp_document']= "";
         $data['exp_name']=$request->exp_name;
-        $data['exp_amount']=$request->exp_amount;
+        $check_exp_amount = $data['exp_amount']=$request->exp_amount;
         $data['exp_date']=dmyToYmd($request->exp_date);
         $data['exp_comment']=$request->exp_comment;
-        $data['exp_category']=$request->selected_expense_category;
+        $check_exp_category = $data['exp_category']=$request->selected_expense_category;
         $image = $request->exp_document;
         $image_name ="";
         if( $image){
@@ -77,7 +77,11 @@ class ExpenseController extends Controller
             }
         }
         DB::table('expense_table')->insert($data);
-
+        $get_exp_quantity = DB::table('expense_category')->where('id',$check_exp_category)->first();
+        $update_exp_quantity = ($get_exp_quantity->exp_qty)+1;
+        $update_exp_amount = ($get_exp_quantity->exp_category_total)+$check_exp_amount;
+        // dd($update_exp_quantity);
+        DB::table('expense_category')->where('id',$check_exp_category)->update(['exp_qty'=>$update_exp_quantity,'exp_category_total'=>$update_exp_amount]);
         $notification=array(
             'messege'=>'Expense added Successfully',
             'alert-type'=>'success'
@@ -86,6 +90,11 @@ class ExpenseController extends Controller
     }
 
     public function view_expense(){
-        
+        $expense_table_data = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->get();
+        dd($expense_table_data->exp_category_image);
+        return view('admin.Expense_sheet.view_expense',compact('expense_table_data'));
     }
 }
