@@ -94,7 +94,7 @@ class ExpenseController extends Controller
                         ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
                         ->select('expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
                         ->get();
-        dd($expense_table_data->exp_category_image);
+        // dd($expense_table_data->exp_category_image);
         return view('admin.Expense_sheet.view_expense',compact('expense_table_data'));
     }
 }
