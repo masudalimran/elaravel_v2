@@ -58,7 +58,7 @@
                                 </td>
                                 <td style="white-space: nowrap;">
                                     <a href="{{URL::to('edit/product/'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
-                                    <a href="{{URL::to('delete/product/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
+                                    <a href="{{URL::to('delete/product/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
                                     <a href="{{URL::to('view/product/'.$row->id)}}" class="btn btn-sm btn-warning" title="View"><i class="fa fa-eye"></i></a>
                                     @if ($row->publication_status == 1)
                                         <a href="{{URL::to('inactive/product/'.$row->id)}}" class="btn btn-sm btn-danger" title="Deactivate Product"><i class="fa fa-thumbs-down"></i></a>

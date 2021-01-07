@@ -25,10 +25,10 @@
                     <table id="datatable1" class="table display responsive nowrap">
                         <thead>
                             <tr>
-                                <th class="wd-4p">Id</th>
-                                <th class="wd-5p">Category</th>
+                                <th class="wd-5p">Id</th>
+                                <th class="wd-10p">Category</th>
                                 <th class="wd-20p">Category Details</th>
-                                <th class="wd-5p">Image</th>
+                                <th class="wd-10p">Image</th>
                                 {{-- <th class="wd-20p">Qty</th>
                                 <th class="wd-20p">Category Total</th> --}}
                                 <th class="wd-5p">Amount</th>
@@ -40,18 +40,36 @@
                         {{-- {{dd($index_product)}} --}}
                         <tbody>
                             @foreach ($expense_table_data as $row)
+                            @php
+                                $image=$row->exp_document;
+                                $exp_image = explode('::::', $image);
+                                $exp_image_count = count($exp_image);
+                                // dd($exp_image_count)
+                            @endphp
                             <tr>
                                 <td>{{$row->id}}</td>
-                                <td>{{$row->exp_category}}</td>
+                                <td>{{$row->category_name}}</td>
                                 <td>{!!$row->exp_category_details!!}</td>
-
-                                <td><img src="{{URL::to($row->exp_category_image)}}" height="50px"></td>
+                                <td>
+                                    {{-- <select class="form-control input-sm select-100">
+                                        @foreach($exp_image as $v_exp_image)
+                                            <option value="<img src='{{asset($v_exp_image)}}' height='50px'>"><img src="{{asset($v_exp_image)}}" height="50px"></option>
+                                        @endforeach
+                                        <span class="badge badge-pill badge-success" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
+                                    </select> --}}
+                                    <img src="{{asset($exp_image[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
+                                </td>
                                 {{-- {{dd($row->exp_category_image)}} --}}
                                 {{-- <td>{{$row->exp_qty}}</td>
                                 <td>{{$row->exp_category_total}}</td> --}}
-                                <td>{{$row->exp_amount}}</td>
+                                <td>{{numberFormat($row->exp_amount)}} TK</td>
                                 <td>{{$row->exp_date}}</td>
                                 <td>{!!$row->exp_comment!!}</td>
+                                <td style="white-space: nowrap;">
+                                    <a href="{{URL::to('edit/expense/'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
+                                    <a href="{{URL::to('delete/expense/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
+                                    <a href="{{URL::to('view/expense/details/'.$row->id)}}" class="btn btn-sm btn-warning" title="View"><i class="fa fa-eye"></i>View</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

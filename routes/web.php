@@ -136,6 +136,12 @@ Route::get('admin/view/expense','Admin\Expense_sheet\ExpenseController@view_expe
 Route::post('admin/store/expense_category','Admin\Expense_sheet\ExpenseController@store_expense_category')->name('store.expense_category');
 Route::post('admin/store/expense_sheet','Admin\Expense_sheet\ExpenseController@store_expense_sheet')->name('store.expense_sheet');
 Route::get('admin/view/expense','Admin\Expense_sheet\ExpenseController@view_expense');
+Route::get('edit/expense/{exp_id}','Admin\Expense_sheet\ExpenseController@edit_expense');
+Route::post('update/expense/{exp_id}','Admin\Expense_sheet\ExpenseController@update_expense');
+Route::get('delete/expense/{exp_id}','Admin\Expense_sheet\ExpenseController@delete_expense');
+Route::get('view/expense/details/{exp_id}','Admin\Expense_sheet\ExpenseController@view_expense_details');
+Route::get('admin/delete/expense/image/{exp_id}/{expense_image_index}','Admin\Expense_sheet\ExpenseController@delete_expense_image');
+
 
 
 //Frontend

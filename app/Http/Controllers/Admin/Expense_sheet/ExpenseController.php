@@ -58,10 +58,10 @@ class ExpenseController extends Controller
         $image=array();
         $data['exp_document']= "";
         $data['exp_name']=$request->exp_name;
-        $check_exp_amount = $data['exp_amount']=$request->exp_amount;
+        $data['exp_amount']=$request->exp_amount;
         $data['exp_date']=dmyToYmd($request->exp_date);
         $data['exp_comment']=$request->exp_comment;
-        $check_exp_category = $data['exp_category']=$request->selected_expense_category;
+        $data['exp_category']=$request->selected_expense_category;
         $image = $request->exp_document;
         $image_name ="";
         if( $image){
@@ -77,11 +77,6 @@ class ExpenseController extends Controller
             }
         }
         DB::table('expense_table')->insert($data);
-        $get_exp_quantity = DB::table('expense_category')->where('id',$check_exp_category)->first();
-        $update_exp_quantity = ($get_exp_quantity->exp_qty)+1;
-        $update_exp_amount = ($get_exp_quantity->exp_category_total)+$check_exp_amount;
-        // dd($update_exp_quantity);
-        DB::table('expense_category')->where('id',$check_exp_category)->update(['exp_qty'=>$update_exp_quantity,'exp_category_total'=>$update_exp_amount]);
         $notification=array(
             'messege'=>'Expense added Successfully',
             'alert-type'=>'success'
@@ -92,9 +87,116 @@ class ExpenseController extends Controller
     public function view_expense(){
         $expense_table_data = DB::table('expense_table')
                         ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
-                        ->select('expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
                         ->get();
-        // dd($expense_table_data->exp_category_image);
+        // dd($expense_table_data[7]->expense_document);
         return view('admin.Expense_sheet.view_expense',compact('expense_table_data'));
+    }
+
+
+    public function edit_expense($exp_id){
+        $expense_table_data=DB::table('expense_table')->where('id',$exp_id)->first();
+
+        return view('admin.Expense_sheet.edit_expense',compact('expense_table_data'));
+    }
+
+
+    public function delete_expense_image($exp_id,$exp_img_index){
+        // dd($exp_img_index);
+        $expense_table_data=DB::table('expense_table')->where('id',$exp_id)->first();
+        $exp_image=$expense_table_data->exp_document;
+
+        $image=$expense_table_data->exp_document;
+        $exp_image_explode = explode('::::', $image);
+        $image_to_delete = $exp_image_explode[$exp_img_index];
+        if($image_to_delete){
+            unlink($image_to_delete);
+        }
+        if(strpos($exp_image,'::::')){
+            if($exp_img_index == 0){
+                $image_to_delete_a = $image_to_delete."::::";
+                $updated_exp_image =  str_replace($image_to_delete_a,'', $exp_image);
+            }else{
+                $image_to_delete_b = "::::".$image_to_delete;
+                $updated_exp_image =  str_replace($image_to_delete_b,'', $exp_image);
+            }
+        }else{
+            $updated_exp_image=Null;
+        }
+        // $update_to_database = "";
+        // dd($updated_exp_image);
+        DB::table('expense_table')->where('id',$exp_id)->update(['exp_document'=>$updated_exp_image]);
+        $notification=array(
+            'messege'=>'Image Deleted',
+            'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
+
+
+    }
+
+    public function update_expense(Request $request,$exp_id){
+        $previous_image = DB::table('expense_table')->where('id',$exp_id)->first();
+        $data=array();
+        $image=array();
+        $data['exp_document']= "";
+        $data['exp_name']=$request->exp_name;
+        $data['exp_amount']=$request->exp_amount;
+        $data['exp_date']=dmyToYmd($request->exp_date);
+        $data['exp_comment']=$request->exp_comment;
+        $data['exp_category']=$request->exp_category;
+        $image = $request->exp_document;
+        $image_name = "";
+        if($previous_image->exp_document){
+            $data['exp_document']= $previous_image->exp_document;
+        }
+        if( $image){
+            foreach($image as $e_image){
+                    $image_name = hexdec(uniqid()).'.'.$e_image->getClientOriginalExtension();
+                    Image::make($e_image)->resize(300,300)->save('public/media/expense_sheet_document/'.$image_name);
+                    $data_image='public/media/expense_sheet_document/'.$image_name;
+                    if($data['exp_document']){
+                        $data['exp_document']= $data['exp_document'].'::::'. $data_image;
+                    }else{
+                        $data['exp_document']= $data_image;
+                    }
+            }
+        }
+        DB::table('expense_table')->where('id',$exp_id)->update($data);
+        $notification=array(
+            'messege'=>'Expense Updated Successfully',
+            'alert-type'=>'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+    public function delete_expense($exp_id){
+        $expense_table_data=DB::table('expense_table')->where('id',$exp_id)->first();
+        $exp_image=$expense_table_data->exp_document;
+
+        if($exp_image){
+            $image=$expense_table_data->exp_document;
+            $exp_image = explode('::::', $image);
+            foreach($exp_image as $v_exp_image){
+                unlink($v_exp_image);
+            }
+        }else{
+
+        }
+        DB::table('expense_table')->where('id',$exp_id)->delete();
+        $notification=array(
+            'messege'=>'Expense Deleted successfully',
+            'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
+    }
+    public function view_expense_details($exp_id){
+        $expense_table_data = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->where('expense_table.id',$exp_id)
+                        ->get();
+        // dd($expense_table_data[7]->expense_document);
+        return view('admin.Expense_sheet.view_expense_details',compact('expense_table_data'));
     }
 }

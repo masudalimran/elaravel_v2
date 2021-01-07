@@ -419,52 +419,6 @@
     </script>
     {{-- end Text editor TinyMCE --}}
 
-
-    {{-- Color picker Spectrum --}}
-
-    {{-- <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
-    <script type="text/javascript">
-        $('#color-picker').spectrum({
-            type: "color",
-            showPalette: "false",
-            showPaletteOnly: "true",
-            hideAfterPaletteSelect: "true",
-            showInitial: "true",
-            showAlpha: "false",
-            showButtons: "false",
-            allowEmpty: "false"
-        });
-    </script>
-    <script type="text/javascript">
-        $('#color-picker2').spectrum({
-            type: "color",
-            showPalette: "false",
-            showPaletteOnly: "true",
-            hideAfterPaletteSelect: "true",
-            showInitial: "true",
-            showAlpha: "false",
-            showButtons: "false",
-            allowEmpty: "false"
-        });
-    </script>
-    <script type="text/javascript">
-        $('#color-picker3').spectrum({
-            type: "color",
-            showPalette: "false",
-            showPaletteOnly: "true",
-            hideAfterPaletteSelect: "true",
-            showInitial: "true",
-            showAlpha: "false",
-            showButtons: "false",
-            allowEmpty: "false"
-        });
-    </script> --}}
-    {{-- color picker spectrum End --}}
-
-
-
-
-
     {{-- Tags Input script --}}
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
         crossorigin="anonymous"></script>
