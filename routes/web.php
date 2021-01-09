@@ -137,10 +137,18 @@ Route::post('admin/store/expense_category','Admin\Expense_sheet\ExpenseControlle
 Route::post('admin/store/expense_sheet','Admin\Expense_sheet\ExpenseController@store_expense_sheet')->name('store.expense_sheet');
 Route::get('admin/view/expense','Admin\Expense_sheet\ExpenseController@view_expense');
 Route::get('edit/expense/{exp_id}','Admin\Expense_sheet\ExpenseController@edit_expense');
+Route::get('admin/view/expense/category/','Admin\Expense_sheet\ExpenseController@view_expense_category');
+Route::get('admin/edit/expense/category/{exp_category_id}','Admin\Expense_sheet\ExpenseController@edit_expense_category')->name('edit.expense_category');
+Route::post('update/expense/category/{exp_category_id}','Admin\Expense_sheet\ExpenseController@update_expense_category')->name('update.expense.category');
 Route::post('update/expense/{exp_id}','Admin\Expense_sheet\ExpenseController@update_expense');
 Route::get('delete/expense/{exp_id}','Admin\Expense_sheet\ExpenseController@delete_expense');
+Route::get('delete/expense/category/{exp_id}','Admin\Expense_sheet\ExpenseController@delete_expense_category');
 Route::get('view/expense/details/{exp_id}','Admin\Expense_sheet\ExpenseController@view_expense_details');
+Route::get('view/expense/category/details/{exp_id}','Admin\Expense_sheet\ExpenseController@view_expense_category_details');
 Route::get('admin/delete/expense/image/{exp_id}/{expense_image_index}','Admin\Expense_sheet\ExpenseController@delete_expense_image');
+Route::get('admin/delete/expense/category/image/{exp_id}/{expense_image_index}','Admin\Expense_sheet\ExpenseController@delete_expense_category_image');
+Route::post('admin/search/between/dates/{category_id}','Admin\Expense_sheet\ExpenseController@search_between_dates')->name('search.between.dates');
+
 
 
 

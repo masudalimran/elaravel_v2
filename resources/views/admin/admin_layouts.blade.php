@@ -178,6 +178,7 @@
       </a><!-- sl-menu-link -->
       <ul class="sl-menu-sub nav flex-column">
         <li class="nav-item"><a href="{{url('admin/create/expense')}}" class="nav-link">Create Expense</a></li>
+        <li class="nav-item"><a href="{{url('admin/view/expense/category')}}" class="nav-link">View Expense Category</a></li>
         <li class="nav-item"><a href="{{url('admin/view/expense')}}" class="nav-link">View Expense Sheet</a></li>
         {{-- <li class="nav-item"><a href="#" class="nav-link">Show Expense</a></li> --}}
         {{-- <li class="nav-item"><a href="{{route('add.blogpost')}}" class="nav-link">Add Post</a></li>

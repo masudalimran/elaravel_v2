@@ -3,19 +3,19 @@
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
-            <a class="breadcrumb-item" href="#">Admin Panel</a>
-            <a class="breadcrumb-item" href="#">Product</a>
-            <span class="breadcrumb-item active">Product List</span>
+            <a class="breadcrumb-item" href="admin/home">Admin Panel</a>
+            <a class="breadcrumb-item" href="admin/view/expense">Expense</a>
+            <span class="breadcrumb-item active">Expense List</span>
         </nav>
 
         <div class="sl-pagebody" style="  overflow-x: scroll !important; display: table; width: 100%; height: 100vh">
             <div class="sl-page-title">
-                <h5>Product List</h5>
-                <p>Here below is the product list</p>
+                <h5>Expense List</h5>
+                <p>Here below is the expense list</p>
             </div><!-- sl-page-title -->
 
             <div class="card pd-20 pd-sm-40">
-                <h6 class="card-body-title">Here you can find all sort of product listrings</h6>
+                <h6 class="card-body-title">Here you can find all sort of expense listrings</h6>
                 <a style="position:absolute; right:5%;" href="{{URL::to('admin/create/expense')}}" class="btn btn-sm btn-success"
                     >Add NEW</a>
                 <p class="mg-b-20 mg-sm-b-30">Searching, ordering and paging goodness will be immediately added to the
@@ -26,6 +26,7 @@
                         <thead>
                             <tr>
                                 <th class="wd-5p">Id</th>
+                                <th class="wd-10p">Name</th>
                                 <th class="wd-10p">Category</th>
                                 <th class="wd-20p">Category Details</th>
                                 <th class="wd-10p">Image</th>
@@ -48,6 +49,7 @@
                             @endphp
                             <tr>
                                 <td>{{$row->id}}</td>
+                                <td>{{$row->exp_name}}</td>
                                 <td>{{$row->category_name}}</td>
                                 <td>{!!$row->exp_category_details!!}</td>
                                 <td>

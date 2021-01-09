@@ -26,7 +26,6 @@
                 <p>Here below you can Create Expense Sheet</p>
             </div><!-- sl-page-title -->
 
-
             <div class="card pd-20 pd-sm-40">
                 {{-- start Table Part --}}
                 {{-- <h1 style="text-align: center; text-decoration: underline; color: black"><b>Create Expense Category Here</b></h1> --}}
@@ -36,7 +35,8 @@
                         Add Expense Category
                     </button>
                 </div>
-                    <!-- Modal -->
+
+                    <!-- Add Category Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">

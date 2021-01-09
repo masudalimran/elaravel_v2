@@ -195,8 +195,134 @@ class ExpenseController extends Controller
                         ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
                         ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
                         ->where('expense_table.id',$exp_id)
-                        ->get();
+                        ->first();
         // dd($expense_table_data[7]->expense_document);
         return view('admin.Expense_sheet.view_expense_details',compact('expense_table_data'));
     }
+
+    public function view_expense_category(){
+        $expense_category_data=DB::table('expense_category')->get();
+        return view('admin.Expense_sheet.view_expense_category',compact('expense_category_data'));
+    }
+
+    public function edit_expense_category($exp_category_id){
+        $expense_category_table_data=DB::table('expense_category')->where('id',$exp_category_id)->first();
+        return view('admin.Expense_sheet.edit_expense_category',compact('expense_category_table_data'));
+    }
+
+    public function update_expense_category(Request $request, $category_id){
+        $previous_image = DB::table('expense_category')->where('id',$category_id)->first();
+        $data=array();
+        $image=array();
+        $data['exp_category_image']= "";
+        $data['exp_category']=$request->exp_category;
+        $data['exp_category_details']=$request->exp_category_details;
+        $image = $request->exp_category_image;
+        $image_name = "";
+        if($previous_image->exp_category_image){
+            $data['exp_category_image']= $previous_image->exp_category_image;
+        }
+        if( $image){
+            foreach($image as $e_image){
+                    $image_name = hexdec(uniqid()).'.'.$e_image->getClientOriginalExtension();
+                    Image::make($e_image)->resize(300,300)->save('public/media/expense_sheet_document/'.$image_name);
+                    $data_image='public/media/expense_sheet_document/'.$image_name;
+                    if($data['exp_category_image']){
+                        $data['exp_category_image']= $data['exp_category_image'].'::::'. $data_image;
+                    }else{
+                        $data['exp_category_image']= $data_image;
+                    }
+            }
+        }
+        DB::table('expense_category')->where('id',$category_id)->update($data);
+        $notification=array(
+            'messege'=>'Expense Category updated Updated Successfully',
+            'alert-type'=>'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+    public function delete_expense_category_image($exp_id,$exp_img_index){
+        // dd($exp_img_index);
+        $expense_table_data=DB::table('expense_category')->where('id',$exp_id)->first();
+        $exp_image=$expense_table_data->exp_category_image;
+
+        $image=$expense_table_data->exp_category_image;
+        $exp_image_explode = explode('::::', $image);
+        $image_to_delete = $exp_image_explode[$exp_img_index];
+        if($image_to_delete){
+            unlink($image_to_delete);
+        }
+        if(strpos($exp_image,'::::')){
+            if($exp_img_index == 0){
+                $image_to_delete_a = $image_to_delete."::::";
+                $updated_exp_image =  str_replace($image_to_delete_a,'', $exp_image);
+            }else{
+                $image_to_delete_b = "::::".$image_to_delete;
+                $updated_exp_image =  str_replace($image_to_delete_b,'', $exp_image);
+            }
+        }else{
+            $updated_exp_image=Null;
+        }
+        // $update_to_database = "";
+        // dd($updated_exp_image);
+        DB::table('expense_category')->where('id',$exp_id)->update(['exp_category_image'=>$updated_exp_image]);
+        $notification=array(
+            'messege'=>'Image Deleted',
+            'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+    public function delete_expense_category($exp_category_id){
+        $expense_table_data=DB::table('expense_category')->where('id',$exp_category_id)->first();
+        $exp_image=$expense_table_data->exp_category_image;
+
+        if($exp_image){
+            $image=$expense_table_data->exp_category_image;
+            $exp_image = explode('::::', $image);
+            foreach($exp_image as $v_exp_image){
+                unlink($v_exp_image);
+            }
+        }else{
+
+        }
+        DB::table('expense_category')->where('id',$exp_category_id)->delete();
+        $notification=array(
+            'messege'=>'Expense Category Deleted successfully',
+            'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
+    }
+    public function view_expense_category_details($exp_category_id){
+        $expense_category_data = DB::table('expense_category')
+                        ->leftjoin('expense_table','expense_category.id','=','expense_table.exp_category')
+                        ->select('expense_category.id as category_id','expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->where('expense_category.id',$exp_category_id)
+                        ->get();
+        return view('admin.Expense_sheet.view_expense_category_details',compact('expense_category_data'));
+    }
+
+    // $date=$expense_category_data[0]->exp_category_image;
+    // $start_date_array = explode('-', $start_date);
+    // $end_date_array = explode('-', $end_date);
+
+    // $exp_image_category_count = count($exp_image_category);
+    // dd($exp_image_category);
+
+    public function search_between_dates(Request $request,$exp_category_id){
+        $start_date = dmyToYmd($request->start_date);
+        $end_date = dmyToYmd($request->end_date);
+        // dd($exp_category_id);
+
+        $expense_category_data = DB::table('expense_category')
+                        ->leftjoin('expense_table','expense_category.id','=','expense_table.exp_category')
+                        ->select('expense_category.id as category_id','expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->where('expense_category.id',$exp_category_id)
+                        ->whereBetween('expense_table.exp_date',[date($start_date),date($end_date)])
+                        ->get();
+                        // dd($expense_category_data);
+        return view('admin.Expense_sheet.view_expense_category_details',compact('expense_category_data'));
+    }
+
 }

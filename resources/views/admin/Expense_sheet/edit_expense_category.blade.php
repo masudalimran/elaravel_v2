@@ -8,8 +8,7 @@
     {{-- <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/bootstrap4/bootstrap.min.css')}}"> --}}
 
     @php
-        $expense_category = DB::table('expense_category')->get();
-        $image=$expense_table_data->exp_document;
+        $image=$expense_category_table_data->exp_category_image;
         if($image == NULL){
             $exp_image = NULL;
         }else{
@@ -22,116 +21,71 @@
     <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
             <a class="breadcrumb-item" href="{{ url('admin/home') }}">Admin Panel</a>
-            <a class="breadcrumb-item" href="{{ url('admin/view/expense') }}">Expense Sheet</a>
-            <span class="breadcrumb-item active">Edit Expense Sheet</span>
+            <a class="breadcrumb-item" href="{{ url('admin/view/expense/category/') }}">View Expense Category</a>
+            <span class="breadcrumb-item active">Edit Expense Category</span>
         </nav>
 
         <div class="sl-pagebody">
             <div class="sl-page-title">
-                <h5>Edit Expense Sheet here</h5>
-                <p>Here below you can Edit Expense Sheet</p>
+                <h5>Edit Expense Category here</h5>
+                <p>Here below you can Edit Expense Category</p>
             </div><!-- sl-page-title -->
 
 
-            <div class="card pd-20 pd-sm-40">
-                {{-- start Table Part --}}
-                {{-- <h1 style="text-align: center; text-decoration: underline; color: black"><b>Create Expense Category Here</b></h1> --}}
-            </div><!-- card -->
 
             <div class="card pd-20 pd-sm-40">
-                <h1 style="text-align: center; text-decoration: underline; color: black; margin-bottom: 4%"><b>Update Expense</b></h1>
-                    <form action="{{ url('update/expense/'.$expense_table_data->id) }}" method="post" enctype="multipart/form-data">
+                <h1 style="text-align: center; text-decoration: underline; color: black; margin-bottom: 4%"><b>Update Expense Category</b></h1>
+                    <form action="{{ url('update/expense/category/'.$expense_category_table_data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        {{-- {{dd($expense_category_table_data)}} --}}
 
                         <div class="form-layout">
                             <div class="row mg-b-25">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label class="form-control-label">Expense Name: <span
+                                        <label class="form-control-label">Expense Category Name: <span
                                                 class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="exp_name"
-                                            value={{$expense_table_data->exp_name}} >
-                                    </div>
-                                </div><!-- col-4 -->
-
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Select category <span
-                                                class="tx-danger">*</span></label>
-                                        <select class="form-control select2" data-placeholder="Choose country"
-                                                name="exp_category" >
-                                            <option label="Choose Category"></option>
-                                            @foreach ($expense_category as $v_expense_category)
-                                                <option value="{{ $v_expense_category->id }}"
-                                                    <?php
-                                                        if($v_expense_category->id == $expense_table_data->exp_category){
-                                                            echo "selected";
-                                                        }
-                                                    ?>
-                                                    >{{ $v_expense_category->exp_category }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div><!-- col-4 -->
-
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Amount: <span
-                                                class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" name="exp_amount"
-                                            value={{$expense_table_data->exp_amount}}>
-                                    </div>
-                                </div><!-- col-4 -->
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Date: <span
-                                                class="tx-danger">*</span></label>
-                                        <input class="form-control" type="text" id="datepicker" name="exp_date"
-                                            value={{YmdTodmY($expense_table_data->exp_date)}}>
-                                        {{-- <input type="text" id="datepicker" name="exp_date"> --}}
+                                        <input class="form-control" type="text" name="exp_category"
+                                            value="{{$expense_category_table_data->exp_category}}" >
                                     </div>
                                 </div><!-- col-4 -->
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">Comments (if any): </label>
-                                        <textarea id="mytextarea1" name="exp_comment"
-                                        >{{$expense_table_data->exp_comment}}</textarea>
+                                        <label class="form-control-label">Category details (if any): </label>
+                                        <textarea id="mytextarea1" name="exp_category_details"
+                                        >{{$expense_category_table_data->exp_category_details}}</textarea>
                                     </div>
                                 </div><!-- col-4 -->
 
                                 <div class="col-lg-12">
-                                    <label class="form-control-label"> Upload Document <span
+                                    <label class="form-control-label"> Upload Category Image <span
                                             class="tx-danger">*</span></label>
                                     <br>
                                     @if($exp_image)
                                     <label class="custom-file">
-                                        <input type="file" id="file" class="custom-file-input" name="exp_document[]"
+                                        <input type="file" id="file" class="custom-file-input" name="exp_category_image[]"
                                         multiple onchange="readURL2(this);">
-                                        {{--  --}}
                                         <span class="custom-file-control"></span>
                                     </label><br><br>
                                     <div id="exp_document_section">
-                                        <h3 style="color: black;text-align: center" >Previous Images</h3>
-                                        <br>
                                         @foreach($exp_image as $v_exp_image)
                                         <div class="text-center" style='display:inline-block; max-height:150px; max-width:150px;'>
                                             <img src="{{asset($v_exp_image)}}" style="max-height:100px; max-width:100px;padding:10px">
-                                            <a href="{{url('admin/delete/expense/image',[$expense_table_data->id,$loop->index])}}">
+                                            <a href="{{url('admin/delete/expense/category/image',[$expense_category_table_data->id,$loop->index])}}">
                                             <span class="badge badge-pill badge-danger" style="z-index: 1; position: absolute; margin-left:5px">X</span></a>
                                             <p style="font-size:12px; color:black; padding:3%;">{{$v_exp_image}}</p>
-                                            {{-- <button class="btn btn-sm btn-danger">X</button> --}}
                                         </div>
                                         @endforeach
                                     @endif
                                     <hr>
                                     </div>
                                 </div>
+
                                 <br>
                             </div>
                             <div class="form-layout-footer" style="float: right">
-                                <button class="btn btn-success mg-r-5">Update Expense</button>
+                                <button class="btn btn-success mg-r-5">Update Expense Category</button>
                                 {{-- <button class="btn btn-danger"><a href="{{ url('admin/create/expense') }}"></a>Cancel</button> --}}
                             </div><!-- form-layout-footer -->
                     </form>
@@ -147,31 +101,7 @@
 
     {{-- Ajax --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('select[name="category_id"]').on('change', function() {
-                var category_id = $(this).val();
-                if (category_id) {
-                    $.ajax({
-                        url: "{{ url('/get/subcategory/') }}/" + category_id,
-                        type: "GET",
-                        datatype: "json",
-                        success: function(data) {
-                            var d = $('select[name="subcategory_id"]').empty();
-                            $.each(data, function(key, value) {
-                                $('select[name="subcategory_id"]').append(
-                                    '<option value="' + value.id + '">' + value
-                                    .sub_category_name + '</option>');
-                            });
-                        },
-                    });
-                } else {
-                    alert('Please select a category');
-                }
-            });
-        });
 
-    </script>{{--Ajax End--}}
 
     {{-- image script --}}
     <script type="text/javascript">
