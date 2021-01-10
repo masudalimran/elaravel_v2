@@ -5,7 +5,13 @@
     $image_category=$expense_category_data[0]->exp_category_image;
     $exp_image_category = explode('::::', $image_category);
     $exp_image_category_count = count($exp_image_category);
+    $summation_of_expense_amount = 0;
 @endphp
+@foreach ($expense_category_data as $item)
+    @php
+        $summation_of_expense_amount = $summation_of_expense_amount + $item->exp_amount
+    @endphp
+@endforeach
     <!-- ########## START: MAIN PANEL ########## -->
     <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
@@ -31,6 +37,8 @@
                     <img src="{{asset($exp_image_category[0])}}" style="height: 150px; width: 200px"><br>
                     <h3 style="color:red; display:inline">Category : </h3><h3 style="color:black; display: inline; text-transform: capitalize">{{$expense_category_data[0]->category_name}}<h3>
                     <h6 style="color:black; display: inline; text-transform: capitalize">{!!$expense_category_data[0]->exp_category_details!!}<h6>
+
+                    <h3 style="color:red; display:inline">Total : </h3><h3 style="color:black; display: inline; text-transform: capitalize">{{numberFormat($summation_of_expense_amount)}} TK<h3>
                 </div>
                 <br>
                 <div class="card pd-20 pd-sm-40">
@@ -75,7 +83,7 @@
                             <tr>
                                 <td style="text-align: center">{{$row->id}}</td>
                                 <td style="text-align: center">{{$row->exp_name}}</td>
-                                <td style="text-align: center">{{$row->exp_amount}}</td>
+                                <td style="text-align: center">{{numberFormat($row->exp_amount)}} TK</td>
                                 <td style="text-align: center">{{YmdTodmY($row->exp_date)}}</td>
                                 <td style="text-align: center">{!!$row->exp_comment!!}</td>
                                 <td>

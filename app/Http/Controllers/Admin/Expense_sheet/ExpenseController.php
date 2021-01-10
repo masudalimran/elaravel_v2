@@ -275,6 +275,24 @@ class ExpenseController extends Controller
     }
 
     public function delete_expense_category($exp_category_id){
+        //Delete Expense
+        $expense_table_data=DB::table('expense_table')->where('exp_category',$exp_category_id)->get();
+        foreach($expense_table_data as $v_expense_table_data){
+            $exp_image=$v_expense_table_data->exp_document;
+
+            if($exp_image){
+                $image=$v_expense_table_data->exp_document;
+                $exp_image = explode('::::', $image);
+                foreach($exp_image as $v_exp_image){
+                    unlink($v_exp_image);
+                }
+            }else{
+
+            }
+        }
+        DB::table('expense_table')->where('exp_category',$exp_category_id)->delete();
+
+        //Delete Expense Category
         $expense_table_data=DB::table('expense_category')->where('id',$exp_category_id)->first();
         $exp_image=$expense_table_data->exp_category_image;
 
@@ -292,6 +310,10 @@ class ExpenseController extends Controller
             'messege'=>'Expense Category Deleted successfully',
             'alert-type'=>'error'
         );
+
+
+
+
         return Redirect()->back()->with($notification);
     }
     public function view_expense_category_details($exp_category_id){
@@ -302,13 +324,6 @@ class ExpenseController extends Controller
                         ->get();
         return view('admin.Expense_sheet.view_expense_category_details',compact('expense_category_data'));
     }
-
-    // $date=$expense_category_data[0]->exp_category_image;
-    // $start_date_array = explode('-', $start_date);
-    // $end_date_array = explode('-', $end_date);
-
-    // $exp_image_category_count = count($exp_image_category);
-    // dd($exp_image_category);
 
     public function search_between_dates(Request $request,$exp_category_id){
         $start_date = dmyToYmd($request->start_date);

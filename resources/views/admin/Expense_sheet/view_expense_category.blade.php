@@ -25,16 +25,16 @@
                     <table id="datatable1" class="table display responsive nowrap">
                         <thead>
                             <tr>
-                                <th class="wd-5p">Id</th>
-                                <th class="wd-10p">Category Name</th>
-                                <th class="wd-20p">Category Details</th>
-                                <th class="wd-10p">Category Image</th>
-                                <th class="wd-5p">Expense Count</th>
-                                <th class="wd-5p">Expense Total</th>
-                                <th class="wd-10p">Created At</th>
-                                <th class="wd-10p">Updated At</th>
+                                <th style="text-align: center" class="wd-5p">Id</th>
+                                <th style="text-align: center" class="wd-10p">Category Name</th>
+                                <th style="text-align: center" class="wd-20p">Category Details</th>
+                                <th style="text-align: center" class="wd-10p">Category Image</th>
+                                <th style="text-align: center" class="wd-5p">Expense Count</th>
+                                <th style="text-align: center" class="wd-5p">Expense Total</th>
+                                <th style="text-align: center" class="wd-10p">Created At</th>
+                                <th style="text-align: center" class="wd-10p">Updated At</th>
 
-                                <th class="wd-20p">Action</th>
+                                <th style="text-align: center" class="wd-20p">Action</th>
                             </tr>
                         </thead>
                         {{-- {{dd($index_product)}} --}}
@@ -59,16 +59,16 @@
 
                             @endphp
                             <tr>
-                                <td>{{$row->id}}</td>
-                                <td>{{$row->exp_category}}</td>
-                                <td>{!!$row->exp_category_details!!}</td>
+                                <td style="text-align: center">{{$row->id}}</td>
+                                <td style="text-align: center">{{$row->exp_category}}</td>
+                                <td style="text-align: center">{!!$row->exp_category_details!!}</td>
                                 <td>
                                     <img src="{{asset($exp_image[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
                                 </td>
-                                <td>{{($expense_count)}}</td>
-                                <td>{{numberFormat($expense_total)}}</td>
-                                <td>{{YmdTodmYPmdMyPM($row->created_at)}}</td>
-                                <td>{{YmdTodmYPmdMyPM($row->updated_at)}}</td>
+                                <td style="text-align: center">{{($expense_count)}}</td>
+                                <td style="text-align: center">{{numberFormat($expense_total)}} TK</td>
+                                <td style="text-align: center">{{YmdTodmYPmdMyPM($row->created_at)}}</td>
+                                <td style="text-align: center">{{YmdTodmYPmdMyPM($row->updated_at)}}</td>
                                 <td style="white-space: nowrap;">
                                     <a href="{{URL::to('admin/edit/expense/category/'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
                                     <a href="{{URL::to('delete/expense/category'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>

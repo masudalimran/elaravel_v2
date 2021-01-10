@@ -25,17 +25,17 @@
                     <table id="datatable1" class="table display responsive nowrap">
                         <thead>
                             <tr>
-                                <th class="wd-5p">Id</th>
-                                <th class="wd-10p">Name</th>
-                                <th class="wd-10p">Category</th>
-                                <th class="wd-20p">Category Details</th>
-                                <th class="wd-10p">Image</th>
+                                <th style="text-align: center" class="wd-5p">Id</th>
+                                <th style="text-align: center" class="wd-10p">Name</th>
+                                <th style="text-align: center" class="wd-10p">Category</th>
+                                <th style="text-align: center" class="wd-20p">Category Details</th>
+                                <th style="text-align: center" class="wd-10p">Image</th>
                                 {{-- <th class="wd-20p">Qty</th>
                                 <th class="wd-20p">Category Total</th> --}}
-                                <th class="wd-5p">Amount</th>
-                                <th class="wd-10p">Date</th>
-                                <th class="wd-20p">Comment</th>
-                                <th class="wd-20p">Action</th>
+                                <th style="text-align: center" class="wd-5p">Amount</th>
+                                <th style="text-align: center" class="wd-10p">Date</th>
+                                <th style="text-align: center" class="wd-20p">Comment</th>
+                                <th style="text-align: center" class="wd-20p">Action</th>
                             </tr>
                         </thead>
                         {{-- {{dd($index_product)}} --}}
@@ -48,10 +48,10 @@
                                 // dd($exp_image_count)
                             @endphp
                             <tr>
-                                <td>{{$row->id}}</td>
-                                <td>{{$row->exp_name}}</td>
-                                <td>{{$row->category_name}}</td>
-                                <td>{!!$row->exp_category_details!!}</td>
+                                <td style="text-align: center">{{$row->id}}</td>
+                                <td style="text-align: center">{{$row->exp_name}}</td>
+                                <td style="text-align: center">{{$row->category_name}}</td>
+                                <td style="text-align: center">{!!$row->exp_category_details!!}</td>
                                 <td>
                                     {{-- <select class="form-control input-sm select-100">
                                         @foreach($exp_image as $v_exp_image)
@@ -64,9 +64,9 @@
                                 {{-- {{dd($row->exp_category_image)}} --}}
                                 {{-- <td>{{$row->exp_qty}}</td>
                                 <td>{{$row->exp_category_total}}</td> --}}
-                                <td>{{numberFormat($row->exp_amount)}} TK</td>
-                                <td>{{$row->exp_date}}</td>
-                                <td>{!!$row->exp_comment!!}</td>
+                                <td style="text-align: center">{{numberFormat($row->exp_amount)}} TK</td>
+                                <td style="text-align: center">{{$row->exp_date}}</td>
+                                <td style="text-align: center">{!!$row->exp_comment!!}</td>
                                 <td style="white-space: nowrap;">
                                     <a href="{{URL::to('edit/expense/'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
                                     <a href="{{URL::to('delete/expense/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
