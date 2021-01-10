@@ -71,7 +71,7 @@
                                 <td style="text-align: center">{{YmdTodmYPmdMyPM($row->updated_at)}}</td>
                                 <td style="white-space: nowrap;">
                                     <a href="{{URL::to('admin/edit/expense/category/'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
-                                    <a href="{{URL::to('delete/expense/category'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
+                                    <a href="{{URL::to('delete/expense/category/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
                                     <a href="{{URL::to('view/expense/category/details/'.$row->id)}}" class="btn btn-sm btn-warning" title="View"><i class="fa fa-eye"></i>View</a>
                                 </td>
                             </tr>

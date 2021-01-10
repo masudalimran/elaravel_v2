@@ -310,10 +310,6 @@ class ExpenseController extends Controller
             'messege'=>'Expense Category Deleted successfully',
             'alert-type'=>'error'
         );
-
-
-
-
         return Redirect()->back()->with($notification);
     }
     public function view_expense_category_details($exp_category_id){
