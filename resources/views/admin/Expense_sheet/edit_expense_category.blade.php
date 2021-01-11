@@ -43,8 +43,7 @@
                             <div class="row mg-b-25">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label class="form-control-label">Expense Category Name: <span
-                                                class="tx-danger">*</span></label>
+                                        <label class="form-control-label">Expense Category Name: </label>
                                         <input class="form-control" type="text" name="exp_category"
                                             value="{{$expense_category_table_data->exp_category}}" >
                                     </div>

@@ -47,8 +47,7 @@
                             <div class="row mg-b-25">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label class="form-control-label">Expense Name: <span
-                                                class="tx-danger">*</span></label>
+                                        <label class="form-control-label">Expense Name: </label>
                                         <input class="form-control" type="text" name="exp_name"
                                             value={{$expense_table_data->exp_name}} >
                                     </div>
@@ -77,16 +76,14 @@
 
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label class="form-control-label">Amount: <span
-                                                class="tx-danger">*</span></label>
+                                        <label class="form-control-label">Amount: </label>
                                         <input class="form-control" type="text" name="exp_amount"
                                             value={{$expense_table_data->exp_amount}}>
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label class="form-control-label">Date: <span
-                                                class="tx-danger">*</span></label>
+                                        <label class="form-control-label">Date: </label>
                                         <input class="form-control" type="text" id="datepicker" name="exp_date"
                                             value={{YmdTodmY($expense_table_data->exp_date)}}>
                                         {{-- <input type="text" id="datepicker" name="exp_date"> --}}
@@ -95,7 +92,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">Comments (if any): </label>
+                                        <label class="form-control-label">In Details (if any): </label>
                                         <textarea id="mytextarea1" name="exp_comment"
                                         >{{$expense_table_data->exp_comment}}</textarea>
                                     </div>

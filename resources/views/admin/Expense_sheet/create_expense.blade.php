@@ -110,10 +110,9 @@
                             <div class="row mg-b-25">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label class="form-control-label">Expense Name: <span
-                                                class="tx-danger">*</span></label>
+                                        <label class="form-control-label">Expense Name: </label>
                                         <input class="form-control" type="text" name="exp_name"
-                                            placeholder="Enter Expense Name" required>
+                                            placeholder="Enter Expense Name">
                                     </div>
                                 </div><!-- col-4 -->
 
@@ -153,15 +152,14 @@
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">Comments (if any): </label>
+                                        <label class="form-control-label">In Details </label>
                                         <textarea id="mytextarea1" name="exp_comment"
                                         placeholder="Category details..."></textarea>
                                     </div>
                                 </div><!-- col-4 -->
 
                                 <div class="col-lg-6">
-                                    <label class="form-control-label"> Upload Document <span
-                                            class="tx-danger">*</span></label>
+                                    <label class="form-control-label"> Upload Document </label>
                                     <br>
                                     <label class="custom-file">
                                         <input type="file" id="file" class="custom-file-input" name="exp_document[]"

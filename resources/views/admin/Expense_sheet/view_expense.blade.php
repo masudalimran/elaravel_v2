@@ -34,7 +34,7 @@
                                 <th class="wd-20p">Category Total</th> --}}
                                 <th style="text-align: center" class="wd-5p">Amount</th>
                                 <th style="text-align: center" class="wd-10p">Date</th>
-                                <th style="text-align: center" class="wd-20p">Comment</th>
+                                <th style="text-align: center" class="wd-20p">In Details</th>
                                 <th style="text-align: center" class="wd-20p">Action</th>
                             </tr>
                         </thead>
@@ -59,7 +59,9 @@
                                         @endforeach
                                         <span class="badge badge-pill badge-success" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
                                     </select> --}}
-                                    <img src="{{asset($exp_image[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
+                                    @if($row->exp_document)
+                                        <img src="{{asset($exp_image[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
+                                    @endif
                                 </td>
                                 {{-- {{dd($row->exp_category_image)}} --}}
                                 {{-- <td>{{$row->exp_qty}}</td>

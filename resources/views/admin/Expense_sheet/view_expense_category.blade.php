@@ -63,7 +63,10 @@
                                 <td style="text-align: center">{{$row->exp_category}}</td>
                                 <td style="text-align: center">{!!$row->exp_category_details!!}</td>
                                 <td>
-                                    <img src="{{asset($exp_image[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
+                                    @if($row->exp_category_image)
+                                    {{-- {{dd($exp_image[0])}} --}}
+                                        <img src="{{asset($exp_image[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_count}}</span>
+                                    @endif
                                 </td>
                                 <td style="text-align: center">{{($expense_count)}}</td>
                                 <td style="text-align: center">{{numberFormat($expense_total)}} TK</td>
