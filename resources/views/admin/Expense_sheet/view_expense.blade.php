@@ -67,7 +67,7 @@
                                 {{-- <td>{{$row->exp_qty}}</td>
                                 <td>{{$row->exp_category_total}}</td> --}}
                                 <td style="text-align: center">{{numberFormat($row->exp_amount)}} TK</td>
-                                <td style="text-align: center">{{$row->exp_date}}</td>
+                                <td style="text-align: center">{{YmdTodmY($row->exp_date)}}</td>
                                 <td style="text-align: center">{!!$row->exp_comment!!}</td>
                                 <td style="white-space: nowrap;">
                                     <a href="{{URL::to('edit/expense/'.$row->id)}}" class="btn btn-sm btn-info">Edit</a>
