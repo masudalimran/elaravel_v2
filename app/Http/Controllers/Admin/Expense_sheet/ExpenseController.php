@@ -26,12 +26,13 @@ class ExpenseController extends Controller
     public function store_expense_category(Request $request){
         $data=array();
         $image=array();
-        $data['exp_category_image']= "";
         $data['exp_category']=$request->exp_category_name;
         $data['exp_category_details']=$request->exp_category_details;
         $image = $request->exp_category_image;
+        // dd($request->exp_category_image);
         $image_name ="";
         if( $image){
+            $data['exp_category_image']= "";
             foreach($image as $c_image){
                     $image_name = hexdec(uniqid()).'.'.$c_image->getClientOriginalExtension();
                     Image::make($c_image)->resize(300,300)->save('public/media/expense_sheet/'.$image_name);
@@ -56,7 +57,6 @@ class ExpenseController extends Controller
     public function store_expense_sheet(Request $request){
         $data=array();
         $image=array();
-        $data['exp_document']= "";
         $data['exp_name']=$request->exp_name;
         $data['exp_amount']=$request->exp_amount;
         $data['exp_date']=dmyToYmd($request->exp_date);
@@ -65,6 +65,8 @@ class ExpenseController extends Controller
         $image = $request->exp_document;
         $image_name ="";
         if( $image){
+            // dd($image);
+            $data['exp_document']= "";
             foreach($image as $e_image){
                     $image_name = hexdec(uniqid()).'.'.$e_image->getClientOriginalExtension();
                     Image::make($e_image)->resize(300,300)->save('public/media/expense_sheet_document/'.$image_name);

@@ -43,11 +43,14 @@
                         <tr>
                             <th>Category Image</th>
                             <td>
-                                @foreach($exp_image as $v_exp_image)
-                                <div class="text-center" style='display:inline-block; max-height:150px; max-width:150px;'>
-                                    <img src="{{asset($v_exp_image)}}" style="max-height:100px; max-width:100px;padding:10px">
-                                </div>
-                                @endforeach
+                                @if($exp_image[0])
+                                {{-- {{dd($exp_image[0])}} --}}
+                                    @foreach($exp_image as $v_exp_image)
+                                    <div class="text-center" style='display:inline-block; max-height:150px; max-width:150px;'>
+                                        <img src="{{asset($v_exp_image)}}" style="max-height:100px; max-width:100px;padding:10px">
+                                    </div>
+                                    @endforeach
+                                @endif
                             </td>
                         </tr>
                         <tr>
@@ -65,13 +68,15 @@
                         <tr>
                             <th>Expense Documents</th>
                             <td>
-                                @foreach($exp_document as $v_exp_document)
-                                <div class="text-center" style='display:inline-block; max-height:150px; max-width:150px;'>
-                                    <img src="{{asset($v_exp_document)}}" style="max-height:100px; max-width:100px;padding:10px"><br>
-                                    {{-- {{dd($v_exp_document)}} --}}
-                                    <a href="{{$v_exp_document}}" download="{{$v_exp_document}}"><button class="btn btn-sm btn-primary">Download</button></a>
-                                </div>
-                                @endforeach
+                                @if($expense_table_data->exp_document)
+                                    @foreach($exp_document as $v_exp_document)
+                                    <div class="text-center" style='display:inline-block; max-height:150px; max-width:150px;'>
+                                        <img src="{{asset($v_exp_document)}}" style="max-height:100px; max-width:100px;padding:10px"><br>
+                                        {{-- {{dd($v_exp_document)}} --}}
+                                        <a href="{{$v_exp_document}}" download="{{asset($v_exp_document)}}"><button class="btn btn-sm btn-primary">Download</button></a>
+                                    </div>
+                                    @endforeach
+                                @endif
                             </td>
                         </tr>
                         <tr>

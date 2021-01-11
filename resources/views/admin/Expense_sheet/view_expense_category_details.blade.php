@@ -62,7 +62,7 @@
                                 <th style="text-align: center" class="wd-10p">Expense Name</th>
                                 <th style="text-align: center" class="wd-5p">Expense Amount</th>
                                 <th style="text-align: center" class="wd-5p">Expense Date</th>
-                                <th style="text-align: center" style="text-align: center" class="wd-20p">Expense Comment</th>
+                                <th style="text-align: center" style="text-align: center" class="wd-20p">In Details</th>
                                 <th style="text-align: center" class="wd-10p">Expense Document</th>
                                 <th style="text-align: center" class="wd-10p">Created At</th>
                                 <th style="text-align: center" class="wd-10p">Updated At</th>
@@ -87,7 +87,10 @@
                                 <td style="text-align: center">{{YmdTodmY($row->exp_date)}}</td>
                                 <td style="text-align: center">{!!$row->exp_comment!!}</td>
                                 <td>
-                                    <img src="{{asset($exp_image_document[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_document_count}}</span>
+                                    @if($exp_image_document[0])
+                                    {{-- {{dd($exp_image_document[0])}} --}}
+                                        <img src="{{asset($exp_image_document[0])}}" height="50px"><span class="badge badge-pill badge-info" style="z-index: 1; position: absolute;">{{$exp_image_document_count}}</span>
+                                    @endif
                                 </td>
                                 <td style="text-align: center">{{YmdTodmYPmdMyPM($row->created_at)}}</td>
                                 <td style="text-align: center">{{YmdTodmYPmdMyPM($row->updated_at)}}</td>
