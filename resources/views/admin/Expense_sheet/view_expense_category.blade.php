@@ -27,7 +27,7 @@
                             <tr>
                                 <th style="text-align: center" class="wd-5p">Id</th>
                                 <th style="text-align: center" class="wd-10p">Category Name</th>
-                                <th style="text-align: center" class="wd-20p">Category Details</th>
+                                {{-- <th style="text-align: center" class="wd-20p">Category Details</th> --}}
                                 <th style="text-align: center" class="wd-10p">Category Image</th>
                                 <th style="text-align: center" class="wd-5p">Expense Count</th>
                                 <th style="text-align: center" class="wd-5p">Expense Total</th>
@@ -61,7 +61,7 @@
                             <tr>
                                 <td style="text-align: center">{{$row->id}}</td>
                                 <td style="text-align: center">{{$row->exp_category}}</td>
-                                <td style="text-align: center">{!!$row->exp_category_details!!}</td>
+                                {{-- <td style="text-align: center">{!!$row->exp_category_details!!}</td> --}}
                                 <td>
                                     @if($row->exp_category_image)
                                     {{-- {{dd($exp_image[0])}} --}}

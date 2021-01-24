@@ -326,7 +326,7 @@ class ExpenseController extends Controller
     public function search_between_dates(Request $request,$exp_category_id){
         $start_date = dmyToYmd($request->start_date);
         $end_date = dmyToYmd($request->end_date);
-        // dd($exp_category_id);
+        // dd($start_date);
 
         $expense_category_data = DB::table('expense_category')
                         ->leftjoin('expense_table','expense_category.id','=','expense_table.exp_category')
@@ -336,6 +336,120 @@ class ExpenseController extends Controller
                         ->get();
                         // dd($expense_category_data);
         return view('admin.Expense_sheet.view_expense_category_details',compact('expense_category_data'));
+    }
+
+    public function view_expense_by_month(){
+        $expense_table_data_January = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-01-01'),date('2021-01-31')])
+                        ->get();
+        $January_total = 0;
+        foreach ($expense_table_data_January as $data){
+            $January_total += $data->exp_amount;
+        }
+        $expense_table_data_February = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-02-01'),date('2021-02-28')])
+                        ->get();
+        $February_total = 0;
+        foreach ($expense_table_data_February as $data){
+            $February_total += $data->exp_amount;
+        }
+        $expense_table_data_March = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-03-01'),date('2021-03-31')])
+                        ->get();
+        $March_total = 0;
+        foreach ($expense_table_data_March as $data){
+            $March_total += $data->exp_amount;
+        }
+        $expense_table_data_April = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-04-01'),date('2021-04-30')])
+                        ->get();
+        $April_total = 0;
+        foreach ($expense_table_data_April as $data){
+            $April_total += $data->exp_amount;
+        }
+        $expense_table_data_May = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-05-01'),date('2021-05-31')])
+                        ->get();
+        $May_total = 0;
+        foreach ($expense_table_data_May as $data){
+            $May_total += $data->exp_amount;
+        }
+        $expense_table_data_June = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-06-01'),date('2021-06-30')])
+                        ->get();
+        $June_total = 0;
+        foreach ($expense_table_data_June as $data){
+            $June_total += $data->exp_amount;
+        }
+        $expense_table_data_July = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-07-01'),date('2021-07-31')])
+                        ->get();
+        $July_total = 0;
+        foreach ($expense_table_data_July as $data){
+            $July_total += $data->exp_amount;
+        }
+        $expense_table_data_August = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-08-01'),date('2021-08-31')])
+                        ->get();
+        $August_total = 0;
+        foreach ($expense_table_data_August as $data){
+            $August_total += $data->exp_amount;
+        }
+        $expense_table_data_September = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-09-01'),date('2021-09-30')])
+                        ->get();
+        $September_total = 0;
+        foreach ($expense_table_data_September as $data){
+            $September_total += $data->exp_amount;
+        }
+        $expense_table_data_October = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-10-01'),date('2021-10-31')])
+                        ->get();
+        $October_total = 0;
+        foreach ($expense_table_data_October as $data){
+            $October_total += $data->exp_amount;
+        }
+        $expense_table_data_November = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-11-01'),date('2021-11-30')])
+                        ->get();
+        $November_total = 0;
+        foreach ($expense_table_data_November as $data){
+            $November_total += $data->exp_amount;
+        }
+        $expense_table_data_December = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereBetween('expense_table.exp_date',[date('2021-12-01'),date('2021-12-31')])
+                        ->get();
+        $December_total = 0;
+        foreach ($expense_table_data_December as $data){
+            $December_total += $data->exp_amount;
+        }
+        // dd($expense_table_data);
+        // dd($expense_table_data[7]->expense_document);
+        return view('admin.Expense_sheet.view_expense_by_month',compact('expense_table_data_January','expense_table_data_February','expense_table_data_March','expense_table_data_April','expense_table_data_May','expense_table_data_June','expense_table_data_July','expense_table_data_August','expense_table_data_September','expense_table_data_October','expense_table_data_November','expense_table_data_December','January_total','February_total','March_total','April_total','May_total','June_total','July_total','August_total','September_total','October_total','November_total','December_total'));
     }
 
 }
