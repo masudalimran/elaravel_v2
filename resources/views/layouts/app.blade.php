@@ -30,7 +30,7 @@
     <meta name="keywords"   content="{{DB::table('seo')->pluck('bing_analytics_en')->first()}}" />
 @endif
 
-<meta http-equiv="refresh" content="30">
+<meta http-equiv="refresh" content="1800">
 
 {{-- <meta name="description" content="OneTech shop project"> --}}
 <meta name="viewport" content="width=device-width, initial-scale=1">
