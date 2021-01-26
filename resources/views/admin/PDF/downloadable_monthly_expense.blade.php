@@ -151,7 +151,7 @@ tr:nth-child(even) {
     <td>{{numberFormat($pdf_data[1])}}</td>
 </tr>
   </table>
-  {{dd('asdadsads')}}
+  {{-- {{dd('asdadsads')}} --}}
 </div>
 
 </body>
