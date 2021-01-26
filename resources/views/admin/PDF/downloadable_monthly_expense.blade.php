@@ -106,7 +106,7 @@ tr:nth-child(even) {
     <td>{{YmdTodmY($item->exp_date)}}</td>
     <td>{{$item->category_name}}</td>
     <td>{{numberFormat($item->exp_amount)}}</td>
-    <td>{{$item->exp_comment}}</td>
+    <td>{!!$item->exp_comment!!}</td>
 </tr>
 @endforeach
 </table>
