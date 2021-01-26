@@ -96,13 +96,14 @@
                         @endphp
                     @endif
 
-                <h4 style="text-align: center;"><button class="badge badge-pill badge-success"> Total: {{numberFormat($total)}}</button></h4>
+                {{-- <h4 style="text-align: center;"><button class="badge badge-pill badge-success"> Total: {{numberFormat($total)}}</button></h4> --}}
                 <div style="display: flex; justify-content: center;">
                     <button class="btn btn-sm btn-light" style="margin: 5px">Download CSV (coming soon)</button>
                     <a href="{{route('download.expense.pdf',[$month_name, $month])}}"><button class="btn btn-sm btn-primary" style="margin: 5px">Download PDF</button></a>
                 </div>
                 <hr>
                 {{-- Table 1 --}}
+                <h3 style="text-align: center; text-decoration: underline">Expenses</h3>
                 <div class="table">
 
                     <div class="row header">
@@ -121,8 +122,6 @@
                     </div>
 
                     @foreach ($expense_table_data_month as $item)
-
-
                     <div class="row">
                         <div class="cell" data-title="Full Name">
                             {{YmdTodmY($item->exp_date)}}
@@ -138,11 +137,25 @@
                         </div>
                     </div>
                     @endforeach
+                    <div class="row" style="background:#c8cde0">
+                        <div class="cell" data-title="Full Name">
 
+                        </div>
+                        <div class="cell" data-title="Job Title">
+                            Total
+                        </div>
+                        <div class="cell" data-title="Location">
+                            {{numberFormat($total)}}
+                        </div>
+                        <div class="cell" data-title="Age">
+
+                        </div>
+                    </div>
                 </div>
                 <br>
 
                 {{-- Table 2 --}}
+                <h3 style="text-align: center; text-decoration: underline">Category</h3>
                 <div class="table">
 
                     <div class="row header">
@@ -179,6 +192,18 @@
 
                     @endif
                     @endforeach
+                    <div class="row" style="background:#c8cde0">
+                        <div class="cell" data-title="Full Name">
+
+                        </div>
+                        <div class="cell" data-title="Job Title">
+                            Total
+                        </div>
+                        <div class="cell" data-title="Location">
+                            {{numberFormat($total)}}
+                        </div>
+
+                    </div>
 
                 </div>
             </div>
