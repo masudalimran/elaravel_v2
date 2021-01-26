@@ -24,7 +24,7 @@ tr:nth-child(even) {
     @php
          $month_name = "";
     @endphp
-    <div style="line-height: 10%;">
+    <div style="line-height: 5%;">
     <h1 style="text-align: center; line-height: 50%; "> <b style="border: solid#b3e9f5; background: #b3e9f5 "> BISMIB TECHNOLOGY </b> </h1>
 
     <h3 style="text-align: center; text-decoration: underline; "> <b style="border: solid#a0a6b0; background: #a0a6b0"> Expense Sheet</b></h3>
@@ -93,7 +93,7 @@ tr:nth-child(even) {
     {{-- <h4 style="text-align: center; color: blue"> Total: {{numberFormat($pdf_data[1])}}</h4> --}}
     {{-- <hr> --}}
     <h3 style="text-align: center; text-decoration: underline">Expenses</h3>
-<table style="height: 80%">
+<table>
   <tr style="background:#c8cde0">
     <th style="width: 90px">Date</th>
     <th style="width: 140px">Title</th>
