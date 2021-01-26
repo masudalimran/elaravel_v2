@@ -93,7 +93,7 @@ tr:nth-child(even) {
     {{-- <h4 style="text-align: center; color: blue"> Total: {{numberFormat($pdf_data[1])}}</h4> --}}
     {{-- <hr> --}}
     <h3 style="text-align: center; text-decoration: underline">Expenses</h3>
-<table style="line-height: 90%">
+<table style="line-height: 90%; height: 80%">
   <tr style="background:#c8cde0">
     <th style="width: 90px">Date</th>
     <th style="width: 140px">Title</th>
