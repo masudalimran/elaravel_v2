@@ -134,7 +134,7 @@
                             {{numberFormat($item->exp_amount)}}
                         </div>
                         <div class="cell" data-title="Location">
-                            {{$item->exp_comment}}
+                            {!!$item->exp_comment!!}
                         </div>
                     </div>
                     @endforeach
