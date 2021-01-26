@@ -105,7 +105,7 @@ tr:nth-child(even) {
     <td style="font-size: 14px">{{YmdTodmY($item->exp_date)}}</td>
     <td style="font-size: 14px">{{$item->category_name}}</td>
     <td style="font-size: 14px">{{numberFormat($item->exp_amount)}}</td>
-    <td style="font-size: 14px">{!!$item->exp_comment!!}</td>
+    <td style="font-size: 14px; line-height:10%">{!!$item->exp_comment!!}</td>
 </tr>
 @endforeach
 <tr style="background:#c8cde0">
