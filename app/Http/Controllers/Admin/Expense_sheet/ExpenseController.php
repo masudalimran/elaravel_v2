@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin\Expense_sheet;
 
 use App\Http\Controllers\Controller;
+// use Barryvdh\DomPDF\PDF;
+// use pdf;
+use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
@@ -326,7 +330,7 @@ class ExpenseController extends Controller
     public function search_between_dates(Request $request,$exp_category_id){
         $start_date = dmyToYmd($request->start_date);
         $end_date = dmyToYmd($request->end_date);
-        // dd($exp_category_id);
+        // dd($start_date);
 
         $expense_category_data = DB::table('expense_category')
                         ->leftjoin('expense_table','expense_category.id','=','expense_table.exp_category')
@@ -336,6 +340,141 @@ class ExpenseController extends Controller
                         ->get();
                         // dd($expense_category_data);
         return view('admin.Expense_sheet.view_expense_category_details',compact('expense_category_data'));
+    }
+
+
+    public function select_expense_year(){
+        $expense_year = DB::table('expense_table')
+        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+        ->get();
+        $year=array();
+
+        foreach($expense_year as $data){
+            $data->exp_date;
+            $date = new Carbon($data->exp_date);
+            $date->year;
+            array_push($year, $date->year);
+        }
+        $year=array_unique($year);
+        sort($year);
+        // dd($year);
+        return view('admin.Expense_sheet.select_expense_view_year',compact('year'));
+    }
+
+    public function view_expense_by_month($year){
+        // dd($year);
+        $expense_table_data = array();
+        $expense_total = array();
+
+        for($i = 1; $i<=12; $i++){
+            $get_expense_data = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        // ->whereBetween('expense_table.exp_date',[date('2021-01-01'),date('2021-01-31')])
+                        ->whereMonth('expense_table.exp_date', $i)
+                        ->whereYear('expense_table.exp_date', $year)
+                        ->get();
+            array_push($expense_table_data,$get_expense_data);
+            $total = 0;
+            foreach ($get_expense_data as $data){
+                $total += $data->exp_amount;
+            }
+            array_push($expense_total, $total);
+        }
+        return view('admin.Expense_sheet.view_expense_by_month',compact('expense_table_data','expense_total'));
+        // dd($expense_total);
+    }
+
+    public function view_expense_before_download($month){
+        // dd($month);
+        $expense_table_data_month = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereMonth('expense_table.exp_date', $month+1)
+                        ->get();
+        $total = 0;
+        foreach ($expense_table_data_month as $data){
+            $total += $data->exp_amount;
+        }
+
+        $get_category = DB::table('expense_category')
+        // ->select('id')
+        ->get();
+        // dd($get_category);
+
+        $category_count = array();
+        $category_amount = array();
+
+        foreach($get_category as $category){
+            $get_per_category = DB::table('expense_table')
+                        // ->select('id','exp_date','exp_category')
+                        ->whereMonth('exp_date', $month+1)
+                        ->where('exp_category',$category->id)
+                        ->get();
+            $count_per_category = $get_per_category->count();
+            $sum_of_category = $get_per_category->sum('exp_amount');
+            array_push($category_count, $count_per_category);
+            array_push($category_amount, $sum_of_category);
+        }
+        // dd($category_amount);
+        return view('admin.PDF.show_monthly_expense',compact('expense_table_data_month','total','month','get_category','category_count','category_amount'));
+    }
+
+    public function download_expense_pdf($month_name, $month){
+        // dd($month);
+        $month ++;
+        $expense_table_data_month = DB::table('expense_table')
+                        ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
+                        ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
+                        ->whereMonth('expense_table.exp_date', $month)
+                        ->get();
+
+        $total = 0;
+        foreach ($expense_table_data_month as $data){
+            $total += $data->exp_amount;
+        }
+        // dd($expense_table_data_month);
+        $get_category = DB::table('expense_category')
+        // ->select('id')
+        ->get();
+        // dd($get_category);
+
+        $category_count = array();
+        $category_amount = array();
+
+        foreach($get_category as $category){
+            $get_per_category = DB::table('expense_table')
+                        // ->select('id','exp_date','exp_category')
+                        ->where('exp_category',$category->id)
+                        ->whereMonth('exp_date', $month)
+                        ->get();
+            $count_per_category = $get_per_category->count();
+            $sum_of_category = $get_per_category->sum('exp_amount');
+            array_push($category_count, $count_per_category);
+            array_push($category_amount, $sum_of_category);
+        }
+        $month--;
+        $pdf_data = array();
+        $pdf_data[0]= $expense_table_data_month->toArray();
+        $pdf_data[1]= $total;
+        $pdf_data[2]= $month;
+        $pdf_data[3]= $get_category->toArray();
+        $pdf_data[4]= $category_count;
+        $pdf_data[5]= $category_amount;
+        // array_push($pdf_data, $expense_table_data_month);
+        // array_push($pdf_data, $total);
+        // array_push($pdf_data, $month);
+        // array_push($pdf_data, $get_category);
+        // array_push($pdf_data, $category_count);
+        // array_push($pdf_data, $category_amount);
+        // dd($pdf_data);
+
+
+        // $pdf = PDF::loadView('admin.PDF.downloadable_monthly_expense',compact('expense_table_data_month','total','month','get_category','category_count','category_amount'));
+        $pdf = PDF::loadView('admin.PDF.downloadable_monthly_expense', compact('pdf_data'));
+        return $pdf->download('expense_Sheet_'.$month.'.pdf');
+
     }
 
 }

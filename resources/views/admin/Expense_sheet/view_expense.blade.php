@@ -26,9 +26,9 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center" class="wd-5p">Id</th>
-                                <th style="text-align: center" class="wd-10p">Name</th>
+                                {{-- <th style="text-align: center" class="wd-10p">Name</th> --}}
                                 <th style="text-align: center" class="wd-10p">Category</th>
-                                <th style="text-align: center" class="wd-20p">Category Details</th>
+                                {{-- <th style="text-align: center" class="wd-20p">Category Details</th> --}}
                                 <th style="text-align: center" class="wd-10p">Image</th>
                                 {{-- <th class="wd-20p">Qty</th>
                                 <th class="wd-20p">Category Total</th> --}}
@@ -49,9 +49,9 @@
                             @endphp
                             <tr>
                                 <td style="text-align: center">{{$row->id}}</td>
-                                <td style="text-align: center">{{$row->exp_name}}</td>
+                                {{-- <td style="text-align: center">{{$row->exp_name}}</td> --}}
                                 <td style="text-align: center">{{$row->category_name}}</td>
-                                <td style="text-align: center">{!!$row->exp_category_details!!}</td>
+                                {{-- <td style="text-align: center">{!!$row->exp_category_details!!}</td> --}}
                                 <td>
                                     {{-- <select class="form-control input-sm select-100">
                                         @foreach($exp_image as $v_exp_image)
