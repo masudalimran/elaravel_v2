@@ -24,7 +24,7 @@ tr:nth-child(even) {
     @php
          $month_name = "";
     @endphp
-    <div style="line-height: 0%;">
+    <div style="line-height: 10%;">
     <h1 style="text-align: center; line-height: 50%; "> <b style="border: solid#b3e9f5; background: #b3e9f5 "> BISMIB TECHNOLOGY </b> </h1>
 
     <h3 style="text-align: center; text-decoration: underline; "> <b style="border: solid#a0a6b0; background: #a0a6b0"> Expense Sheet</b></h3>
