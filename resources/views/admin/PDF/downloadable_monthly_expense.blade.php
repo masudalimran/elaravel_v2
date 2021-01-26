@@ -95,9 +95,9 @@ tr:nth-child(even) {
     <h3 style="text-align: center; text-decoration: underline">Expenses</h3>
 <table>
   <tr style="background:#c8cde0">
-    <th style="width: 90px">Date</th>
-    <th style="width: 140px">Title</th>
-    <th style="width: 60px">Amount</th>
+    <th style="width: 90px; font-size: 14px">Date</th>
+    <th style="width: 140px; font-size: 14px">Title</th>
+    <th style="width: 60px; font-size: 14px">Amount</th>
     <th>In details</th>
   </tr>
 @foreach ($pdf_data[0] as $item)
@@ -119,9 +119,9 @@ tr:nth-child(even) {
 <h3 style="text-align: center; text-decoration: underline">Category</h3>
 <table style="margin-left: auto; margin-right: auto; width:50%">
     <tr style="background:#c8cde0">
-      <th style="width: 150px">Expense Title</th>
-      <th style="width: 30px">Qty</th>
-      <th style="width: 60px">Total</th>
+      <th style="width: 150px; font-size: 14px">Expense Title</th>
+      <th style="width: 30px; font-size: 14px">Qty</th>
+      <th style="width: 60px; font-size: 14px">Total</th>
     </tr>
     @php
         $cat_counter = -1;
