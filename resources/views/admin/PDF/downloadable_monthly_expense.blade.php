@@ -95,33 +95,33 @@ tr:nth-child(even) {
     <h3 style="text-align: center; text-decoration: underline">Expenses</h3>
 <table>
   <tr style="background:#c8cde0">
-    <th style="width: 90px; font-size: 14px">Date</th>
-    <th style="width: 140px; font-size: 14px">Title</th>
-    <th style="width: 60px; font-size: 14px">Amount</th>
+    <th style="width: 90px; font-size: 14px; line-height:10%">Date</th>
+    <th style="width: 140px; font-size: 14px; line-height:10%">Title</th>
+    <th style="width: 60px; font-size: 14px; line-height:10%">Amount</th>
     <th>In details</th>
   </tr>
 @foreach ($pdf_data[0] as $item)
 <tr style="background:white">
-    <td style="font-size: 14px">{{YmdTodmY($item->exp_date)}}</td>
-    <td style="font-size: 14px">{{$item->category_name}}</td>
-    <td style="font-size: 14px">{{numberFormat($item->exp_amount)}}</td>
+    <td style="font-size: 14px; line-height:10%">{{YmdTodmY($item->exp_date)}}</td>
+    <td style="font-size: 14px; line-height:10%">{{$item->category_name}}</td>
+    <td style="font-size: 14px; line-height:10%">{{numberFormat($item->exp_amount)}}</td>
     <td style="font-size: 14px; line-height:10%">{!!$item->exp_comment!!}</td>
 </tr>
 @endforeach
 <tr style="background:#c8cde0">
-    <td style="font-size: 14px"></td>
-    <td style="font-size: 14px">Total</td>
-    <td style="font-size: 14px">{{numberFormat($pdf_data[1])}}</td>
-    <td style="font-size: 14px"></td>
+    <td style="font-size: 14px; line-height:10%"></td>
+    <td style="font-size: 14px; line-height:10%">Total</td>
+    <td style="font-size: 14px; line-height:10%">{{numberFormat($pdf_data[1])}}</td>
+    <td style="font-size: 14px; line-height:10%"></td>
 </tr>
 </table>
 <br>
 <h3 style="text-align: center; text-decoration: underline">Category</h3>
 <table style="margin-left: auto; margin-right: auto; width:50%">
     <tr style="background:#c8cde0">
-      <th style="width: 150px; font-size: 14px">Expense Title</th>
-      <th style="width: 30px; font-size: 14px">Qty</th>
-      <th style="width: 60px; font-size: 14px">Total</th>
+      <th style="width: 150px; font-size: 14px; line-height:10%">Expense Title</th>
+      <th style="width: 30px; font-size: 14px; line-height:10%">Qty</th>
+      <th style="width: 60px; font-size: 14px; line-height:10%">Total</th>
     </tr>
     @php
         $cat_counter = -1;
@@ -134,20 +134,20 @@ tr:nth-child(even) {
     @endphp
     @if ($pdf_data[4][$cat_counter] != 0)
         <tr style="background:white;">
-            <td style="font-size: 14px">{{$item->exp_category}}</td>
-            <td style="font-size: 14px">{{$pdf_data[4][$cat_counter]}}</td>
+            <td style="font-size: 14px; line-height:10%">{{$item->exp_category}}</td>
+            <td style="font-size: 14px; line-height:10%">{{$pdf_data[4][$cat_counter]}}</td>
             @php
                 $sum_cat_counter = $sum_cat_counter + $pdf_data[4][$cat_counter]
             @endphp
-            <td style="font-size: 14px">{{numberFormat($pdf_data[5][$cat_counter])}}</td>
+            <td style="font-size: 14px; line-height:10%">{{numberFormat($pdf_data[5][$cat_counter])}}</td>
         </tr>
     @endif
     @endforeach
     {{-- {{dd($sum_cat_counter)}} --}}
   <tr style="background:#c8cde0">
-    <td style="font-size: 14px">Total</td>
-    <td style="font-size: 14px">{{$sum_cat_counter}}</td>
-    <td style="font-size: 14px">{{numberFormat($pdf_data[1])}}</td>
+    <td style="font-size: 14px; line-height:10%">Total</td>
+    <td style="font-size: 14px; line-height:10%">{{$sum_cat_counter}}</td>
+    <td style="font-size: 14px; line-height:10%">{{numberFormat($pdf_data[1])}}</td>
 </tr>
   </table>
   {{-- {{dd('asdadsads')}} --}}
