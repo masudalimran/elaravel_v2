@@ -55,6 +55,7 @@
                                 <td>{{YmdTodmYPmdMyPM($row->created_at)}}</td>
                                 <td>{{YmdTodmYPmdMyPM($row->updated_at)}}</td>
                                 <td style="white-space: nowrap;">
+                                    <a href="{{route('admin.set.role',$row->id)}}" class="btn btn-sm btn-success">Set Role</a>
                                     <a href="{{route('admin.delete',$row->id)}}" class="btn btn-sm btn-danger" id="delete">delete</a>
                                 </td>
 

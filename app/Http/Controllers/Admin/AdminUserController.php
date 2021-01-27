@@ -67,4 +67,29 @@ class AdminUserController extends Controller
         return Redirect()->back()->with($notification);
     }
 
+    public function admin_set_role($admin_id){
+        $set_role = DB::table('admins')
+                    ->where('id',$admin_id)
+                    ->first();
+        return view('admin.user_tab.admin_set_role',compact('set_role'));
+    }
+
+    public function update_set_role(Request $request, $admin_id){
+        $data =array();
+        $data['product_manage'] = $request->product_manage;
+        $data['order_manage'] = $request->order_manage;
+        $data['user_role_manage'] = $request->user_role_manage;
+        $data['blog_manage'] = $request->blog_manage;
+        $data['others_manage'] = $request->others_manage;
+        $data['bismib_expense_manage'] = $request->bismib_expense_manage;
+        DB::table('admins')
+                    ->where('id',$admin_id)
+                    ->update($data);
+        $notification = array(
+            'messege'=>'Updated Successfully',
+            'alert-type'=>'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
 }

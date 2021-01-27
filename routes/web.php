@@ -101,6 +101,8 @@ Route::get('admin/user/details/{user_id}','Admin\AdminUserController@user_detail
 Route::get('admin/user/delete/{user_id}','Admin\AdminUserController@user_delete')->name('user.delete');
 Route::get('admin/show/admin/all','Admin\AdminUserController@index_admin')->name('all.admin');
 Route::get('admin/admin/details/{admin_id}','Admin\AdminUserController@admin_details')->name('admin.details');
+Route::get('admin/admin/set_role/{admin_id}','Admin\AdminUserController@admin_set_role')->name('admin.set.role');
+Route::post('update/set_role/{admin_id}','Admin\AdminUserController@update_set_role');
 Route::get('admin/admin/delete/{admin_id}','Admin\AdminUserController@admin_delete')->name('admin.delete');
 
 //show user by id
