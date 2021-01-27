@@ -31,19 +31,8 @@
 @endif
 
 <meta http-equiv="refresh" content="1800">
-
-{{-- <meta name="description" content="OneTech shop project"> --}}
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{{-- <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/bootstrap4/bootstrap.min.css')}}">
-<link href="{{asset('public/frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/animate.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/slick-1.8.0/slick.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/main_styles.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/responsive.css')}}">
-<link rel="stylesheet" type="text/css" href="'{{asset('public/frontend/styles/product_styles.css')}}'">
-<link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/product_responsive.css')}}"> --}}
+
 
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/bootstrap4/bootstrap.min.css') }}">
 <link href="plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
@@ -63,18 +52,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_styles.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/product_responsive.css') }}">
 <script src="https://js.stripe.com/v3/"></script>
-
-
-
-
-
-{{-- <style>
-    html{
-        scroll-behavior: smooth;
-    }
-</style> --}}
-
-
 
 {{--Font Awsome --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
@@ -97,6 +74,8 @@
 }
 
 </style>
+
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6011295dfe6fa50012b7b81c&product=inline-share-buttons" async="async"></script>
 
 
 
