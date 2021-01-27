@@ -138,10 +138,9 @@
                                Product Videos : {!! $product->video_link !!}
                           </div>
                           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-                              <div class="fb-comments" data-href="{{ Request::url() }}" data-width="" data-numposts="8"></div>
-                            {{-- <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments/comments#configurator" data-width="" data-numposts="8"></div> --}}
-                          </div>
+                              {{-- <div class="fb-comments" data-href="{{ Request::url() }}" data-width="" data-numposts="8"></div> --}}
+                                <div class="fb-comments" data-href="{{ Request::url() }}" data-width="" data-numposts="4"></div>
+                        </div>
                         </div>
                 </div>
 				</div>
@@ -150,7 +149,7 @@
 	</div>
 {{-- Facebook comment script --}}
 <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/em_GB/sdk.js#xfbml=1&version=v5.0"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="LPxCnSCa"></script>
 {{-- Facebook comment script --}}
 
 <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
