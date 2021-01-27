@@ -83,7 +83,7 @@
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_1.png')}}" alt=""></div>
                       <div class="char_content">
                           <div class="char_title">Free Delivery</div>
-                          <div class="char_subtitle">from $50</div>
+                          <div class="char_subtitle">from 2,000 Taka</div>
                       </div>
                   </div>
               </div>
@@ -95,7 +95,7 @@
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_2.png')}}" alt=""></div>
                       <div class="char_content">
                           <div class="char_title">Easy Refund</div>
-                          <div class="char_subtitle">within 2 days</div>
+                          <div class="char_subtitle">within 5 days</div>
                       </div>
                   </div>
               </div>
