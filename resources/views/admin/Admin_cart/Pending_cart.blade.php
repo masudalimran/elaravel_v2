@@ -9,7 +9,7 @@
         </nav>
 
 
-        {{dd($pending_order_var)}}
+        {{-- {{dd($pending_order_var)}} --}}
         <div class="sl-pagebody" style="  overflow-x: scroll !important; display: table; width: 100%; height: 100vh">
             <div class="sl-page-title">
                 <h5>Pending Order</h5>
@@ -27,7 +27,7 @@
                             <tr>
                                 <th class="wd-5p">ID</th>
                                 <th class="wd-20p">User</th>
-                                <th class="wd-5p">Cart ID</th>
+                                {{-- <th class="wd-5p">Cart ID</th> --}}
                                 <th class="wd-5p">Coupon Discount</th>
                                 <th class="wd-5p">Shipping Cost</th>
                                 <th class="wd-5p">Vat</th>
@@ -52,7 +52,7 @@
                                 </td>
                                 {{-- {{dd($row->cart_id)}} --}}
                                 <td><a href="{{route('browse.cart.by.single_user',$row->user_id)}}">{{$row->name}}</a></td>
-                                <td><a href="{{route('all.cart.details',(int) $row->cart_id)}}">{{$row->cart_id}}</a></td>
+                                {{-- <td><a href="{{route('all.cart.details',(int) $row->cart_id)}}">{{$row->cart_id}}</a></td> --}}
                                 <td>{{numberformat($row->coupon_discount)}}</td>
                                 <td>{{numberformat($row->shipping_cost)}}</td>
                                 <td>{{numberformat($row->vat)}}</td>

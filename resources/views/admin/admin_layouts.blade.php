@@ -80,111 +80,130 @@
         <span class="menu-item-label">Cards &amp; Widgets</span>
       </div><!-- menu-item -->
     </a><!-- sl-menu-link --> --}}
-    <a href="#" class="sl-menu-link">
-      <div class="sl-menu-item">
-        <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-        <span class="menu-item-label">Category</span>
-        <i class="menu-item-arrow fa fa-angle-down"></i>
-      </div><!-- menu-item -->
-    </a><!-- sl-menu-link -->
-    <ul class="sl-menu-sub nav flex-column">
-    <li class="nav-item"><a href="{{route('categories')}}" class="nav-link">Category</a></li>
-    <li class="nav-item"><a href="{{route('sub.categories')}}" class="nav-link">Sub Category</a></li>
-    <li class="nav-item"><a href="{{route('brands')}}" class="nav-link">Brand</a></li>
-    </ul>
-    <a href="#" class="sl-menu-link">
-      <div class="sl-menu-item">
-        <i class="menu-item-icon icon ion-ios-gear-outline tx-24"></i>
-        <span class="menu-item-label">Coupon</span>
-        <i class="menu-item-arrow fa fa-angle-down"></i>
-      </div><!-- menu-item -->
-    </a><!-- sl-menu-link -->
-    <ul class="sl-menu-sub nav flex-column">
-      <li class="nav-item"><a href="{{route('admin.coupon')}}" class="nav-link">Manage Coupon</a></li>
-    </ul>
+    @if (Auth::user()->product_manage == 1)
 
-    <a href="#" class="sl-menu-link">
-      <div class="sl-menu-item">
-        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-        <span class="menu-item-label">Products</span>
-        <i class="menu-item-arrow fa fa-angle-down"></i>
-      </div><!-- menu-item -->
-    </a><!-- sl-menu-link -->
-    <ul class="sl-menu-sub nav flex-column">
-      <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li>
-      <li class="nav-item"><a href="{{route('all.product')}}" class="nav-link">All Product</a></li>
-    </ul>
+        <a href="#" class="sl-menu-link">
+            <div class="sl-menu-item">
+                <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+                <span class="menu-item-label">Category</span>
 
-    <a href="#" class="sl-menu-link">
-      <div class="sl-menu-item">
-        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-        <span class="menu-item-label">Order Management</span>
-        <i class="menu-item-arrow fa fa-angle-down"></i>
-      </div><!-- menu-item -->
-    </a><!-- sl-menu-link -->
-    <ul class="sl-menu-sub nav flex-column">
-        <li class="nav-item"><a href="{{route('all.cart')}}" class="nav-link">Cart Information</a></li>
-        <li class="nav-item"><a href="{{route('pending.order')}}" class="nav-link">Pending order</a></li>
-        <li class="nav-item"><a href="{{route('browse.cart.by.user')}}" class="nav-link">Browse Cart Info By User</a></li>
-        {{-- <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li> --}}
-    </ul>
+            </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{route('categories')}}" class="nav-link">Category</a></li>
+            <li class="nav-item"><a href="{{route('sub.categories')}}" class="nav-link">Sub Category</a></li>
+            <li class="nav-item"><a href="{{route('brands')}}" class="nav-link">Brand</a></li>
+        </ul>
+    @endif
 
-    <a href="#" class="sl-menu-link">
-      <div class="sl-menu-item">
-        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-        <span class="menu-item-label">User Role</span>
-        <i class="menu-item-arrow fa fa-angle-down"></i>
-      </div><!-- menu-item -->
-    </a><!-- sl-menu-link -->
-    <ul class="sl-menu-sub nav flex-column">
-        <li class="nav-item"><a href="{{route('all.user')}}" class="nav-link">Admin Information</a></li>
-        <li class="nav-item"><a href="{{route('all.user')}}" class="nav-link">Users Information</a></li>
-        {{-- <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li> --}}
-    </ul>
+    @if (Auth::user()->product_manage == 1)
+        <a href="#" class="sl-menu-link">
+            <div class="sl-menu-item">
+                <i class="menu-item-icon icon ion-ios-gear-outline tx-24"></i>
+                <span class="menu-item-label">Coupon</span>
 
-    <a href="#" class="sl-menu-link">
-      <div class="sl-menu-item">
-        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-        <span class="menu-item-label">Blogs</span>
-        <i class="menu-item-arrow fa fa-angle-down"></i>
-      </div><!-- menu-item -->
-    </a><!-- sl-menu-link -->
-    <ul class="sl-menu-sub nav flex-column">
-      <li class="nav-item"><a href="{{url('post/category')}}" class="nav-link">Category</a></li>
-      <li class="nav-item"><a href="{{route('add.blogpost')}}" class="nav-link">Add Post</a></li>
-      <li class="nav-item"><a href="{{route('all.blogpost')}}" class="nav-link">All Post</a></li>
-    </ul>
+            </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{route('admin.coupon')}}" class="nav-link">Manage Coupon</a></li>
+        </ul>
+    @endif
 
-    <a href="#" class="sl-menu-link">
-      <div class="sl-menu-item">
-        <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
-        <span class="menu-item-label">Others</span>
-        <i class="menu-item-arrow fa fa-angle-down"></i>
-      </div><!-- menu-item -->
-    </a><!-- sl-menu-link -->
-    <ul class="sl-menu-sub nav flex-column">
-      <li class="nav-item"><a href="{{route('admin.newsletter')}}" class="nav-link">Newsletter</a></li>
-      <li class="nav-item"><a href="{{route('admin.seo')}}" class="nav-link">SEO</a></li>
-      <li class="nav-item"><a href="page-signup.html" class="nav-link">Signup Page</a></li>
-      <li class="nav-item"><a href="page-notfound.html" class="nav-link">404 Page Not Found</a></li>
-    </ul>
+    @if (Auth::user()->product_manage == 1)
+        <a href="#" class="sl-menu-link">
+            <div class="sl-menu-item">
+                <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+                <span class="menu-item-label">Products</span>
 
-    <a href="#" class="sl-menu-link">
+            </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li>
+            <li class="nav-item"><a href="{{route('all.product')}}" class="nav-link">All Product</a></li>
+        </ul>
+    @endif
+
+    @if (Auth::user()->order_manage == 1)
+        <a href="#" class="sl-menu-link">
         <div class="sl-menu-item">
-          <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-          <span class="menu-item-label">BISMIB EXPENSE SHEET</span>
-          <i class="menu-item-arrow fa fa-angle-down"></i>
+            <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+            <span class="menu-item-label">Order Management</span>
+
         </div><!-- menu-item -->
-      </a><!-- sl-menu-link -->
-      <ul class="sl-menu-sub nav flex-column">
-        <li class="nav-item"><a href="{{url('admin/create/expense')}}" class="nav-link">Create Expense</a></li>
-        <li class="nav-item"><a href="{{url('admin/view/expense/category')}}" class="nav-link">View Expense Category</a></li>
-        <li class="nav-item"><a href="{{url('admin/view/expense')}}" class="nav-link">View Expense Sheet</a></li>
-        <li class="nav-item"><a href="{{url('admin/view/expense/by/year')}}" class="nav-link">View Expenses By Month</a></li>
-        {{-- <li class="nav-item"><a href="#" class="nav-link">Show Expense</a></li> --}}
-        {{-- <li class="nav-item"><a href="{{route('add.blogpost')}}" class="nav-link">Add Post</a></li>
-        <li class="nav-item"><a href="{{route('all.blogpost')}}" class="nav-link">All Post</a></li> --}}
-      </ul>
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{route('all.cart')}}" class="nav-link">Cart Information</a></li>
+            {{-- <li class="nav-item"><a href="{{route('pending.order')}}" class="nav-link">Pending order (under construction)</a></li> --}}
+            <li class="nav-item"><a href="#" class="nav-link"> <del> Pending order </del> <br>(under construction)</a></li>
+            <li class="nav-item"><a href="{{route('browse.cart.by.user')}}" class="nav-link">Browse Cart Info By User</a></li>
+            {{-- <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li> --}}
+        </ul>
+    @endif
+
+    @if (Auth::user()->user_role_manage == 1)
+        <a href="#" class="sl-menu-link">
+        <div class="sl-menu-item">
+            <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+            <span class="menu-item-label">User Role</span>
+
+        </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{route('all.admin')}}" class="nav-link">Admin Information</a></li>
+            <li class="nav-item"><a href="{{route('all.user')}}" class="nav-link">Users Information</a></li>
+            {{-- <li class="nav-item"><a href="{{URL::to('admin/product/add')}}" class="nav-link">Add Product</a></li> --}}
+        </ul>
+    @endif
+
+    @if (Auth::user()->blog_manage == 1)
+        <a href="#" class="sl-menu-link">
+        <div class="sl-menu-item">
+            <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+            <span class="menu-item-label">Blogs</span>
+
+        </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+        <li class="nav-item"><a href="{{url('post/category')}}" class="nav-link">Category</a></li>
+        <li class="nav-item"><a href="{{route('add.blogpost')}}" class="nav-link">Add Post</a></li>
+        <li class="nav-item"><a href="{{route('all.blogpost')}}" class="nav-link">All Post</a></li>
+        </ul>
+    @endif
+
+    @if (Auth::user()->others_manage == 1)
+        <a href="#" class="sl-menu-link">
+        <div class="sl-menu-item">
+            <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
+            <span class="menu-item-label">Others</span>
+
+        </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+        <li class="nav-item"><a href="{{route('admin.newsletter')}}" class="nav-link">Newsletter</a></li>
+        <li class="nav-item"><a href="{{route('admin.seo')}}" class="nav-link">SEO</a></li>
+        <li class="nav-item"><a href="page-signup.html" class="nav-link">Signup Page</a></li>
+        <li class="nav-item"><a href="page-notfound.html" class="nav-link">404 Page Not Found</a></li>
+        </ul>
+    @endif
+
+    @if (Auth::user()->bismib_expense_manage == 1)
+        <a href="#" class="sl-menu-link">
+            <div class="sl-menu-item">
+            <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+            <span class="menu-item-label">BISMIB EXPENSE SHEET</span>
+
+            </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{url('admin/create/expense')}}" class="nav-link">Create Expense</a></li>
+            <li class="nav-item"><a href="{{url('admin/view/expense/category')}}" class="nav-link">View Expense Category</a></li>
+            <li class="nav-item"><a href="{{url('admin/view/expense')}}" class="nav-link">View Expense Sheet</a></li>
+            <li class="nav-item"><a href="{{url('admin/view/expense/by/year')}}" class="nav-link">View Expenses By Month</a></li>
+            {{-- <li class="nav-item"><a href="#" class="nav-link">Show Expense</a></li> --}}
+            {{-- <li class="nav-item"><a href="{{route('add.blogpost')}}" class="nav-link">Add Post</a></li>
+            <li class="nav-item"><a href="{{route('all.blogpost')}}" class="nav-link">All Post</a></li> --}}
+        </ul>
+    @endif
   </div><!-- sl-sideleft-menu -->
 
   <br>
@@ -201,7 +220,7 @@
     <nav class="nav">
       <div class="dropdown">
         <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-          <span class="logged-name">Jane<span class="hidden-md-down"> Doe</span></span>
+          <span class="logged-name">{{Auth::user()->email}}<span class="hidden-md-down"></span></span>
           <img src="{{asset('public/backend/img/img3.jpg')}}" class="wd-32 rounded-circle" alt="">
         </a>
         <div class="dropdown-menu dropdown-menu-header wd-200">
@@ -547,19 +566,73 @@
        });
 </script>
 
-    {{-- <script>
-        $(function(){
-            'use strict';
 
-            //Inline Editor
-            var editor =new MediumEditor('.editable');
+<script>
+    function reverseString(str) {
+                // Step 1. Use the split() method to return a new array
+                var splitString = str.split(""); // var splitString = "hello".split("");
+                // ["h", "e", "l", "l", "o"]
 
-            //Summernote editor
-            $('#summernote').summernote({
-                height: 150,
-                tooltip: false
-            })
-        });
-    </script> --}}
+                // Step 2. Use the reverse() method to reverse the new created array
+                var reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
+                // ["o", "l", "l", "e", "h"]
+
+                // Step 3. Use the join() method to join all elements of the array into a string
+                var joinArray = reverseArray.join(""); // var joinArray = ["o", "l", "l", "e", "h"].join("");
+                // "olleh"
+
+                //Step 4. Return the reversed string
+                return joinArray; // "olleh"
+            }
+    function numberWithCommas(number, decimals=0) {
+
+            var decimalNumbers = '';
+            if ((number.toString()).indexOf('.')>=0)  // if string/number has '.' , like 5.5, .56, 0.6
+            {
+                decimalNumbers = (number.toString()).substr( (number.toString()).indexOf('.'));
+                decimalNumbers = decimalNumbers.substr( 1, decimals);
+            }
+            else
+            {
+                decimalNumbers = '';
+                for (var i = 2; i <=decimals ; i++)
+                {
+                    decimalNumbers = decimalNumbers+'0';
+                }
+            }
+            // return decimalNumbers;
+
+
+
+            number = parseInt(number);
+            number = number.toString();
+            // // reverse
+            number = this.reverseString(number.toString());
+
+            var n = '';
+            var stringlength = number.length;
+
+            for (i = 0; i < stringlength; i++)
+            {
+                if (i%2==0 && i!=stringlength-1 && i>1)
+                {
+                    n = n+number[i]+',';
+                }
+                else
+                {
+                    n = n+number[i];
+                }
+            }
+
+            number = n;
+            // // reverse
+            number = this.reverseString(number);
+
+            (decimals!=0)? number=(number+'.'+decimalNumbers) : number ;
+
+
+            return number;
+    }
+</script>
   </body>
 </html>

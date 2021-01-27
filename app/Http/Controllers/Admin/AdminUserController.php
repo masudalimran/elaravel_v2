@@ -28,4 +28,43 @@ class AdminUserController extends Controller
         return view('admin.user_tab.user_details',compact('user_details'));
     }
 
+    public function user_delete($user_id){
+        DB::table('users')
+                    ->where('id',$user_id)
+                    ->delete();
+
+        $notification = array(
+                'messege'=>'Deleted Successfully',
+                'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+
+    public function index_admin(){
+        $index_admin=DB::table('admins')
+                    ->get();
+        return view('admin.user_tab.index_admin',compact('index_admin'));
+    }
+
+    public function admin_details($admin_id){
+        $admin_details=DB::table('admins')
+                    ->where('id',$admin_id)
+                    ->first();
+
+        return view('admin.user_tab.admin_details',compact('admin_details'));
+    }
+
+    public function admin_delete($admin_id){
+        DB::table('admins')
+                    ->where('id',$admin_id)
+                    ->delete();
+
+        $notification = array(
+                'messege'=>'Deleted Successfully',
+                'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
 }

@@ -44,10 +44,10 @@
                                     +"<td>"+"<a target='_blank' href='{{URL::to('admin/browse/cart/by/single_user')}}/"+userId+"'>"+el.name+"</a>"+"</td>"
 
                                     + "<td>"+"<a target='_blank' href='{{URL::to('admin/cart/details/')}}/"+el.cart_id+"'>"+el.cart_id+"</td>"
-                                    + "<td>"+el.coupon_discount+"</td>"
-                                    + "<td>"+el.shipping_cost+"</td>"
-                                    + "<td>"+el.vat+"</td>"
-                                    + "<td>"+el.total_cost+"</td>"
+                                    + "<td>"+numberWithCommas(el.coupon_discount)+"</td>"
+                                    + "<td>"+numberWithCommas(el.shipping_cost)+"</td>"
+                                    + "<td>"+numberWithCommas(el.vat)+"</td>"
+                                    + "<td>"+numberWithCommas(el.total_cost)+"</td>"
                                     + "<td>"+el.paid_with+"</td>"
                                     + "<td>"+isPaid+"</td>"
                                     + "<td>"+el.created_at+"</td>"
@@ -102,21 +102,46 @@
                             <tr>
                                 <th class="wd-5p">ID</th>
                                 <th class="wd-20p">User</th>
+                                <th class="wd-5p">Purchases</th>
                                 <th class="wd-10p">Action</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($cart_by_user as $row)
+                                {{-- Count Purchase --}}
+                                @php
+                                    $cart_user_id = $row->id;
+                                    $purchases = DB::table('cart')
+                                    ->where('user_id',$cart_user_id)
+                                    ->select('cart_id')
+                                    ->groupBy('cart_id')
+                                    ->get();
+                                    $purchase_counter = 0;
+                                    foreach($purchases as $p){
+                                        if($p->cart_id == NUll){
+
+                                        }else{
+                                            $purchase_counter++;
+                                        }
+                                    }
+                                    // dd($purchase_counter);
+                                @endphp
+                                {{-- Count Purchase --}}
                             <tr>
                                 <td>{{$row->id}}</td>
                                 <td>{{$row->name}}</td>
+
+                                <td>{{$purchase_counter}}</td>
                                 <td>
                                 <button data-userid="{{$row->id}}" data-username="{{strtoupper($row->name)}}" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                                     View Carts
                                 </button>
                                 </td>
                             </tr>
+                            @php
+                                $purchase_counter = 0;
+                            @endphp
                             @endforeach
                         </tbody>
 

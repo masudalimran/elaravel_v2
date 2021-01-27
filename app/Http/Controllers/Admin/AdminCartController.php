@@ -132,7 +132,7 @@ class AdminCartController extends Controller
                             ->leftJoin('users','cart.user_id','=','users.id')
                             ->leftJoin('payments','cart.cart_id', '=', 'payments.cart_id')
                             ->select('users.name','users.id AS u_id','cart_master.is_checkout','cart.*','payments.coupon_discount','payments.shipping_cost','payments.vat','payments.total_cost','payments.paid_with','payments.created_at')
-                            ->groupBy('cart.id')
+                            // ->groupBy('cart.id')
                             ->where('cart.cart_id', NULL)
                             ->get();
 
