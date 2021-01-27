@@ -1,5 +1,6 @@
 @php
-	$category=DB::table('categories')->get();
+    $category=DB::table('categories')->get();
+    $language = session()->get('lang');
 @endphp
 
         <!-- Main Navigation -->
@@ -86,18 +87,19 @@
 									<ul class="page_menu_selection">
 										<li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
 										<li><a href="#">Italian<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
 									</ul>
 								</li>
 								<li class="page_menu_item has-children">
-									<a href="#">Currency<i class="fa fa-angle-down"></i></a>
-									<ul class="page_menu_selection">
-										<li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">GBP British Pound<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
-									</ul>
+									@if ($language == 'bangla')
+                                            <a href="#">ভাষা <span style="text-transform: capitalize">({{$language}})</span><i class="fas fa-chevron-down"></i></a>
+                                    @else
+                                        <a href="#">Language <span style="text-transform: capitalize">(ENGLISH)<i class="fas fa-chevron-down"></i></a>
+                                    @endif
+                                    <ul>
+                                        <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.english')}}">English<i class="fas fa-chevron-down"></i></a></li>
+                                        <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('language.bangla')}}">বাংলা<i class="fas fa-chevron-down"></i></a></li>
+                                        <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian1 (OFFLINE) </del><i class="fas fa-chevron-down"></i></a></li>
+                                    </ul>
 								</li>
 								<li class="page_menu_item">
 									<a href="#">Home<i class="fa fa-angle-down"></i></a>

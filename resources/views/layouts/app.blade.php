@@ -352,7 +352,7 @@
 
 					<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
 						<div class="copyright_content"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Project is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Masud Al Imran</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 </div>
 						<div class="logos ml-sm-auto">
@@ -369,21 +369,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</div>
 </div>
-
-{{-- <script src="{{asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{asset('public/frontend/styles/bootstrap4/popper.js')}}"></script>
-<script src="{{asset('public/frontend/styles/bootstrap4/bootstrap.min.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/greensock/TweenMax.min.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/greensock/TimelineMax.min.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/scrollmagic/ScrollMagic.min.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/greensock/animation.gsap.min.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/greensock/ScrollToPlugin.min.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/slick-1.8.0/slick.js')}}"></script>
-<script src="{{asset('public/frontend/plugins/easing/easing.js')}}"></script>
-<script src="{{asset('public/frontend/js/custom.js')}}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
 
 <script src="{{ asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{ asset('public/frontend/styles/bootstrap4/popper.js')}}"></script>
@@ -429,63 +414,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       }
     @endif
  </script>
-
-
-
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
-
-{{-- <script type="text/javascript">
-// ====================Number related=============================
-            // ====================Number related=============================
-            function numberWithCommas(number, decimals=0) {
-                var decimalNumbers = '';
-                if ((number.toString()).indexOf('.')>=0)  // if string/number has '.' , like 5.5, .56, 0.6
-                {
-                    decimalNumbers = (number.toString()).substr( (number.toString()).indexOf('.'));
-                    decimalNumbers = decimalNumbers.substr( 1, decimals);
-                }
-                else
-                {
-                    decimalNumbers = '';
-                    for (var i = 2; i <=decimals ; i++)
-                    {
-                        decimalNumbers = decimalNumbers+'0';
-                    }
-                }
-                // return decimalNumbers;
-                number = parseInt(number);
-                number = number.toString();
-                // // reverse
-                number = this.reverseString(number.toString());
-                var n = '';
-                var stringlength = number.length;
-                for (i = 0; i < stringlength; i++)
-                {
-                    if (i%2==0 && i!=stringlength-1 && i>1)
-                    {
-                        n = n+number[i]+',';
-                    }
-                    else
-                    {
-                        n = n+number[i];
-                    }
-                }
-                number = n;
-                // // reverse
-                number = this.reverseString(number);
-                (decimals!=0)? number=(number+'.'+decimalNumbers) : number ;
-                return number;
-            },
-            // ====================Number related=============================
-            // ====================Number related=============================
-</script> --}}
-
-
-
-
-
-
-
 </body>
 
 </html>
