@@ -7,6 +7,10 @@
     {{-- sweetalert2 css --}}
 
   <!-- Characteristics -->
+
+  {{-- {{dd(  )}} --}}
+  {{-- {{ app()->setLocale( getLocaleFromUrl( Request::url() ) ) }} --}}
+  {{-- {{ dd( getLocaleFromUrl( Request::url() ) ) }} --}}
   @php
   $featured_product=DB::table('products')
   ->where('publication_status',1)

@@ -5,14 +5,13 @@
 use Illuminate\Support\Facades\App;
 
 Route::get('/', function () {
-    // App::setLocale('bn');
     return view('pages.index');
-    // return redirect()->route('language.english');
 });
-// Route::get('/{lang}/', function () {
-//     // App::setLocale('bn');
-//     return view('pages.index');
-// });
+
+Route::get('{lang}/', function ($lang) {
+    // App::setLocale($lang);
+    return view('pages.index');
+});
 
 //auth & user
 Auth::routes(['verify' => true]);
