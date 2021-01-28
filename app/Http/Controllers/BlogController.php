@@ -23,7 +23,7 @@ class BlogController extends Controller
         // Session::get('lang');
         // session()->forget('lang');
         Session::put('lang','bangla');
-        return redirect()->back();
+        return redirect('/bn/');
 
     }
 
@@ -31,7 +31,7 @@ class BlogController extends Controller
         // Session::get('lang');
         // session()->forget('lang');
         Session::put('lang','english');
-        return redirect()->back();
+        return redirect('/en/');
     }
 
     public function translate_en($source_language){
