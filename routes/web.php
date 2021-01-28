@@ -9,14 +9,11 @@ Route::get('/', function () {
     return view('pages.index');
     // return redirect()->route('language.english');
 });
-Route::get('bn/', function () {
+Route::get('/{lang}/', function () {
     // App::setLocale('bn');
     return view('pages.index');
 });
-Route::get('en/', function () {
-    // App::setLocale('bn');
-    return view('pages.index');
-});
+
 //auth & user
 Auth::routes(['verify' => true]);
 Route::get('/welcome', 'HomeController@welcome')->name('welcome');
@@ -35,7 +32,7 @@ Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');
 
 //Google Socialite
 Route::get('/auth/redirect/{provider}', 'Auth\GoogleController@redirect');
- Route::get('/callback/{provider}', 'Auth\GoogleController@callback');
+Route::get('/callback/{provider}', 'Auth\GoogleController@callback');
 
 //facebook socialite
 // Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');

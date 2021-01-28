@@ -82,8 +82,8 @@
                   <div class="char_item d-flex flex-row align-items-center justify-content-start">
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_1.png')}}" alt=""></div>
                       <div class="char_content">
-                          <div class="char_title">Free Delivery</div>
-                          <div class="char_subtitle">from 2,000 Taka</div>
+                          <div class="char_title">{{__('index._free_delivery')}}</div>
+                          <div class="char_subtitle">{{__('index._from_2,000_taka')}}</div>
                       </div>
                   </div>
               </div>
@@ -94,8 +94,8 @@
                   <div class="char_item d-flex flex-row align-items-center justify-content-start">
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_2.png')}}" alt=""></div>
                       <div class="char_content">
-                          <div class="char_title">Easy Refund</div>
-                          <div class="char_subtitle">within 5 days</div>
+                          <div class="char_title">{{__('index._easy_refund')}}</div>
+                          <div class="char_subtitle">{{__('index._within_5_days')}}</div>
                       </div>
                   </div>
               </div>
@@ -106,8 +106,8 @@
                   <div class="char_item d-flex flex-row align-items-center justify-content-start">
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_3.png')}}" alt=""></div>
                       <div class="char_content">
-                          <div class="char_title">Special Coupons</div>
-                          <div class="char_subtitle">redeem them now</div>
+                          <div class="char_title">{{__('index._special_coupon')}}</div>
+                          <div class="char_subtitle">{{__('index._redeem_them_now')}}</div>
                       </div>
                   </div>
               </div>
@@ -118,8 +118,8 @@
                   <div class="char_item d-flex flex-row align-items-center justify-content-start">
                       <div class="char_icon"><img src="{{asset('public/frontend/images/char_4.png')}}" alt=""></div>
                       <div class="char_content">
-                          <div class="char_title">Bookmark Our Site</div>
-                          <div class="char_subtitle">please bookmark</div>
+                          <div class="char_title">{{__('index._bookmark_our_website')}}</div>
+                          <div class="char_subtitle">{{__('index._please_bookmark')}}</div>
                       </div>
                   </div>
               </div>
@@ -137,7 +137,7 @@
                   <!-- Deals -->
 
                   <div class="deals">
-                      <div class="deals_title">Deals of the Week</div>
+                      <div class="deals_title">{{__('index._deals_of_the_week')}}</div>
                       <div class="deals_slider_container">
 
                           <!-- Deals Slider -->
@@ -169,33 +169,33 @@
                                             ></div>
                                       </div>
                                       <div style="margin-top: 5px; text-align: right;">
-                                        <a onclick="add_to_cart({{$row->id}})" class="btn btn-primary btn-sm">Add to Cart</a>
+                                        <a onclick="add_to_cart({{$row->id}})" class="btn btn-primary btn-sm">{{__('index._add_to_cart')}}</a>
                                     </div>
                                       <div class="available">
                                           <div class="available_line d-flex flex-row justify-content-start">
-                                              <div class="available_title">Available: <span>{{$row->product_quantity}}</span></div>
-                                              <div class="sold_title ml-auto">Already sold: <span>Pore add hobe</span></div>
+                                              <div class="available_title">{{__('index._available')}}<span>{{$row->product_quantity}}</span></div>
+                                              <div class="sold_title ml-auto">{{__('index._already_sold')}} <span>{{__('index._pore_add_hobe')}}</span></div>
                                           </div>
                                           <div class="available_bar"><span style="width:17%"></span></div>
                                       </div>
                                       <div class="deals_timer d-flex flex-row align-items-center justify-content-start">
                                           <div class="deals_timer_title_container">
-                                              <div class="deals_timer_title">Hurry Up</div>
-                                              <div class="deals_timer_subtitle">Offer ends in:</div>
+                                              <div class="deals_timer_title">{{__('index._hurry_up')}}</div>
+                                              <div class="deals_timer_subtitle">{{__('index._offer_ends_in')}}</div>
                                           </div>
                                           <div class="deals_timer_content ml-auto">
                                               <div class="deals_timer_box clearfix" data-target-time="">
                                                   <div class="deals_timer_unit">
                                                       <div id="deals_timer1_hr" class="deals_timer_hr"></div>
-                                                      <span>hours</span>
+                                                      <span>{{__('index._hours')}}</span>
                                                   </div>
                                                   <div class="deals_timer_unit">
                                                       <div id="deals_timer1_min" class="deals_timer_min"></div>
-                                                      <span>mins</span>
+                                                      <span>{{__('index._mins')}}</span>
                                                   </div>
                                                   <div class="deals_timer_unit">
                                                       <div id="deals_timer1_sec" class="deals_timer_sec"></div>
-                                                      <span>secs</span>
+                                                      <span>{{__('index._secs')}}</span>
                                                   </div>
                                               </div>
                                           </div>
@@ -223,9 +223,9 @@
                       <div class="tabbed_container">
                           <div class="tabs">
                               <ul class="clearfix">
-                                  <li class="active">Featured</li>
-                                  <li>Trending Now</li>
-                                  <li>Best Rated</li>
+                                  <li class="active">{{__('index._featured')}}</li>
+                                  <li>{{__('index._trending_now')}}</li>
+                                  <li>{{__('index._best_rated')}}</li>
                               </ul>
                               <div class="tabs_line"><span></span></div>
                           </div>
@@ -263,7 +263,7 @@
                                                     <div class="product_cart_button">Add to Cart</div>
                                                   </a> --}}
                                                   <a onclick="add_to_cart({{$row->id}})" >
-                                                    <div class="product_cart_button">Add To Cart</div>
+                                                    <div class="product_cart_button">{{__('index._add_to_cart')}}</div>
                                                 </a>
 
                                               </div>
@@ -286,7 +286,7 @@
                                               @endif
                                               @if($row->hot_new == NULL)
                                               @else
-                                              <li class="product_mark product_discount" style="background: #10b529;">New
+                                              <li class="product_mark product_discount" style="background: #10b529;">{{__('index._new')}}
                                               </li>
                                               @endif
 
@@ -331,7 +331,7 @@
                                             <div class="product_extras">
                                                 <p>{{$row->product_color}}</p>
                                                 <a onclick="add_to_cart({{$row->id}})" >
-                                                <button class="product_cart_button">Add to Cart</button>
+                                                <button class="product_cart_button">{{__('index._add_to_cart')}}</button>
                                                 </a>
                                             </div>
                                         </div>
@@ -353,7 +353,7 @@
                                             @endif
                                             @if($row->hot_new == NULL)
                                             @else
-                                            <li class="product_mark product_discount" style="background: #10b529;">New
+                                            <li class="product_mark product_discount" style="background: #10b529;">{{__('index._new')}}
                                             </li>
                                             @endif
 
@@ -399,7 +399,7 @@
                                             <div class="product_extras">
                                                 <p>{{$row->product_color}}</p>
                                                 <a onclick="add_to_cart({{$row->id}})" >
-                                                <button class="product_cart_button">Add to Cart</button>
+                                                <button class="product_cart_button">{{__('index._add_to_cart')}}</button>
                                                 </a>
                                             </div>
                                         </div>
@@ -421,7 +421,7 @@
                                             @endif
                                             @if($row->hot_new == NULL)
                                             @else
-                                            <li class="product_mark product_discount" style="background: #10b529;">New
+                                            <li class="product_mark product_discount" style="background: #10b529;">{{__('index._new')}}
                                             </li>
                                             @endif
 
@@ -458,7 +458,7 @@
           <div class="row">
               <div class="col-lg-3">
                   <div class="popular_categories_content">
-                      <div class="popular_categories_title">Popular Brands</div>
+                      <div class="popular_categories_title">{{__('index._popular_brands')}}</div>
                       <div class="popular_categories_slider_nav">
                           <div class="popular_categories_prev popular_categories_nav"><i
                                   class="fas fa-angle-left ml-auto"></i></div>
@@ -523,9 +523,9 @@
                                         <div class="banner_2_category">{{$row->category_name}}</div>
                                         <div class="banner_2_title">{{$row->product_name}}</div>
                                         <div class="banner_2_text">{{$row->brand_name}}<br>
-                                        Product ID: {{$row->product_code}}.
+                                            {{__('index._product_id')}} {{$row->product_code}}.
                                         </div>
-                                        <div class="button banner_2_button"><a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}">Explore</a></div>
+                                        <div class="button banner_2_button"><a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}">{{__('index._explore')}}</a></div>
                                     </div>
 
                                 </div>
@@ -553,10 +553,10 @@
               <div class="col">
                   <div class="tabbed_container">
                       <div class="tabs clearfix tabs-right" id="home-cat-hot_best_sellers">
-                          <div class="new_arrivals_title">Hot Best Sellers</div>
+                          <div class="new_arrivals_title">{{__('index._hot_best_sellers')}}</div>
                           <ul class="clearfix">
-                              <li class="active">Most Viewed</li>
-                              <li>Most Sold</li>
+                              <li class="active">{{__('index._most_viewed')}}</li>
+                              <li>{{__('index._most_sold')}}</li>
                           </ul>
                           <div class="tabs_line"><span></span></div>
                       </div>
@@ -587,7 +587,7 @@
                                                     <div class="product_extras">
                                                         <p>{{$v_hot_best_sellers->product_color}}</p>
                                                         <a onclick="add_to_cart({{$v_hot_best_sellers->id}})" >
-                                                        <button class="product_cart_button">Add to Cart</button>
+                                                        <button class="product_cart_button">{{__('index._add_to_cart')}}</button>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -607,7 +607,7 @@
                                                 @endif
                                                 @if($v_hot_best_sellers->hot_new == NULL)
                                                 @else
-                                                <li class="product_mark product_new" >New
+                                                <li class="product_mark product_new">{{__('index._new')}}
                                                 </li>
                                                 @endif
                                             </ul>
@@ -647,7 +647,7 @@
                                                     <div class="product_extras">
                                                     <p>{{$v_hot_best_sellers->product_color}}</p>
                                                     <a onclick="add_to_cart({{$v_hot_best_sellers->id}})" >
-                                                        <button class="product_cart_button">Add to Cart</button>
+                                                        <button class="product_cart_button">{{__('index._add_to_cart')}}</button>
                                                     </a>
                                                     </div>
                                                 </div>
@@ -667,7 +667,7 @@
                                                 @endif
                                                 @if($v_hot_best_sellers->hot_new == NULL)
                                                 @else
-                                                <li class="product_mark product_new" >New
+                                                <li class="product_mark product_new" >{{__('index._new')}}
                                                 </li>
                                                 @endif
                                             </ul>
@@ -696,7 +696,7 @@
                                                 <div class="arrivals_single_price text-right">৳ {{numberFormat($hot_deal[1]->selling_price)}}</div>
                                             </div>
                                                 <a onclick="add_to_cart({{$hot_deal[1]->id}})" >
-                                                    <button class="arrivals_single_button">Add to Cart</button>
+                                                    <button class="arrivals_single_button">{{__('index._add_to_cart')}}</button>
                                                 </a>
                                         </div>
 
@@ -715,7 +715,7 @@
                                             @endif
                                             @if($hot_deal[1]->hot_new == NULL)
                                             @else
-                                            <li class="arrivals_single_mark product_mark product_new" >New
+                                            <li class="arrivals_single_mark product_mark product_new" >{{__('index._new')}}
                                             </li>
                                             @endif
                                         </ul>
@@ -740,9 +740,9 @@
               <div class="col" id="home-cat-hot_new_arrivals" >
                   <div class="tabbed_container">
                       <div class="tabs clearfix tabs-right">
-                          <div class="new_arrivals_title">Hot New Arrivals</div>
+                          <div class="new_arrivals_title">{{__('index._hot_new_arrivals')}}</div>
                           <ul class="clearfix">
-                              <li class="active">Hot New</li>
+                              <li class="active">{{__('index._hot_new')}}</li>
                               {{-- <li>Audio & Video</li>
                               <li>Laptops & Computers</li> --}}
                           </ul>
@@ -779,7 +779,7 @@
                                         @endif
                                         @if($item->hot_new == NULL)
                                         @else
-                                        <li class="bestsellers_mark bestsellers_discount" style="background: #10b529;">New
+                                        <li class="bestsellers_mark bestsellers_discount" style="background: #10b529;">{{__('index._new')}}
                                         </li>
                                         @endif
 
@@ -867,7 +867,7 @@
                                                     <div class="product_extras">
                                                     <p>{{$item->product_color}}</p>
                                                     <a onclick="add_to_cart({{$item->id}})" >
-                                                        <button class="product_cart_button">Add to Cart</button>
+                                                        <button class="product_cart_button">{{__('index._add_to_cart')}}</button>
                                                     </a>
                                                     </div>
                                                 </div>
@@ -887,7 +887,7 @@
                                                 @endif
                                                 @if($item->hot_new == NULL)
                                                 @else
-                                                <li class="product_mark product_new" >New
+                                                <li class="product_mark product_new" >{{__('index._new')}}
                                                 </li>
                                                 @endif
                                             </ul>
@@ -927,8 +927,8 @@
 
                   <div class="advert d-flex flex-row align-items-center justify-content-start">
                       <div class="advert_content">
-                          <div class="advert_title"><a href="#">Trends 2018</a></div>
-                          <div class="advert_text">Lorem ipsum dolor sit amet, consectetur adipiscing Donec et.</div>
+                          <div class="advert_title"><a href="#">{{__('index._trends_2021')}}</a></div>
+                          <div class="advert_text">{{__('index._loren_ipsum')}}</div>
                       </div>
                       <div class="ml-auto">
                           <div class="advert_image"><img src="{{asset('public/frontend/images/adv_1.png')}}" alt="">
@@ -943,9 +943,9 @@
 
                   <div class="advert d-flex flex-row align-items-center justify-content-start">
                       <div class="advert_content">
-                          <div class="advert_subtitle">Trends 2018</div>
-                          <div class="advert_title_2"><a href="#">Sale -45%</a></div>
-                          <div class="advert_text">Lorem ipsum dolor sit amet, consectetur.</div>
+                          <div class="advert_subtitle">{{__('index._trends_2021')}}</div>
+                          <div class="advert_title_2"><a href="#">{{__('index._sale_45')}}</a></div>
+                          <div class="advert_text">{{__('index._loren_ipsum')}}</div>
                       </div>
                       <div class="ml-auto">
                           <div class="advert_image"><img src="{{asset('public/frontend/images/adv_2.png')}}" alt="">
@@ -960,8 +960,8 @@
 
                   <div class="advert d-flex flex-row align-items-center justify-content-start">
                       <div class="advert_content">
-                          <div class="advert_title"><a href="#">Trends 2018</a></div>
-                          <div class="advert_text">Lorem ipsum dolor sit amet, consectetur.</div>
+                          <div class="advert_title"><a href="#">{{__('index._trends_2021')}}</a></div>
+                          <div class="advert_text">{{__('index._loren_ipsum')}}</div>
                       </div>
                       <div class="ml-auto">
                           <div class="advert_image"><img src="{{asset('public/frontend/images/adv_3.png')}}" alt="">
@@ -986,9 +986,9 @@
               <!-- Trends Content -->
               <div class="col-lg-3">
                   <div class="trends_container">
-                      <h2 class="trends_title">Buy One Get One</h2>
+                      <h2 class="trends_title">{{__('index._buy_one_get_one')}}</h2>
                       <div class="trends_text">
-                          <p>Grab on the special offer only available for limited time.</p>
+                          <p>{{__('index._grab_on_the_special')}}</p>
                       </div>
                       <div class="trends_slider_nav">
                           <div class="trends_prev trends_nav" style="background: black"><i class="fas fa-angle-left ml-auto"></i></div>
@@ -1038,11 +1038,11 @@
                                         @endif
                                         @if($item->hot_new == NULL)
                                         @else
-                                        <li class="trends_mark trends_new" style="background: #10b529;">New
+                                        <li class="trends_mark trends_new" style="background: #10b529;">{{__('index._new')}}
                                         </li>
                                         @endif
                                     </ul>
-                                    <div style="margin-top: 10px; text-align: center;"><a onclick="add_to_cart({{$item->id}})" class="btn btn-primary btn-sm" >Add to Cart</a></div>
+                                    <div style="margin-top: 10px; text-align: center;"><a onclick="add_to_cart({{$item->id}})" class="btn btn-primary btn-sm" >{{__('index._add_to_cart')}}</a></div>
                                 </div>
                             </a>
                             </div>
@@ -1066,8 +1066,8 @@
               <div class="col">
 
                   <div class="reviews_title_container">
-                      <h3 class="reviews_title">Latest Reviews</h3>
-                      <div class="reviews_all ml-auto"><a href="#">view all <span>reviews</span></a></div>
+                      <h3 class="reviews_title">{{__('index._latest_reviews')}}</h3>
+                      <div class="reviews_all ml-auto"><a href="#">{{__('index._view_all')}}<span>{{__('index._reviews')}}</span></a></div>
                   </div>
 
                   <div class="reviews_slider_container">
@@ -1083,15 +1083,14 @@
                                               src="{{asset('public/frontend/images/review_1.jpg')}}" alt=""></div>
                                   </div>
                                   <div class="review_content">
-                                      <div class="review_name">Roberto Sanchez</div>
+                                      <div class="review_name">{{__('index._roberto_sanchez')}}</div>
                                       <div class="review_rating_container">
                                           <div class="rating_r rating_r_4 review_rating">
                                               <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="review_time">2 day ago</div>
+                                          <div class="review_time">{{__('index._2_day_ago')}}</div>
                                       </div>
                                       <div class="review_text">
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum
-                                              laoreet.</p>
+                                          <p>{{__('index._loren_ipsum')}}</p>
                                       </div>
                                   </div>
                               </div>
@@ -1105,15 +1104,14 @@
                                               src="{{asset('public/frontend/images/review_2.jpg')}}" alt=""></div>
                                   </div>
                                   <div class="review_content">
-                                      <div class="review_name">Brandon Flowers</div>
+                                      <div class="review_name">{{__('index._roberto_sanchez')}}</div>
                                       <div class="review_rating_container">
                                           <div class="rating_r rating_r_4 review_rating">
                                               <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="review_time">2 day ago</div>
+                                          <div class="review_time">{{__('index._2_day_ago')}}</div>
                                       </div>
                                       <div class="review_text">
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum
-                                              laoreet.</p>
+                                          <p>{{__('index._loren_ipsum')}}</p>
                                       </div>
                                   </div>
                               </div>
@@ -1127,15 +1125,14 @@
                                               src="{{asset('public/frontend/images/review_3.jpg')}}" alt=""></div>
                                   </div>
                                   <div class="review_content">
-                                      <div class="review_name">Emilia Clarke</div>
+                                      <div class="review_name">{{__('index._roberto_sanchez')}}</div>
                                       <div class="review_rating_container">
                                           <div class="rating_r rating_r_4 review_rating">
                                               <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="review_time">2 day ago</div>
+                                          <div class="review_time">{{__('index._2_day_ago')}}</div>
                                       </div>
                                       <div class="review_text">
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum
-                                              laoreet.</p>
+                                          <p>{{__('index._loren_ipsum')}}</p>
                                       </div>
                                   </div>
                               </div>
@@ -1149,15 +1146,14 @@
                                               src="{{asset('public/frontend/images/review_1.jpg')}}" alt=""></div>
                                   </div>
                                   <div class="review_content">
-                                      <div class="review_name">Roberto Sanchez</div>
+                                      <div class="review_name">{{__('index._roberto_sanchez')}}</div>
                                       <div class="review_rating_container">
                                           <div class="rating_r rating_r_4 review_rating">
                                               <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="review_time">2 day ago</div>
+                                          <div class="review_time">{{__('index._2_day_ago')}}</div>
                                       </div>
                                       <div class="review_text">
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum
-                                              laoreet.</p>
+                                          <p>{{__('index._loren_ipsum')}}</p>
                                       </div>
                                   </div>
                               </div>
@@ -1171,15 +1167,14 @@
                                               src="{{asset('public/frontend/images/review_2.jpg')}}" alt=""></div>
                                   </div>
                                   <div class="review_content">
-                                      <div class="review_name">Brandon Flowers</div>
+                                      <div class="review_name">{{__('index._roberto_sanchez')}}</div>
                                       <div class="review_rating_container">
                                           <div class="rating_r rating_r_4 review_rating">
                                               <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="review_time">2 day ago</div>
+                                          <div class="review_time">{{__('index._2_day_ago')}}</div>
                                       </div>
                                       <div class="review_text">
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum
-                                              laoreet.</p>
+                                          <p>{{__('index._loren_ipsum')}}</p>
                                       </div>
                                   </div>
                               </div>
@@ -1193,15 +1188,14 @@
                                               src="{{asset('public/frontend/images/review_3.jpg')}}" alt=""></div>
                                   </div>
                                   <div class="review_content">
-                                      <div class="review_name">Emilia Clarke</div>
+                                      <div class="review_name">{{__('index._roberto_sanchez')}}</div>
                                       <div class="review_rating_container">
                                           <div class="rating_r rating_r_4 review_rating">
                                               <i></i><i></i><i></i><i></i><i></i></div>
-                                          <div class="review_time">2 day ago</div>
+                                          <div class="review_time">{{__('index._2_day_ago')}}</div>
                                       </div>
                                       <div class="review_text">
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum
-                                              laoreet.</p>
+                                          <p>{{__('index._loren_ipsum')}}</p>
                                       </div>
                                   </div>
                               </div>
@@ -1222,7 +1216,7 @@
           <div class="row">
               <div class="col">
                   <div class="viewed_title_container">
-                      <h3 class="viewed_title">Recently Viewed</h3>
+                      <h3 class="viewed_title">{{__('index._recently_viewed')}}</h3>
                       <div class="viewed_nav_container">
                           <div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
                           <div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
@@ -1242,12 +1236,12 @@
                                   <div class="viewed_image"><img src="{{asset('public/frontend/images/view_1.jpg')}}"
                                           alt=""></div>
                                   <div class="viewed_content text-center">
-                                      <div class="viewed_price">$225<span>$300</span></div>
-                                      <div class="viewed_name"><a href="#">Beoplay H7</a></div>
+                                      <div class="viewed_price">{{__('index._$225')}}<span>{{__('index._$300')}}</span></div>
+                                      <div class="viewed_name"><a href="#">{{__('index._beoplay_h7')}}</a></div>
                                   </div>
                                   <ul class="item_marks">
-                                      <li class="item_mark item_discount">-25%</li>
-                                      <li class="item_mark item_new">new</li>
+                                      <li class="item_mark item_discount">{{__('index._-25%')}}</li>
+                                      <li class="item_mark item_new">{{__('index._new')}}</li>
                                   </ul>
                               </div>
                           </div>
@@ -1259,12 +1253,12 @@
                                   <div class="viewed_image"><img src="{{asset('public/frontend/images/view_2.jpg')}}"
                                           alt=""></div>
                                   <div class="viewed_content text-center">
-                                      <div class="viewed_price">$379</div>
-                                      <div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
+                                      <div class="viewed_price">{{__('index._$225')}}</div>
+                                      <div class="viewed_name"><a href="#">{{__('index._beoplay_h7')}}</a></div>
                                   </div>
                                   <ul class="item_marks">
-                                      <li class="item_mark item_discount">-25%</li>
-                                      <li class="item_mark item_new">new</li>
+                                      <li class="item_mark item_discount">{{__('index._-25%')}}</li>
+                                      <li class="item_mark item_new">{{__('index._new')}}</li>
                                   </ul>
                               </div>
                           </div>
@@ -1276,12 +1270,12 @@
                                   <div class="viewed_image"><img src="{{asset('public/frontend/images/view_3.jpg')}}"
                                           alt=""></div>
                                   <div class="viewed_content text-center">
-                                      <div class="viewed_price">$225</div>
-                                      <div class="viewed_name"><a href="#">Samsung J730F...</a></div>
+                                      <div class="viewed_price">{{__('index._$225')}}</div>
+                                      <div class="viewed_name"><a href="#">{{__('index._beoplay_h7')}}</a></div>
                                   </div>
                                   <ul class="item_marks">
-                                      <li class="item_mark item_discount">-25%</li>
-                                      <li class="item_mark item_new">new</li>
+                                      <li class="item_mark item_discount">{{__('index._-25%')}}</li>
+                                      <li class="item_mark item_new">{{__('index._new')}}</li>
                                   </ul>
                               </div>
                           </div>
@@ -1293,12 +1287,12 @@
                                   <div class="viewed_image"><img src="{{asset('public/frontend/images/view_4.jpg')}}"
                                           alt=""></div>
                                   <div class="viewed_content text-center">
-                                      <div class="viewed_price">$379</div>
-                                      <div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
+                                      <div class="viewed_price">{{__('index._$225')}}</div>
+                                      <div class="viewed_name"><a href="#">{{__('index._beoplay_h7')}}</a></div>
                                   </div>
                                   <ul class="item_marks">
-                                      <li class="item_mark item_discount">-25%</li>
-                                      <li class="item_mark item_new">new</li>
+                                      <li class="item_mark item_discount">{{__('index._-25%')}}</li>
+                                      <li class="item_mark item_new">{{__('index._new')}}</li>
                                   </ul>
                               </div>
                           </div>
@@ -1310,12 +1304,12 @@
                                   <div class="viewed_image"><img src="{{asset('public/frontend/images/view_5.jpg')}}"
                                           alt=""></div>
                                   <div class="viewed_content text-center">
-                                      <div class="viewed_price">$225<span>$300</span></div>
-                                      <div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
+                                      <div class="viewed_price">{{__('index._$225')}}$225<span>{{__('index._$300')}}</span></div>
+                                      <div class="viewed_name"><a href="#">{{__('index._beoplay_h7')}}</a></div>
                                   </div>
                                   <ul class="item_marks">
-                                      <li class="item_mark item_discount">-25%</li>
-                                      <li class="item_mark item_new">new</li>
+                                      <li class="item_mark item_discount">{{__('index._-25%')}}</li>
+                                      <li class="item_mark item_new">{{__('index._new')}}</li>
                                   </ul>
                               </div>
                           </div>
@@ -1327,12 +1321,12 @@
                                   <div class="viewed_image"><img src="{{asset('public/frontend/images/view_6.jpg')}}"
                                           alt=""></div>
                                   <div class="viewed_content text-center">
-                                      <div class="viewed_price">$375</div>
-                                      <div class="viewed_name"><a href="#">Speedlink...</a></div>
+                                      <div class="viewed_price">{{__('index._$225')}}</div>
+                                      <div class="viewed_name"><a href="#">{{__('index._beoplay_h7')}}</a></div>
                                   </div>
                                   <ul class="item_marks">
-                                      <li class="item_mark item_discount">-25%</li>
-                                      <li class="item_mark item_new">new</li>
+                                      <li class="item_mark item_discount">{{__('index._-25%')}}</li>
+                                      <li class="item_mark item_new">{{__('index._new')}}</li>
                                   </ul>
                               </div>
                           </div>
@@ -1412,9 +1406,9 @@
                       <div class="newsletter_title_container">
                           <div class="newsletter_icon"><img src="{{asset('public/frontend/images/send.png')}}" alt="">
                           </div>
-                          <div class="newsletter_title">Sign up for Newsletter</div>
+                          <div class="newsletter_title">{{__('index._sign_up_for_newsletter')}}</div>
                           <div class="newsletter_text">
-                              <p>...and receive %20 coupon for first shopping.</p>
+                              <p>{{__('index._receive_20')}}</p>
                           </div>
                       </div>
                       <div class="newsletter_content clearfix">
@@ -1422,9 +1416,9 @@
                               @csrf
                               <input type="email" class="newsletter_input" required="required"
                                   placeholder="Enter your email address" name="email">
-                              <button class="newsletter_button">Subscribe</button>
+                              <button class="newsletter_button">{{__('index._subscribe')}}</button>
                           </form>
-                          <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
+                          <div class="newsletter_unsubscribe_link"><a href="#">{{__('index._unsubscribe')}} </a></div>
                       </div>
                   </div>
               </div>
