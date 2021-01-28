@@ -9,6 +9,9 @@
     বিস্ মিব ফ্যাশন
     @else
     BISMIB FASHION
+    {{-- {{ __('text.introduction')}} --}}
+    {{-- {{ trans_choice('text.introduction', 10)}} --}}
+    {{-- {{ __('text.introduction',['user' => "victor"])}} --}}
     @endif
 </title>
 <meta name="csrf" value="{{ csrf_token() }}">
@@ -23,6 +26,7 @@
     <meta name="keywords"   content="{{DB::table('seo')->pluck('bing_analytics_bn')->first()}}" />
 @else
     <meta name="title"   content="{{DB::table('seo')->pluck('meta_title_en')->first()}}" />
+    {{-- {{dd(DB::table('seo')->pluck('meta_title_en')->first())}} --}}
     <meta name="author"   content="{{DB::table('seo')->pluck('meta_author_en')->first()}}" />
     <meta name="keywords"   content="{{DB::table('seo')->pluck('meta_tags_en')->first()}}" />
     <meta name="description"   content="{{DB::table('seo')->pluck('meta_description_en')->first()}}" />
