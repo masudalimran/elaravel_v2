@@ -9,7 +9,7 @@
   <!-- Characteristics -->
 
   {{-- {{dd(  )}} --}}
-  {{-- {{ app()->setLocale( getLocaleFromUrl( Request::url() ) ) }} --}}
+  {{ app()->setLocale( getLocaleFromUrl( Request::url() ) ) }}
   {{-- {{ dd( getLocaleFromUrl( Request::url() ) ) }} --}}
   @php
   $featured_product=DB::table('products')
@@ -1412,7 +1412,7 @@
                           </div>
                           <div class="newsletter_title">{{__('index._sign_up_for_newsletter')}}</div>
                           <div class="newsletter_text">
-                              <p>{{__('index._receive_20')}}</p>
+                              <p>{{__('index._receive_20%')}}</p>
                           </div>
                       </div>
                       <div class="newsletter_content clearfix">
