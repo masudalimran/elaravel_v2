@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\App;
 Route::get('/', function () {
     // App::setLocale('bn');
     return view('pages.index');
-    // /return redirect()->route('language.english');
+    // return redirect()->route('language.english');
 });
-Route::get('{lang}/', function () {
+Route::get('bn/', function () {
     // App::setLocale('bn');
     return view('pages.index');
 });
-// Route::get('en/', function () {
-//     // App::setLocale('bn');
-//     return view('pages.index');
-// });
+Route::get('en/', function () {
+    // App::setLocale('bn');
+    return view('pages.index');
+});
 //auth & user
 Auth::routes(['verify' => true]);
 Route::get('/welcome', 'HomeController@welcome')->name('welcome');
@@ -35,7 +35,7 @@ Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');
 
 //Google Socialite
 Route::get('/auth/redirect/{provider}', 'Auth\GoogleController@redirect');
-Route::get('/callback/{provider}', 'Auth\GoogleController@callback');
+ Route::get('/callback/{provider}', 'Auth\GoogleController@callback');
 
 //facebook socialite
 // Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
