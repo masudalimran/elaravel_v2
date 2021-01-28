@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\App;
 
 Route::get('/', function () {
     // App::setLocale('bn');
-    // return view('pages.index');
-    /return redirect()->route('language.english');
+    return view('pages.index');
+    // /return redirect()->route('language.english');
 });
 Route::get('{lang}/', function () {
     // App::setLocale('bn');
