@@ -75,7 +75,7 @@ $language = session()->get('lang');
                     <div class="dropdown" id="dropdownMenuButton_menu" style="margin-left:auto; margin-top:2px; margin-right:8%;" >
                         <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                            ({{Auth::user()->name}})
+                            {{-- ({{Auth::user()->name}}) --}}
                             {{-- <a href="{{route('home')}}" style="color: white">@if ($language == 'bangla') প্রোফাইল  @else Profile @endif
                                 ({{Auth::user()->name}})</a> --}}
                                 {{-- menu --}}
