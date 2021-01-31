@@ -225,8 +225,8 @@
                                 ->where('user_id',Auth::id())
                                 ->get();
                             @endphp
-                            <div class="wishlist d-flex flex-row align-items-center justify-content-end">
-								<div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
+                            <div class="wishlist d-flex flex-row align-items-center justify-content-end" id="wishlist_count_show">
+								<div class="wishlist_icon"><a href="{{route('show.wishlist')}}"><img src="{{asset('public/frontend/images/heart.png')}}"></a></div>
 								<div class="wishlist_content">
 									<div class="wishlist_text"><a href="{{route('show.wishlist')}}">@if ($language == 'bangla') উইশলিস্ট @else Wishlist @endif</a></div>
 									<div class="wishlist_count" id="wishlist-count">{{count($wishlist)}}</div>
@@ -250,9 +250,11 @@
                                     $subtotal_cart += ($v_cart->qty) * ($v_cart->price);
                                 }
                                 @endphp
-								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
+								<div class="cart_container d-flex flex-row align-items-center justify-content-end" id="cart_count_show">
 									<div class="cart_icon">
-										<img src="images/cart.png" alt="">
+                                        <a href="{{route('show.cart')}}">
+                                            <img src="{{asset('public/frontend/images/cart.png')}}" alt="">
+                                        </a>
 										<div class="cart_count" ><span id="cart-count">{{count($cart)}}</span></div>
 									</div>
 									<div class="cart_content">
@@ -418,6 +420,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       }
     @endif
  </script>
+ <style>
+    @media (max-width: 768px) {
+        #wishlist_count_show {
+            /* visibility:hidden; */
+            /* background: red; */
+        }
+        #cart_count_show {
+            /* visibility:hidden; */
+            /* background: red; */
+        }
+    }
+    /* cart_count_show */
+
+</style>
 </body>
 
 </html>
