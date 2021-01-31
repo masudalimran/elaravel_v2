@@ -24,9 +24,9 @@ class BlogController extends Controller
         // Session::get('lang');
         // session()->forget('lang');
         Session::put('lang','bangla');
-        app()->setLocale('bn');
-        // return redirect()->back();
-        return redirect('/bn/');
+        // app()->setLocale('bn');
+        return redirect()->back();
+        // return redirect('/bn/');
 
     }
 
@@ -34,9 +34,9 @@ class BlogController extends Controller
         // Session::get('lang');
         // session()->forget('lang');
         Session::put('lang','english');
-        App::setLocale('en');
-        // return redirect()->back();
-        return redirect('/en/');
+        // App::setLocale('en');
+        return redirect()->back();
+        // return redirect('/en/');
     }
 
     public function translate_en($source_language){

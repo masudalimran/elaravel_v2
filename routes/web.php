@@ -3,15 +3,18 @@
 // use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-
+// use Illuminate\Http\RedirectResponse;
 Route::get('/', function () {
     return view('pages.index');
+    // return redirect()->route('/{lang}');
 });
+// https://www.youtube.com/watch?v=KqzGKg8IxE4
+// Route::group(['prefix' => '{language}'], function () {
 
-Route::get('{lang}/', function ($lang) {
-    // App::setLocale($lang);
-    return view('pages.index');
-});
+//     Route::get('/', function () {
+//         return view('pages.index');
+//     });
+// });
 
 //auth & user
 Auth::routes(['verify' => true]);

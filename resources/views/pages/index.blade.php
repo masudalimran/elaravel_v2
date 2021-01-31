@@ -9,7 +9,7 @@
   <!-- Characteristics -->
 
   {{-- {{dd(  )}} --}}
-  {{ app()->setLocale( getLocaleFromUrl( Request::url() ) ) }}
+  {{-- {{ app()->setLocale( getLocaleFromUrl( Request::url() ) ) }} --}}
   {{-- {{ dd( getLocaleFromUrl( Request::url() ) ) }} --}}
   @php
   $featured_product=DB::table('products')
