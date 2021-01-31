@@ -1127,8 +1127,9 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             height: 100%;
             width: 100%;
         }
-        #order_total_amount{
-            float: right;        }
+        .order_total_amount{
+            float: right;
+        }
     }
 </style>
 {{-- mobile responsive --}}
