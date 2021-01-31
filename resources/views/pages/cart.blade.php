@@ -148,7 +148,9 @@
                                                 <button onclick="remove_cart_item({{$item->product_id}},{{$item->price}})" class="btn btn-sm btn-danger">X</button>
                                         </div>
                                     </div>
-                                    <button id="action_show_mobile" style="display: none" onclick="remove_cart_item({{$item->product_id}},{{$item->price}})" class="btn btn-sm btn-danger">X</button>
+                                    <div >
+                                        <button id="action_show_mobile" style="display: none" onclick="remove_cart_item({{$item->product_id}},{{$item->price}})" class="btn btn-sm btn-danger">Delete</button>
+                                    </div>
                                     @php
                                         $sum_total+=($item->price * $item->qty);
                                     @endphp
@@ -1106,9 +1108,10 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             min-width:100% !important;
         }
         #action_show_mobile{
-            max-width: 100% !important;
-            min-width:100% !important;
-            display: inline;
+            /* max-width: 100% !important; */
+            margin-left:35%;
+            min-width:50% !important;
+            display: inline !important;
         }
         #action_hide_mobile{
             display: none;
@@ -1127,8 +1130,12 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
             height: 100%;
             width: 100%;
         }
-        #order_total_amount{
-            float: right;        }
+        .order_total_amount{
+            float: right;
+        }
+        .cart_buttons {
+            margin-left: 10%;
+        }
     }
 </style>
 {{-- mobile responsive --}}
