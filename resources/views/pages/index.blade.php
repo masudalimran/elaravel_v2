@@ -191,15 +191,15 @@
                                               <div class="deals_timer_box clearfix" data-target-time="">
                                                   <div class="deals_timer_unit">
                                                       <div id="deals_timer1_hr" class="deals_timer_hr"></div>
-                                                      <span>{{__('index._hours')}}</span>
+                                                      <span style="font-size: small">{{__('index._hours')}}</span>
                                                   </div>
                                                   <div class="deals_timer_unit">
                                                       <div id="deals_timer1_min" class="deals_timer_min"></div>
-                                                      <span>{{__('index._mins')}}</span>
+                                                      <span style="font-size: small">{{__('index._mins')}}</span>
                                                   </div>
                                                   <div class="deals_timer_unit">
                                                       <div id="deals_timer1_sec" class="deals_timer_sec"></div>
-                                                      <span>{{__('index._secs')}}</span>
+                                                      <span style="font-size: small">{{__('index._secs')}}</span>
                                                   </div>
                                               </div>
                                           </div>

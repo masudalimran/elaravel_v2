@@ -66,68 +66,10 @@
 
 @endphp
 
-{{-- ================================================================================================ --}}
-{{--
-<div class="cart_section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-10 offset-lg-1">
-                <div class="cart_container">
-                    <div class="cart_title text-center">Thank You Shopping With BISMIB FASHION</div>
-                    <h4 style="text-align: center; color: red">Your Payment Has Been Received Successfully</h4>
-
-                    <div class="card text-center">
-                        <div class="card-header">
-                          Paid With Stripe
-                        </div>
-                        <div class="card-body">
-                          <h5 class="card-title">User Name</h5>
-                          <p class="card-text">Paid Successfully {{$charge->amount}}</p>
-                          <p class="card-text">Token Number</p>
-                          <a href="{{url('/')}}" class="btn btn-primary">Go To Home Page</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                          2 days ago
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
-{{-- ================================================================================================ --}}
-
 <div class="cart_section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 offset-lg-0">
-
-                    {{-- <div > --}}
-                    {{-- <div class="card" id="payment_stripe" style="display: none">
-                        <div class="card-header">
-                          Pay Us Through Stripe here
-                        </div>
-                        <div class="card-body">
-                            <form role="form" action="{{route('payment.charge')}}" method="post" id="payment-form">
-                                @csrf
-                                <div class="form-row">
-                                    <label for="card-element">
-                                        Enter Your Credit or Debit Card Information Here
-                                    </label>
-                                    <div id="card-element">
-                                        <!-- A Stripe Element will be inserted here. -->
-                                    </div>
-
-                                    <!-- Used to display form errors. -->
-                                    <div id="card-errors" role="alert"></div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit Payment</button>
-                            </form>
-                        </div>
-                    </div> --}}
-                    {{-- </div> --}}
 
                 <div class="cart_container" id="shopping_cart_content" style="display: block">
 
@@ -147,21 +89,21 @@
                     <div class="cart_items">
                         <ul class="cart_list">
                             <li class="cart_item clearfix" id="remove-cart-item-{{$item->id}}">
-                                <div class="cart_item_image">
+                                <div class="cart_item_image" id="product_image_mobile">
                                     <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
-                                        <img src="{{asset($item->image)}}" alt="">
+                                        <img src="{{asset($item->image)}}" id="literally_the_product_image">
                                     </a>
                                 </div>
                                 <div class="cart_item_info d-flex flex-sm-row flex-column justify-content-between">
-                                    <div class="cart_item_name cart_info_col" style="max-width: 10%; min-width:10%;">
-                                        <div class="cart_item_title">Product Name</div>
-                                        <div class="cart_item_text" >{{$item->product_name}}</div>
+                                    <div class="cart_item_name cart_info_col" style="max-width: 10%; min-width:10%;" id="product_name_mobile">
+                                        <div class="cart_item_title">Product Name: </div>
+                                        <div class="cart_item_text" id="product_name_text_mobile">{{$item->product_name}}</div>
                                     </div>
-                                    <div class="cart_item_name cart_info_col" style="max-width: 7%; min-width:7%;">
+                                    <div class="cart_item_name cart_info_col" style="max-width: 7%; min-width:7%;" id="product_id_mobile">
                                         <div class="cart_item_title">Product ID: </div>
                                         <div class="cart_item_text"><h5>{{$item->product_id}}</h5></div>
                                     </div>
-                                    <div class="cart_item_color cart_info_col" style="max-width: 10%; min-width:10%;">
+                                    <div class="cart_item_color cart_info_col" style="max-width: 10%; min-width:10%;" id="product_color_mobile">
                                         <div class="cart_item_title" style="text-align: center">Color</div>
                                         <div class="cart_item_text">
                                             <select onchange="change_color({{$item->product_id}}, this.value)" class="form-control input-sm select-100" id="cart_product_color">
@@ -172,7 +114,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="cart_item_color cart_info_col" style="max-width: 7%; min-width:7%;">
+                                    <div class="cart_item_color cart_info_col" style="max-width: 7%; min-width:7%;" id="product_size_mobile">
                                         <div class="cart_item_title" style="text-align: center">Size</div>
                                         <div class="cart_item_text" >
                                             <select onchange="change_size({{$item->product_id}}, this.value)" class="form-control input-lg select-100" id="exampleFormControlSelect1">
@@ -184,29 +126,29 @@
                                     </div>
 
                                     {{-- QUANTIY --}}
-                                    <div class="cart_item_quantity cart_info_col" style="max-width: 8%; min-width:8%;">
+                                    <div class="cart_item_quantity cart_info_col" style="max-width: 8%; min-width:8%;" id="product_qty_mobile">
                                         <div class="cart_item_title">Quantity</div>
-                                        <div class="cart_item_text" >
-                                            <input onchange="qty_change({{$item->id}},this.value, {{$item->price}}, {{$userId}})" class="form-control" type="number" pattern="[0-9]*" value="{{$item->qty}}" name="qty">
+                                        <div class="cart_item_text" id="qty_input_field">
+                                            <input  onchange="qty_change({{$item->id}},this.value, {{$item->price}}, {{$userId}})" class="form-control" type="number" pattern="[0-9]*" value="{{$item->qty}}" name="qty">
                                         </div>
                                     </div>
                                     {{-- QUANTIY --}}
 
-                                    <div class="cart_item_price cart_info_col" style="max-width: 10%; min-width:10%;">
+                                    <div class="cart_item_price cart_info_col" style="max-width: 10%; min-width:10%;" id="price_mobile">
                                         <div class="cart_item_title" style="text-align: right">Price</div>
                                         <div class="cart_item_text">{{numberFormat($item->price)}}</div>
                                     </div>
-                                    <div class="cart_item_total cart_info_col" style="max-width: 10%; min-width:10%;">
+                                    <div class="cart_item_total cart_info_col" style="max-width: 10%; min-width:10%;" id="total_mobile">
                                         <div class="cart_item_title" style="text-align: right">Total</div>
                                         <div class="cart_item_text" id="product-subtotal-{{$item->id}}">{{numberFormat($item->price * $item->qty)  }}</div>
                                     </div>
-                                    <div class="cart_item_name cart_info_col" style="max-width: 5%; min-width:5%;">
+                                    <div class="cart_item_name cart_info_col" style="max-width: 5%; min-width:5%;" id="action_hide_mobile">
                                         <div class="cart_item_title" style="text-align: center">Action</div>
                                         <div class="cart_item_text" style="text-align: center">
                                                 <button onclick="remove_cart_item({{$item->product_id}},{{$item->price}})" class="btn btn-sm btn-danger">X</button>
                                         </div>
-
                                     </div>
+                                    <button id="action_show_mobile" style="display: none" onclick="remove_cart_item({{$item->product_id}},{{$item->price}})" class="btn btn-sm btn-danger">X</button>
                                     @php
                                         $sum_total+=($item->price * $item->qty);
                                     @endphp
@@ -241,9 +183,12 @@
                     <div class="order_total">
                         <div class="order_total_content text-md-right">
                             <div class="order_total_title">Coupon Discount
-                                <span class="badge badge-pill badge-success" id="coupon_name"></span>
-                                 <span class="badge badge-pill badge-warning" id="coupon_percentage"></span>
-                                  (-)</div>
+                                {{-- <div id="coupon_name_mobile"> --}}
+                                    <span class="badge badge-pill badge-success" id="coupon_name"></span>
+                                {{-- </div> --}}
+                                <span class="badge badge-pill badge-warning" id="coupon_percentage"></span>
+                                (-)
+                            </div>
                             <div class="order_total_amount" id="updated_coupon">{{numberFormat($coupon_minus)}}</div><br>
                         </div>
                     </div>
@@ -1117,6 +1062,76 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
 
 </script>
 {{-- Payment script --}}
+
+{{-- mobile responsive --}}
+<style>
+    @media (max-width: 768px){
+        #product_name_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+        }
+        #product_name_text_mobile{
+            font-size: 12px;
+        }
+        .cart_item_text {
+            float: right;
+            margin-top: 2%;
+        }
+        #product_id_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+        }
+        #product_color_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+        }
+        #product_qty_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+        }
+
+        #qty_input_field{
+            max-width: 25%;
+        }
+        #product_size_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+        }
+        #price_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+        }
+        #total_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+        }
+        #action_show_mobile{
+            max-width: 100% !important;
+            min-width:100% !important;
+            display: inline;
+        }
+        #action_hide_mobile{
+            display: none;
+        }
+
+        #coupon_name{
+            display: none;
+        }
+        #product_image_mobile{
+            margin: auto;
+            width: 50%;
+            border: 2px solid black;
+            padding: 0px;
+        }
+        #literally_the_product_image{
+            height: 100%;
+            width: 100%;
+        }
+        #order_total_amount{
+            float: right;        }
+    }
+</style>
+{{-- mobile responsive --}}
 
 @endsection
 
