@@ -572,53 +572,53 @@
                                   <div class="arrivals_slider slider">
                                       @foreach ($hot_best_sellers as $v_hot_best_sellers)
 
-                                      @if ($v_hot_best_sellers->product_quantity >= 50)
+                                        @if ($v_hot_best_sellers->product_quantity >= 50)
 
-                                      <!-- Slider Item -->
-                                      <a href="{{url('product/details/'.$v_hot_best_sellers->id.'/'.$v_hot_best_sellers->product_name)}}">
-                                        <div class="arrivals_slider_item">
-                                            <div class="border_active"></div>
-                                            <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                                    <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                    <img src="{{URL::to($v_hot_best_sellers->image_1)}}" style="height: 130px; width: 150px">
-                                                    </div>
+                                            <!-- Slider Item -->
+                                            <a href="{{url('product/details/'.$v_hot_best_sellers->id.'/'.$v_hot_best_sellers->product_name)}}">
+                                                <div class="arrivals_slider_item">
+                                                    <div class="border_active"></div>
+                                                    <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                                            <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                            <img src="{{URL::to($v_hot_best_sellers->image_1)}}" style="height: 130px; width: 150px">
+                                                            </div>
 
-                                                <div class="product_content">
-                                                    <div class="product_price">৳ {{numberFormat($v_hot_best_sellers->selling_price)}}</div>
-                                                    <div class="product_name">
-                                                        <div><a href="product.html">{{($v_hot_best_sellers->product_name)}}</a></div>
-                                                    </div>
-                                                    <div class="product_extras">
-                                                        <p>{{$v_hot_best_sellers->product_color}}</p>
-                                                        <a onclick="add_to_cart({{$v_hot_best_sellers->id}})" >
-                                                        <button class="product_cart_button">{{__('index._add_to_cart')}}</button>
+                                                        <div class="product_content">
+                                                            <div class="product_price">৳ {{numberFormat($v_hot_best_sellers->selling_price)}}</div>
+                                                            <div class="product_name">
+                                                                <div><a href="product.html">{{($v_hot_best_sellers->product_name)}}</a></div>
+                                                            </div>
+                                                            <div class="product_extras">
+                                                                <p>{{$v_hot_best_sellers->product_color}}</p>
+                                                                <a onclick="add_to_cart({{$v_hot_best_sellers->id}})" >
+                                                                <button class="product_cart_button">{{__('index._add_to_cart')}}</button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <a onclick="addwishlist({{$v_hot_best_sellers->id}})" >
+                                                            @if(Auth::check())
+                                                            <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                            @else
+                                                            <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
+                                                            @endif
                                                         </a>
+
+                                                    <ul class="product_marks">
+                                                        @if($v_hot_best_sellers->discount_price == NULL)
+                                                        @else
+                                                        <li class="product_mark product_new" style="background: red;">
+                                                            -{{round(($v_hot_best_sellers->discount_price/$v_hot_best_sellers->selling_price)*100)}}%</li>
+                                                        @endif
+                                                        @if($v_hot_best_sellers->hot_new == NULL)
+                                                        @else
+                                                        <li class="product_mark product_new">{{__('index._new')}}
+                                                        </li>
+                                                        @endif
+                                                    </ul>
                                                     </div>
                                                 </div>
-                                                <a onclick="addwishlist({{$v_hot_best_sellers->id}})" >
-                                                    @if(Auth::check())
-                                                    <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                    @else
-                                                    <div class="product_fav" style="pointer-events: none;"><i class="fas fa-heart"></i></div>
-                                                    @endif
-                                                </a>
-
-                                            <ul class="product_marks">
-                                                @if($v_hot_best_sellers->discount_price == NULL)
-                                                @else
-                                                <li class="product_mark product_new" style="background: red;">
-                                                    -{{round(($v_hot_best_sellers->discount_price/$v_hot_best_sellers->selling_price)*100)}}%</li>
-                                                @endif
-                                                @if($v_hot_best_sellers->hot_new == NULL)
-                                                @else
-                                                <li class="product_mark product_new">{{__('index._new')}}
-                                                </li>
-                                                @endif
-                                            </ul>
-                                            </div>
-                                        </div>
-                                    </a>
-                                      @endif
+                                            </a>
+                                        @endif
 
                                       @endforeach
 

@@ -4,10 +4,14 @@
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 // use Illuminate\Http\RedirectResponse;
+// Route::get('/', function () {
+//     // return view('pages.index');
+//     return redirect()->route('/yoyoyoyoyo/');
+// });
 Route::get('/', function () {
     return view('pages.index');
-    // return redirect()->route('/{lang}');
 });
+// Route::redirect('/', '/en/');
 // https://www.youtube.com/watch?v=KqzGKg8IxE4
 // Route::group(['prefix' => '{language}'], function () {
 
