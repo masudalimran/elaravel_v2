@@ -361,6 +361,14 @@
         }
     }
 
-
+    function getLocaleFromUrl($url){
+        if(strpos($url,'/en') !== false ){
+            return 'en';
+        }elseif(strpos($url,'/bn') !== false ){
+            return 'bn';
+        }else{
+            return 'zero';
+        }
+    }
 
 ?>

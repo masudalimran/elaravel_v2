@@ -536,7 +536,16 @@ $(document).ready(function() {
                     {
                         breakpoint: 480,
                         settings: {
-                            rows: 1,
+                            rows: 2,
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            dots: false
+                        }
+                    },
+                    {
+                        breakpoint: 320,
+                        settings: {
+                            rows: 2,
                             slidesToShow: 1,
                             slidesToScroll: 1,
                             dots: false
@@ -618,7 +627,7 @@ $(document).ready(function() {
                 {
                     breakpoint: 575,
                     settings: {
-                        rows: 1,
+                        rows: 2,
                         slidesToShow: 1,
                         slidesToScroll: 1,
                         dots: false

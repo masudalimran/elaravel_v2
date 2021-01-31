@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Stichoza\GoogleTranslate\GoogleTranslate;
@@ -23,7 +24,9 @@ class BlogController extends Controller
         // Session::get('lang');
         // session()->forget('lang');
         Session::put('lang','bangla');
-        return redirect('/bn/');
+        // app()->setLocale('bn');
+        return redirect()->back();
+        // return redirect('/bn/');
 
     }
 
@@ -31,7 +34,9 @@ class BlogController extends Controller
         // Session::get('lang');
         // session()->forget('lang');
         Session::put('lang','english');
-        return redirect('/en/');
+        // App::setLocale('en');
+        return redirect()->back();
+        // return redirect('/en/');
     }
 
     public function translate_en($source_language){
