@@ -56,8 +56,8 @@ $language = session()->get('lang');
                                         class="fas fa-chevron-down"></i></a></li>
                             <li><a href="/elaravel_v2/?/#home-cat-buy-one-get-one">Buy 1 Get 1<i
                                         class="fas fa-chevron-down"></i></a></li>
-                            <li><a href="{{ route('blog.post') }}">Blogs<i class="fas fa-chevron-down"></i></a></li>
-                            <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                            <li><a href="{{ route('blog.post',app()->getLocale()) }}">Blogs<i class="fas fa-chevron-down"></i></a></li>
+                            <li><a href="#">Contact<i class="fas fa-chevron-down"></i></a></li>
                         </ul>
                     </div>
 
@@ -66,17 +66,14 @@ $language = session()->get('lang');
                     @guest
                         <div  id="login_mobile" style="margin-left:auto; margin-top:2px; margin-right:2%; display:inline-block">
                             {{-- <a style="color: yellow" href="{{ route('blog.post') }}">Blogs|</a> --}}
-                            <a href="{{ route('blog.post') }}" style="color: white">Blogs</a>
+                            <a href="{{ route('blog.post',app()->getLocale()) }}" style="color: white">Blogs</a>
                             <button class="btn btn-success btn-sm">
-                                <a style="color: white" href="{{route('login')}}">
+                                <a style="color: white" href="{{route('login',app()->getLocale())}}">
                                     Log in | Register
                                 </a>
                             </button>
                         </div>
                     @else
-                    {{-- <button class="btn btn-primary btn-sm" style="margin-left:auto; margin-top:2px; margin-right:2%;">
-                        <a href="{{ route('blog.post') }}" style="color: white">Blogs</a>
-                    </button> --}}
                     <div class="dropdown" id="dropdownMenuButton_menu" style="margin-left:auto; margin-top:2px; margin-right:8%;" >
                         <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
@@ -84,11 +81,11 @@ $language = session()->get('lang');
                         {{-- menu --}}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{route('home')}}" style="color: green">Profile</a>
-                            <a class="dropdown-item" href="{{route('show.wishlist')}}">Wishlist</a>
-                            <a class="dropdown-item" href="{{route('show.cart')}}">Cart</a>
-                            <a class="dropdown-item" href="{{ route('blog.post') }}">Blogs</a>
-                            <a class="dropdown-item" href="{{route('user.logout')}}" style="color: red">logout</a>
+                            <a class="dropdown-item" href="{{route('home',app()->getLocale())}}" style="color: green">Profile</a>
+                            <a class="dropdown-item" href="{{route('show.wishlist', app()->getLocale())}}">Wishlist</a>
+                            <a class="dropdown-item" href="{{route('show.cart',app()->getLocale())}}">Cart</a>
+                            <a class="dropdown-item" href="{{ route('blog.post',app()->getLocale()) }}">Blogs</a>
+                            <a class="dropdown-item" href="{{route('user.logout',app()->getLocale())}}" style="color: red">logout</a>
                         </div>
                     </div>
                     @endguest

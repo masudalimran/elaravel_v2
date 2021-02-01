@@ -4,21 +4,19 @@
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 // use Illuminate\Http\RedirectResponse;
-// Route::get('/', function () {
-//     // return view('pages.index');
-//     return redirect()->route('/yoyoyoyoyo/');
-// });
-Route::get('/', function () {
-    return view('pages.index');
-});
-// Route::redirect('/', '/en/');
-// https://www.youtube.com/watch?v=KqzGKg8IxE4
-// Route::group(['prefix' => '{language}'], function () {
 
-//     Route::get('/', function () {
-//         return view('pages.index');
-//     });
-// });
+Route::get('/', function () {
+    return redirect()->route('home_page', 'en');
+});
+// Route::redirect('/', '/en');
+// https://www.youtube.com/watch?v=KqzGKg8IxE4
+Route::group(['prefix' => '{language}'], function () {
+    Route::get('/', function () {
+        return view('pages.index');
+    })->name('home_page');
+// Route::get('/show/wishlist','wishlistController@show_wishlist')->name('show.wishlist');
+
+
 
 //auth & user
 Auth::routes(['verify' => true]);
@@ -213,6 +211,8 @@ Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
 Route::post('cart/product/details/add/{product_id}','VisitProductController_f@AddCart_from_details');
 
     //customer profile related routes
+
+});
 
 
 
