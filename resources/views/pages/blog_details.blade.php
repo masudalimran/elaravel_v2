@@ -5,6 +5,7 @@
     $language = session()->get('lang');
 @endphp
 
+{{-- {{dd(app()->getLocale())}} --}}
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/bootstrap4/bootstrap.min.css')}}">
 <link href="{{asset('public/frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
@@ -99,9 +100,9 @@
                                 </div>
                             @endif
                             @if ($language == 'bangla')
-                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">আরো পড়ুন</a></div>
+                                <div class="blog_button"><a href="{{route('blog.details',[app()->getLocale(), $item->id])}}">আরো পড়ুন</a></div>
                             @else
-                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">Continue Reading</a></div>
+                                <div class="blog_button"><a href="{{route('blog.details',[app()->getLocale(), $item->id])}}">Continue Reading</a></div>
                             @endif
                         </div>
                         @endforeach

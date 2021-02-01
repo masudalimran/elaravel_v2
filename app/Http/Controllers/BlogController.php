@@ -54,7 +54,7 @@ class BlogController extends Controller
         ]), 200, ["Content-Type" => "application/json"]);
     }
 
-    public function blog_details($id){
+    public function blog_details($lang, $id){
         $blog_details = DB::table('posts')
         ->where('id',$id)
         ->first();
