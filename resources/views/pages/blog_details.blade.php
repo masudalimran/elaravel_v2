@@ -14,9 +14,10 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/blog_single_responsive.css')}}">
     <!-- Home -->
 
-	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{asset($blog_details->post_image)}}" data-speed="0.8"></div>
-	</div>
+	{{-- <div class="home"> --}}
+        {{-- <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{asset($blog_details->post_image)}}" data-speed="0.8" ></div> --}}
+        <img src="{{asset($blog_details->post_image)}}" style="display: block; margin-left: auto; margin-right: auto; width: 80%;">
+	{{-- </div> --}}
 
 	<!-- Single Blog Post -->
 
@@ -90,7 +91,7 @@
                                     <span>.......................</span>
                                     <i onclick="change_lang_bn('{{$item->details_bn}}',{{$item->id}})" class="fas fa-align-right fa-language" title="Translate To English"></i>
                                 </div>
-                            @elseif($language == 'english')
+                            @else
                                 <div class="blog_text" id="translated-{{$item->id}}">
                                     {!!substr($item->details_en, 0, 120)!!}
                                     <span>.......................</span>

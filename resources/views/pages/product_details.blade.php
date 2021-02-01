@@ -67,10 +67,10 @@
 										 </div>
 										 @endif
 										 <div class="col-lg-4">
-										 	 <div class="form-group">
-										    <label for="exampleFormControlSelect1">Quantity</label>
-										 		<input class="form-control" type="number" pattern="[0-9]*" value="1" name="qty">
-										  </div>
+										 	<div class="form-group">
+										        <label for="exampleFormControlSelect1">Quantity</label>
+										 	    <input style="margin-left: 4%; margin-right:0%" class="form-control" type="number" pattern="[0-9]*" value="1" name="qty">
+										    </div>
 										 </div>
 									</div>
 								<div class="clearfix" style="z-index: 1000;">

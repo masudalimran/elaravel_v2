@@ -216,7 +216,7 @@
 
     <!-- Modal 1 checkout_modal -->
     <div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
-        <div class="modal-dialog modal-xl" role="document" style="max-width: 80%;">
+        <div class="modal-dialog modal-xl" role="document" style="max-width: 80%; margin-left:auto; margin-right: auto;">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Checkout</h5>
@@ -225,7 +225,6 @@
             </button>
             </div>
             <div class="modal-body">
-
                     {{-- <p style="text-align: center">(*) marked fields are mandatory</p> --}}
                     {{-- imported from auth --}}
                     <div class="form-group" id="shipping_information_div">
@@ -251,7 +250,7 @@
                       {{-- <input onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" type="text" class="form-control" name="checkout_district_n" id="checkout_district" aria-describedby="emailHelp" required> --}}
                     <div class="form-group">
                     <label for="exampleFormControlSelect1">District*</label><p id="shipping_district_error_messege" style="display: none; color: red"><b> Please Select Your Shipping Dsitrict</b></p>
-                        <select onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control select-30" name="checkout_district_n" id="checkout_district" style="width: 100% !important">
+                        <select onchange="shipping_district({{($sum_total)- ($coupon_minus)}})" class="form-control select-100" name="checkout_district_n" id="checkout_district" style="width: 100% !important">
                             <option>Select Shipping District</option>
                             <option>Dhaka (৳50)</option><span></span>
                             <option>Chittagong (৳350)</option>
@@ -309,29 +308,17 @@
                         Featured
                         </div> --}}
                         <ul class="list-group list-group-horizontal d-flex justify-content-around mr-auto ml-auto" id="payment">
-                            <li class="list-group-item " ><input type="radio" name="selected" value="stripe"> <img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
-                            <h5 style="text-align: center; color: violet">Pay With Stripe</h5></li>
+                            <li class="list-group-item " ><input type="radio" name="selected" value="stripe"> <img id="stripe_image_mobile" src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <h6 style="text-align: center; color: violet">Stripe</h6></li>
                             {{-- <li class="list-group-item text-center" ><img src="{{asset('public\media\Payment_system_images\stripe.png')}}" style="height: 70px; width: 180px"><br><br> --}}
                                 <?php
                                     require('show/config.php');
                                 ?>
-                            {{-- <form action="submit.php" method="post"> --}}
-                                {{-- <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                    data-key="{{$publishable_key}}"
-                                    data-amount="{{$total_cost}}"
-                                    data-name="{{Auth::user()->name}}"
-                                    data-description="Payment With Stripe"
-                                    data-image="https://image.shutterstock.com/image-vector/real-estate-logo-260nw-1615688014.jpg"
-                                    data-currency="BDT"
-                                    data-email="{{Auth::user()->email}}"
-                                    >
-                                </script> --}}
-                            {{-- </form> --}}
 
-                            <li class="list-group-item " ><input type="radio" name="selected" value="paypal"> <img src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
-                            <h5 style="text-align: center; color: blue">Pay With Paypal</h5></li>
-                            <li class="list-group-item " ><input type="radio" name="selected" value="mollie"> <img src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
-                            <h5 style="text-align: center; color: red">Pay With Mollie</h5></li>
+                            <li class="list-group-item " ><input type="radio" name="selected" value="paypal"> <img id="paypal_image_mobile" src="{{asset('public\media\Payment_system_images\paypal.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <h6 style="text-align: center; color: blue">Paypal</h6></li>
+                            <li class="list-group-item " ><input type="radio" name="selected" value="mollie"> <img id="mollie_image_mobile" src="{{asset('public\media\Payment_system_images\mollie.png')}}" style="height: 70px; width: 180px"><br><br>
+                            <h6 style="text-align: center; color: red">Mollie</h6></li>
                         </ul>
                     </div>
                 </div>
@@ -1135,6 +1122,18 @@ src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
         }
         .cart_buttons {
             margin-left: 10%;
+        }
+        #stripe_image_mobile{
+            height: 45px !important;
+            width: 50px !important;
+        }
+        #paypal_image_mobile{
+            height: 45px !important;
+            width: 50px !important;
+        }
+        #mollie_image_mobile{
+            height: 45px !important;
+            width: 50px !important;
         }
     }
 </style>
