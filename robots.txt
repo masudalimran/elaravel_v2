@@ -1,2 +1,3 @@
 User-agent: *
-Disallow:
+Disallow: public/backend/*
+Sitemap: http://www.bismibs.xyz/sitemap.xml
