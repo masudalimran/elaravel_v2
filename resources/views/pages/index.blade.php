@@ -1462,7 +1462,7 @@
         console.log(id);
         if(id) {
                $.ajax({
-                   url: "{{  url('/add/wishlist/') }}/"+id,
+                   url: "{{  url('/'.app()->getLocale().'/add/wishlist/') }}/"+id,
                    type:"GET",
                    dataType:"json",
                    success:function(data) {
@@ -1514,7 +1514,7 @@
         console.log(id);
         if(id) {
                $.ajax({
-                   url: "{{  url('/addtocart/') }}/"+id,
+                   url: "{{  url('/'.app()->getLocale().'/addtocart/') }}/"+id,
                    type:"GET",
                    dataType:"json",
                    success:function(data) {

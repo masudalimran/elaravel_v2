@@ -245,7 +245,7 @@ $slider = DB::table('products')
             display: none;
         }
         #login_mobile{
-            display: none;
+            display: none !important;
         }
     }
 

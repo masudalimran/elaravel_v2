@@ -5,6 +5,7 @@
         $language = session()->get('lang');
     @endphp
 <title>
+
     @if ($language == 'bangla')
     বিস্ মিব ফ্যাশন
     @else
@@ -117,15 +118,16 @@
                                             <a href="#">Language <span style="text-transform: capitalize">(ENGLISH)<i class="fas fa-chevron-down"></i></a>
                                         @endif
                                         <ul>
-                                            <li style="padding-left: 15px; padding-right: 15px"><a href="{{route(Route::currentRouteName(), 'en')}}">English<i class="fas fa-chevron-down"></i></a></li>
-                                            <li style="padding-left: 15px; padding-right: 15px"><a href="{{route(Route::currentRouteName(), 'bn')}}">বাংলা<i class="fas fa-chevron-down"></i></a></li>
+                                            <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('home_page', 'en')}}">English<i class="fas fa-chevron-down"></i></a></li>
+                                            <li style="padding-left: 15px; padding-right: 15px"><a href="{{route('home_page', 'bn')}}">বাংলা<i class="fas fa-chevron-down"></i></a></li>
                                             <li style="padding-left: 15px; padding-right: 15px" ><a href="#"><del> Russian1 (OFFLINE) </del><i class="fas fa-chevron-down"></i></a></li>
                                         </ul>
-									</li>
+                                    </li>
+
 								</ul>
 							</div>
 							<div class="top_bar_user">
-								<div class="user_icon"><img src="{{asset('public/frontend/images/user.svg')}}" alt=""></div>
+								<div class="user_icon"><img src="{{asset('public/frontend/images/user.svg')}}"></div>
                                 {{-- guest start --}}
                                 @guest
                                     <div><a href="{{route('login', app()->getLocale())}}">
@@ -142,10 +144,9 @@
                                             <li>
                                                 <div><a href="{{route('home', app()->getLocale())}}">@if ($language == 'bangla') প্রোফাইল  @else Profile @endif
                                                     ({{Auth::user()->name}})</a></div>
-                                                <ul>
-                                                    <li><a href="#">
-                                                        @if ($language == 'bangla') চেকআউট @else Checkout @endif
-                                                    </a></li>
+                                                <ul class="select-100">
+                                                    <li><a href="{{route('home', app()->getLocale())}}">@if ($language == 'bangla') প্রোফাইল  @else Profile @endif
+                                                        </a></li>
                                                     {{-- {{dd(app()->getLocale())}} --}}
                                                     <li><a href="{{route('show.wishlist', app()->getLocale() )}}">@if ($language == 'bangla') উইশ লিস্ট @else Wishlist  @endif</a></li>
                                                     <li><a href="{{route('show.cart', app()->getLocale())}}">@if ($language == 'bangla') কার্ট @else Cart  @endif</a></li>

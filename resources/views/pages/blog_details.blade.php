@@ -3,6 +3,7 @@
 
 @php
     $language = session()->get('lang');
+    // dd($language);
 @endphp
 
 {{-- {{dd(app()->getLocale())}} --}}
@@ -28,13 +29,13 @@
 				<div class="col-lg-8 offset-lg-2">
                     @if ($language == 'bangla')
                         <div class="single_post_title" style="text-align: center"><b>{!!$blog_details->post_title_bn!!}</b></div>
-                    @elseif($language == 'english')
+                    @else
                         <div class="single_post_title" style="text-align: center">{!!$blog_details->post_title_en!!}</div>
                     @endif
 					<div class="single_post_text">
                         @if ($language == 'bangla')
                             <div class="single_post_text">{!!$blog_details->details_bn!!}</div>
-                        @elseif($language == 'english')
+                        @else
                             <div class="single_post_text">{!!$blog_details->details_en!!}</div>
                         @endif
 
@@ -43,14 +44,14 @@
 							<div class="quote_text">
                                 @if ($language == 'bangla')
                                     {!!$blog_details->details_bn!!}
-                                @elseif($language == 'english')
+                                @else
                                     {!!$blog_details->details_en!!}
                                 @endif
                             </div>
 							<div class="quote_name">
                                 @if ($language == 'bangla')
                                     <h4>{!!$blog_details->author_bn!!}</h4>
-                                @elseif($language == 'english')
+                                @else
                                     <h4>{!!$blog_details->author_en!!}</h4>
                                 @endif
                             </div>
@@ -59,7 +60,7 @@
 						<p>
                         @if ($language == 'bangla')
                             <h6>{!!$blog_details->details_bn!!}</h6>
-                        @elseif($language == 'english')
+                        @else
                             <h6>{!!$blog_details->details_en!!}</h6>
                         @endif
                         </p>

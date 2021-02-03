@@ -15,6 +15,8 @@
 
 @php
     $language = session()->get('lang');
+    // dd($language);
+
 @endphp
 
 <div class="home">

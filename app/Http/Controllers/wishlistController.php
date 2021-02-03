@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class wishlistController extends Controller
 {
     //
-    public function add_wishlist($id){
+    public function add_wishlist($language, $id){
         $userId = Auth::id();
         $wishlist = DB::table('wishlists')
         ->where('user_id',$userId)

@@ -3,6 +3,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/contact_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/contact_responsive.css')}}">
 
+{{-- {{dd($forntend_cart_details)}} --}}
+
     <div class="contact_form">
         <div class="container">
             <h1 style="text-align:center; text-decoration: underline;">Cart Details</h1>
@@ -52,7 +54,7 @@
                     <br>
                     <div class="card">
                         <div class="card-header" style="text-align: center; color:red">
-                          <h3> Paid With {{$row->paid_with}}</h3>
+                            <h3> Paid With {{$row->paid_with}}</h3>
                         </div>
                         <div class="card-body">
                             <h5 class="card-text" style="text-align: center; color:black">Coupon Discount: {{numberformat($row->coupon_discount)}}</h5>
@@ -61,7 +63,8 @@
                             <h4 class="card-title" style="text-align: center; color:Blue">Total Cost: {{numberformat($row->total_cost)}}</h4>
                             <h5 class="card-title" style="text-align: center"></h5>
                         </div>
-                      </div>
+                    </div>
+
                 </div>
             </div>
         </div>
