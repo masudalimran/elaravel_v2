@@ -25,7 +25,7 @@
                             @foreach ($user_cart_info as $row)
                             <tr>
                                 <td>
-                                    <a href="{{route('home.all.cart.details',(int) $row->cart_id)}}">{{$row->cart_id}}</a>
+                                    <a href="{{route('home.all.cart.details',[app()->getLocale(), (int) $row->cart_id])}}">{{$row->cart_id}}</a>
                                 </td>
                                 <td>{{numberformat($row->coupon_discount)}}</td>
                                 <td>{{numberformat($row->shipping_cost)}}</td>
@@ -34,7 +34,7 @@
                                 <td>{{$row->paid_with}}</td>
                                 <td>{{YmdTodmYPmdMyPM($row->created_at)}}</td>
                                 <td style="white-space: nowrap;">
-                                    <a href="{{URL::to('home/delete/cart/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
+                                    <a href="{{URL::to('/'.app()->getLocale().'home/delete/cart/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
                                 </td>
 
                             </tr>
@@ -66,12 +66,12 @@
                             </h5>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"> <a href="{{route('password.change')}}"> Change Password</a></li>
-                            <li class="list-group-item"> <a href="{{route('show.cart')}}"> Show Cart</a></li>
-                            <li class="list-group-item"> <a href="{{route('show.wishlist')}}"> Go to Wishlist</a></li>
+                            <li class="list-group-item"> <a href="{{route('password.change',app()->getLocale())}}"> Change Password</a></li>
+                            <li class="list-group-item"> <a href="{{route('show.cart',app()->getLocale())}}"> Show Cart</a></li>
+                            <li class="list-group-item"> <a href="{{route('show.wishlist',app()->getLocale())}}"> Go to Wishlist</a></li>
                         </ul>
                         <div class="card-body">
-                            <a href="{{route('user.logout')}}" class="btn btn-danger btn-sm btn-block">Logout</a>
+                            <a href="{{route('user.logout',app()->getLocale())}}" class="btn btn-danger btn-sm btn-block">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -81,14 +81,14 @@
                 <div id="cart_info_mobile" class="card" style="width: 18rem; margin-left:5%; margin-bottom: 2%">
                     {{-- <img src="..." class="card-img-top" alt="..."> --}}
                     <div class="card-body">
-                        <h5>Cart ID:  <a href="{{route('home.all.cart.details',(int) $row->cart_id)}}" style="width: 100%"> {{$row->cart_id}}</a> </h5>
+                        <h5>Cart ID:  <a href="{{route('home.all.cart.details',[app()->getLocale(),(int) $row->cart_id])}}" style="width: 100%"> {{$row->cart_id}}</a> </h5>
                         <h5> Coupon Discount: <h5 class="card-text"> {{numberformat($row->coupon_discount)}}</h5></h5>
                         <h5>Shipping Cost: <p class="card-text"> {{numberformat($row->shipping_cost)}}</p></h5>
                         <h5>Vat: <p class="card-text">{{numberformat($row->vat)}}</p></h5>
                         <h5>Total Cost: <p class="card-text"><span class="badge badge-warning"> {{numberformat($row->total_cost)}}</span></p></h5>
                         <h5>Paid With: <p class="card-text">{{$row->paid_with}}</p></h5>
                         <h5>Created At: <p class="card-text">{{YmdTodmYPmdMyPM($row->created_at)}}</p></h5>
-                        <a href="{{URL::to('home/delete/cart/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
+                        <a href="{{URL::to('/'.app()->getLocale().'home/delete/cart/'.$row->id)}}" class="btn btn-sm btn-danger" id="delete">Delete</a>
                       {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
                     </div>
                   </div>

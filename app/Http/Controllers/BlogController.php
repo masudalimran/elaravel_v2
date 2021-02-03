@@ -54,7 +54,8 @@ class BlogController extends Controller
         ]), 200, ["Content-Type" => "application/json"]);
     }
 
-    public function blog_details($id){
+    public function blog_details($lang, $id){
+        // dd($lang,$id);
         $blog_details = DB::table('posts')
         ->where('id',$id)
         ->first();
@@ -71,7 +72,9 @@ class BlogController extends Controller
         //         unset($post[$counter]);
         //     }
         // }
+        // dd($post);
 
         return view('pages.blog_details',compact('blog_details','post'));
+        // return redirect()->route('blog.details')->with($blog_details,$post);
     }
 }

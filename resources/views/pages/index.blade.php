@@ -11,6 +11,7 @@
   {{-- {{dd(  )}} --}}
   {{-- {{ app()->setLocale( getLocaleFromUrl( Request::url() ) ) }} --}}
   {{-- {{ dd( getLocaleFromUrl( Request::url() ) ) }} --}}
+  {{-- {{dd(app()->getLocale())}} --}}
   @php
   $featured_product=DB::table('products')
   ->where('publication_status',1)
@@ -151,13 +152,13 @@
 
                               <div class="owl-item deals_item" >
                                   <div class="deals_image">
-                                      <a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}"><img src="{{asset($row->image_1)}}"
+                                      <a href="{{url('/'.app()->getLocale().'product/details/'.$row->id.'/'.$row->product_name)}}"><img src="{{asset($row->image_1)}}"
                                           style="height: 200px; width: 230px">
                                         </a>
                                 </div>
                                   <div class="deals_content">
                                       <div class="deals_info_line d-flex flex-row justify-content-start">
-                                          <div class="deals_item_category"><a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}">{{$row->category_name}}</a></div>
+                                          <div class="deals_item_category"><a href="{{url('/'.app()->getLocale().'product/details/'.$row->id.'/'.$row->product_name)}}">{{$row->category_name}}</a></div>
                                           @if($row->discount_price == NULL)
 
                                             @else
@@ -166,7 +167,7 @@
                                               </div>
                                           @endif
                                       </div>
-                                      <div class="deals_item_brand"><a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}">{{$row->brand_name}}</a></div>
+                                      <div class="deals_item_brand"><a href="{{url('/'.app()->getLocale().'product/details/'.$row->id.'/'.$row->product_name)}}">{{$row->brand_name}}</a></div>
                                       <div class="deals_info_line d-flex flex-row justify-content-start">
                                           <div class="deals_item_name">{{$row->product_name}}</div>
                                           <div class="deals_item_price ml-auto">৳{{numberFormat($row->selling_price - $row->discount_price)}}<span
@@ -274,7 +275,7 @@
                                           </div>
 
 
-                                            <a onclick="addwishlist({{$row->id}})" >
+                                            <a onclick="addwishlist({{$row->id, }})" >
                                                 @if(Auth::check())
                                                 <div class="product_fav"><i class="fas fa-heart"></i></div>
                                                 @else
@@ -313,7 +314,7 @@
                                   <!-- Slider Item -->
                                   <div class="featured_slider_item">
                                     <div class="border_active"></div>
-                                    <a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}">
+                                    <a href="{{url('/'.app()->getLocale().'product/details/'.$row->id.'/'.$row->product_name)}}">
                                     <div
                                         class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                         <div
@@ -381,7 +382,7 @@
                                   <!-- Slider Item -->
                                   <div class="featured_slider_item">
                                     <div class="border_active"></div>
-                                    <a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}">
+                                    <a href="{{url('/'.app()->getLocale().'product/details/'.$row->id.'/'.$row->product_name)}}">
                                     <div
                                         class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                         <div
@@ -529,7 +530,7 @@
                                         <div class="banner_2_text">{{$row->brand_name}}<br>
                                             {{__('index._product_id')}} {{$row->product_code}}.
                                         </div>
-                                        <div class="button banner_2_button"><a href="{{url('product/details/'.$row->id.'/'.$row->product_name)}}">{{__('index._explore')}}</a></div>
+                                        <div class="button banner_2_button"><a href="{{url('/'.app()->getLocale().'product/details/'.$row->id.'/'.$row->product_name)}}">{{__('index._explore')}}</a></div>
                                     </div>
 
                                 </div>
@@ -575,7 +576,7 @@
                                         @if ($v_hot_best_sellers->product_quantity >= 50)
 
                                             <!-- Slider Item -->
-                                            <a href="{{url('product/details/'.$v_hot_best_sellers->id.'/'.$v_hot_best_sellers->product_name)}}">
+                                            <a href="{{url('/'.app()->getLocale().'product/details/'.$v_hot_best_sellers->id.'/'.$v_hot_best_sellers->product_name)}}">
                                                 <div class="arrivals_slider_item">
                                                     <div class="border_active"></div>
                                                     <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
@@ -586,7 +587,7 @@
                                                         <div class="product_content">
                                                             <div class="product_price">৳ {{numberFormat($v_hot_best_sellers->selling_price)}}</div>
                                                             <div class="product_name">
-                                                                <div><a href="product.html">{{($v_hot_best_sellers->product_name)}}</a></div>
+                                                                <div><a href="#">{{($v_hot_best_sellers->product_name)}}</a></div>
                                                             </div>
                                                             <div class="product_extras">
                                                                 <p>{{$v_hot_best_sellers->product_color}}</p>
@@ -635,7 +636,7 @@
                                     @if ($v_hot_best_sellers->product_quantity >= 100)
 
                                     <!-- Slider Item -->
-                                    <a href="{{url('product/details/'.$v_hot_best_sellers->id.'/'.$v_hot_best_sellers->product_name)}}">
+                                    <a href="{{url('/'.app()->getLocale().'product/details/'.$v_hot_best_sellers->id.'/'.$v_hot_best_sellers->product_name)}}">
                                         <div class="arrivals_slider_item">
                                             <div class="border_active"></div>
                                             <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
@@ -646,7 +647,7 @@
                                                 <div class="product_content">
                                                     <div class="product_price">৳ {{numberFormat($v_hot_best_sellers-> selling_price)}}</div>
                                                     <div class="product_name">
-                                                        <div><a href="product.html">{{$v_hot_best_sellers-> product_name}}</a></div>
+                                                        <div><a href="#">{{$v_hot_best_sellers-> product_name}}</a></div>
                                                     </div>
                                                     <div class="product_extras">
                                                     <p>{{$v_hot_best_sellers->product_color}}</p>
@@ -689,7 +690,7 @@
                           </div>
 
                           <div class="col-lg-3">
-                            <a href="{{url('product/details/'.$hot_deal[1]->id.'/'.$hot_deal[1]->product_name)}}">
+                            <a href="{{url('/'.app()->getLocale().'product/details/'.$hot_deal[1]->id.'/'.$hot_deal[1]->product_name)}}">
                                 <div class="arrivals_single clearfix">
                                     <div class="d-flex flex-column align-items-center justify-content-center">
                                         <div class="arrivals_single_image"><img src="{{URL::to($hot_deal[1]->image_1)}}" style="height: 200px; width: 200px"></div>
@@ -761,7 +762,7 @@
 
                             @foreach ($hot_new_arrivals as $item)
                               <!-- Best Sellers Item -->
-                              <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
+                              <a href="{{url('/'.app()->getLocale().'product/details/'.$item->id.'/'.$item->product_name)}}">
                                 <div class="bestsellers_item discount">
                                     <div
                                         class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
@@ -769,7 +770,7 @@
                                                 src="{{asset($item->image_1)}}" style="height: 200px; width: 220px"></div>
                                         <div class="bestsellers_content">
                                             <div class="bestsellers_category"><a href="#">{{$item->category_name}}</a></div>
-                                            <div class="bestsellers_name"><a href="product.html">{{$item->product_name}}</a>
+                                            <div class="bestsellers_name"><a href="#">{{$item->product_name}}</a>
                                             </div>
                                             <div class="bestsellers_price discount">৳{{$item->selling_price - $item->discount_price}}<span>৳ {{$item->selling_price}}</span></div>
                                         </div>
@@ -855,7 +856,7 @@
                                     @foreach ($product_show_by_subcategory as $item)
 
                                     <!-- Slider Item -->
-                                    <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
+                                    <a href="{{url('/'.app()->getLocale().'product/details/'.$item->id.'/'.$item->product_name)}}">
                                         <div class="arrivals_slider_item">
                                             <div class="border_active"></div>
                                             <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
@@ -866,7 +867,7 @@
                                                 <div class="product_content">
                                                     <div class="product_price">৳ {{numberFormat($item-> selling_price)}}</div>
                                                     <div class="product_name">
-                                                        <div><a href="product.html">{{$item-> product_name}}</a></div>
+                                                        <div><a href="#">{{$item-> product_name}}</a></div>
                                                     </div>
                                                     <div class="product_extras">
                                                     <p>{{$item->product_color}}</p>
@@ -1014,7 +1015,7 @@
 
 
                             <div class="owl-item">
-                                <a href="{{url('product/details/'.$item->id.'/'.$item->product_name)}}">
+                                <a href="{{url('/'.app()->getLocale().'product/details/'.$item->id.'/'.$item->product_name)}}">
                                 <div class="trends_item is_new">
                                     <div
                                         class="trends_image d-flex flex-column align-items-center justify-content-center">
@@ -1022,7 +1023,7 @@
                                     <div class="trends_content">
                                         <div class="trends_category"><a href="#">{{$item->category_name}}</a></div>
                                         <div class="trends_info clearfix">
-                                            <div class="trends_name"><a href="product.html">{{$item->product_name}}</a></div>
+                                            <div class="trends_name"><a href="#">{{$item->product_name}}</a></div>
                                             <div class="trends_price">৳ {{numberFormat($item->selling_price)}}</div>
                                         </div>
                                     </div>
@@ -1416,7 +1417,8 @@
                           </div>
                       </div>
                       <div class="newsletter_content clearfix">
-                          <form action="{{route('store.newsletter')}}" class="newsletter_form" method="post">
+
+                          <form action="{{route('store.newsletter', app()->getLocale() )}}" class="newsletter_form" method="post">
                               @csrf
                               <input type="email" class="newsletter_input" required="required"
                                   placeholder="Enter your email address" name="email">
@@ -1460,7 +1462,7 @@
         console.log(id);
         if(id) {
                $.ajax({
-                   url: "{{  url('/add/wishlist/') }}/"+id,
+                   url: "{{  url('/'.app()->getLocale().'/add/wishlist/') }}/"+id,
                    type:"GET",
                    dataType:"json",
                    success:function(data) {
@@ -1512,7 +1514,7 @@
         console.log(id);
         if(id) {
                $.ajax({
-                   url: "{{  url('/addtocart/') }}/"+id,
+                   url: "{{  url('/'.app()->getLocale().'/addtocart/') }}/"+id,
                    type:"GET",
                    dataType:"json",
                    success:function(data) {

@@ -53,7 +53,7 @@ class HomeController extends Controller
     }
 
     //Cart Details
-    public function cart_details($cart_id){
+    public function cart_details($language, $cart_id){
         // dd($cart_id);
 
         $forntend_cart_details=DB::table('cart')
@@ -122,7 +122,7 @@ class HomeController extends Controller
                 'messege'=>'Successfully Logout',
                 'alert-type'=>'success'
                  );
-             return Redirect()->route('login')->with($notification);
+             return Redirect()->route('login', app()->getLocale())->with($notification);
 
 
     }

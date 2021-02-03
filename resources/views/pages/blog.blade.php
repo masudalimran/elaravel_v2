@@ -15,6 +15,8 @@
 
 @php
     $language = session()->get('lang');
+    // dd($language);
+
 @endphp
 
 <div class="home">
@@ -61,9 +63,9 @@
                                 </div>
                             @endif
                             @if ($language == 'bangla')
-                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">আরো পড়ুন </a></div>
+                                <div class="blog_button"><a href="{{route('blog.details',[app()->getLocale(), $item->id])}}">আরো পড়ুন </a></div>
                             @else
-                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">Continue Reading</a></div>
+                                <div class="blog_button"><a href="{{route('blog.details',[app()->getLocale(), $item->id], )}}">Continue Reading</a></div>
                             @endif
                         </div>
                         @endforeach

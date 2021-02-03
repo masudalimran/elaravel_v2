@@ -18,10 +18,10 @@ class GoogleController extends Controller
 
 public function callback($provider)
 {
-
+    // dd($language);
     $getInfo = Socialite::driver($provider)->user();
 
-    $user = $this->createUser($getInfo,$provider);
+    $user = $this->createUser($getInfo, $provider);
 
     auth()->login($user);
 

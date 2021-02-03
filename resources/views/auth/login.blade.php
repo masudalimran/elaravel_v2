@@ -12,7 +12,7 @@
 					<div class="contact_form_container">
 						<div class="contact_form_title text-center">Sign In</div>
 
-                        <form action="{{route('login')}}" method="post" id="contact_form">
+                        <form action="{{route('login', app()->getLocale())}}" method="post" id="contact_form">
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email</label>
@@ -33,7 +33,7 @@
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
-                        <a href="{{route('password.request')}}">Forgot password</a>
+                        <a href="{{route('password.request', app()->getLocale())}}">Forgot password</a>
                         <br><br>
 
                             <a href="{{ URL::to('/auth/redirect/google') }}" type="submit" class="btn btn-danger btn-block">Login With google</a>
@@ -45,7 +45,7 @@
 					<div class="contact_form_container">
 						<div class="contact_form_title text-center">Sign In</div>
 
-						<form action="{{route('register')}}" id="contact_form" method="post">
+						<form action="{{route('register', app()->getLocale())}}" id="contact_form" method="post">
                             @csrf
 
                             <div class="form-group">

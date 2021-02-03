@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 class CartController extends Controller
 {
     //
-    public function add_cart($id){
+    public function add_cart($language, $id){
         $userId = Auth::id();
         $check_cart = DB::table('cart')->where('user_id',$userId)->where('cart_id',NULL)->where('product_id',$id)->first();
         $product = DB::table('products')->where('id', $id)->first();

@@ -4,45 +4,85 @@
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 // use Illuminate\Http\RedirectResponse;
-// Route::get('/', function () {
-//     // return view('pages.index');
-//     return redirect()->route('/yoyoyoyoyo/');
-// });
+
 Route::get('/', function () {
-    return view('pages.index');
+    return redirect()->route('home_page', 'en');
 });
-// Route::redirect('/', '/en/');
+// Route::redirect('/', '/en');
 // https://www.youtube.com/watch?v=KqzGKg8IxE4
-// Route::group(['prefix' => '{language}'], function () {
+Route::group(['prefix' => '{language}'], function () {
+    Route::get('/', function () {
+        return view('pages.index');
+    })->name('home_page');
+// Route::get('/show/wishlist','wishlistController@show_wishlist')->name('show.wishlist');
 
-//     Route::get('/', function () {
-//         return view('pages.index');
-//     });
-// });
 
-//auth & user
-Auth::routes(['verify' => true]);
-Route::get('/welcome', 'HomeController@welcome')->name('welcome');
-Route::get('/home', 'HomeController@index')->name('home');
 
-    //Order History
-Route::get('home/delete/cart/{id}','HomeController@delete_cart');
-Route::get('home/cart/details/{cart_id}','HomeController@cart_details')->name('home.all.cart.details');
-Route::get('home/delete/cart/item/{id}','HomeController@delete_cart_item');
-Route::get('home/edit/cart/item/{id}','HomeController@edit_cart_item');
-Route::post('home/update/cart/{id}','HomeController@update_cart');
+    //auth & user
+    Auth::routes(['verify' => true]);
+    Route::get('/welcome', 'HomeController@welcome')->name('welcome');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
-Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
-Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');
+        //Order History
+    Route::get('home/delete/cart/{id}','HomeController@delete_cart');
+    Route::get('home/cart/details/{cart_id}','HomeController@cart_details')->name('home.all.cart.details');
+    Route::get('home/delete/cart/item/{id}','HomeController@delete_cart_item');
+    Route::get('home/edit/cart/item/{id}','HomeController@edit_cart_item');
+    Route::post('home/update/cart/{id}','HomeController@update_cart');
 
-//Google Socialite
-Route::get('/auth/redirect/{provider}', 'Auth\GoogleController@redirect');
-Route::get('/callback/{provider}', 'Auth\GoogleController@callback');
+    Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
+    Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
+    Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');
 
-//facebook socialite
-// Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
-// Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
+
+
+    //facebook socialite
+    // Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
+    // Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
+
+    //Frontend
+        //newsletter
+    Route::post('store/newsletter','FrontController@store_newsletter')->name('store.newsletter');
+        //wishlist
+    Route::get('add/wishlist/{id}','wishlistController@add_wishlist');
+    Route::get('show/wishlist','wishlistController@show_wishlist')->name('show.wishlist');
+    Route::get('remove/wishlist/{product_id}','wishlistController@remove_wishlist');
+        //addtocart
+    Route::get('addtocart/{id}','CartController@add_cart');
+    Route::get('show/cart','CartController@show_cart')->name('show.cart');
+    Route::post('cart/coupon/add/{user_id}/{sum_total}','CartController@add_coupon');
+    Route::get('remove/cart/{user_id}/{active_coupon}','CartController@remove_cart');
+    // Route::get('remove/item/{product_id}/{coupon_minus}/{active_coupon}','CartController@remove_item');
+    Route::get('remove/cart/item/coupon/{product_id}/{price}/{coupon_minus}/{active_coupon_percentage}/{coupon_input}/{cart_total}','CartController@remove_item_with_coupon');
+    Route::get('remove/cart/item/{product_id}/{price}/{cart_total}','CartController@remove_item_without_coupon');
+    Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
+    Route::get('change/size/database/{product_id}/{size}','CartController@change_size');
+    Route::get('change/color/database/{product_id}/{color}','CartController@change_color');
+    Route::get('update/shipping/info/{district}/{address}/{coupon}/{vat}/{shipping_cost}/{grand_total}','CartController@update_shipping_info');
+
+
+    //checkout
+    // Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
+    Route::post('user/stripe/charge/','PaymentController@stripe_charge')->name('payment.charge');
+    Route::get('pay_with_stripe','PaymentController@pay_with_stripe');
+    Route::get('pay_with_stripe2','PaymentController@pay_with_stripe2')->name('pay_with_stripe2');
+
+        //visitproduct
+    Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
+    Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
+    Route::post('cart/product/details/add/{product_id}','VisitProductController_f@AddCart_from_details');
+
+        //blogs
+Route::get('blog/post','BlogController@show_blog')->name('blog.post');
+Route::get('blog/post/details/{id}','BlogController@blog_details')->name('blog.details');
+Route::get('blog/post/bn','BlogController@bangla_blog')->name('language.bangla');
+Route::get('blog/post/en','BlogController@english_blog')->name('language.english');
+Route::get('change/source/language/en/{source_language}','BlogController@translate_en');
+Route::get('change/source/language/bn/{source_language}','BlogController@translate_bn');
+
+        //customer profile related routes
+
+});
 
 //admin=======
 Route::get('admin/home', 'AdminController@index');
@@ -133,13 +173,7 @@ Route::get('delete/post/{id}','Admin\PostController@delete_post');
 Route::get('edit/post/{id}','Admin\PostController@edit_post');
 Route::post('update/post/{id}','Admin\PostController@update_post');
 Route::get('post/category','Admin\PostController@post_category');
-    //blogs
-Route::get('blog/post','BlogController@show_blog')->name('blog.post');
-Route::get('blog/post/details/{id}','BlogController@blog_details')->name('blog.details');
-Route::get('blog/post/bn','BlogController@bangla_blog')->name('language.bangla');
-Route::get('blog/post/en','BlogController@english_blog')->name('language.english');
-Route::get('change/source/language/en/{source_language}','BlogController@translate_en');
-Route::get('change/source/language/bn/{source_language}','BlogController@translate_bn');
+
 
     //Get Sub Category By Ajax
 Route::get('get/subcategory/{category_id}','Admin\ProductController@get_subcategory');
@@ -175,44 +209,9 @@ Route::post('admin/search/between/dates/{category_id}','Admin\Expense_sheet\Expe
 Route::get('admin/view/expense/before/download/{month}','Admin\Expense_sheet\ExpenseController@view_expense_before_download')->name('view.before.download.pdf');
 Route::get('admin/download/expense/pdf/{month_name}/{month}','Admin\Expense_sheet\ExpenseController@download_expense_pdf')->name('download.expense.pdf');
 
-
-
-
-
-
-//Frontend
-    //newsletter
-Route::post('store/newsletter','FrontController@store_newsletter')->name('store.newsletter');
-    //wishlist
-Route::get('add/wishlist/{id}','wishlistController@add_wishlist');
-Route::get('show/wishlist','wishlistController@show_wishlist')->name('show.wishlist');
-Route::get('remove/wishlist/{product_id}','wishlistController@remove_wishlist');
-    //addtocart
-Route::get('addtocart/{id}','CartController@add_cart');
-Route::get('show/cart','CartController@show_cart')->name('show.cart');
-Route::post('cart/coupon/add/{user_id}/{sum_total}','CartController@add_coupon');
-Route::get('remove/cart/{user_id}/{active_coupon}','CartController@remove_cart');
-// Route::get('remove/item/{product_id}/{coupon_minus}/{active_coupon}','CartController@remove_item');
-Route::get('remove/cart/item/coupon/{product_id}/{price}/{coupon_minus}/{active_coupon_percentage}/{coupon_input}/{cart_total}','CartController@remove_item_with_coupon');
-Route::get('remove/cart/item/{product_id}/{price}/{cart_total}','CartController@remove_item_without_coupon');
-Route::get('update/cart/{product_id}/{qty}','CartController@update_cart');
-Route::get('change/size/database/{product_id}/{size}','CartController@change_size');
-Route::get('change/color/database/{product_id}/{color}','CartController@change_color');
-Route::get('update/shipping/info/{district}/{address}/{coupon}/{vat}/{shipping_cost}/{grand_total}','CartController@update_shipping_info');
-
-
-//checkout
-// Route::post('user/checkout/','CartController@checkout')->name('user.checkout');
-Route::post('user/stripe/charge/','PaymentController@stripe_charge')->name('payment.charge');
-Route::get('pay_with_stripe','PaymentController@pay_with_stripe');
-Route::get('pay_with_stripe2','PaymentController@pay_with_stripe2')->name('pay_with_stripe2');
-
-    //visitproduct
-Route::get('product/details/{product_id}/{product_name}','VisitProductController_f@product_view');
-Route::post('cart/product/add/{product_id}','VisitProductController_f@AddCart');
-Route::post('cart/product/details/add/{product_id}','VisitProductController_f@AddCart_from_details');
-
-    //customer profile related routes
+    //Google Socialite
+    Route::get('/auth/redirect/{provider}', 'Auth\GoogleController@redirect');
+    Route::get('/callback/{provider}', 'Auth\GoogleController@callback');
 
 
 

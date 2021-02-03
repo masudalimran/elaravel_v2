@@ -3,8 +3,10 @@
 
 @php
     $language = session()->get('lang');
+    // dd($language);
 @endphp
 
+{{-- {{dd(app()->getLocale())}} --}}
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/styles/bootstrap4/bootstrap.min.css')}}">
 <link href="{{asset('public/frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="{{asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
@@ -27,13 +29,13 @@
 				<div class="col-lg-8 offset-lg-2">
                     @if ($language == 'bangla')
                         <div class="single_post_title" style="text-align: center"><b>{!!$blog_details->post_title_bn!!}</b></div>
-                    @elseif($language == 'english')
+                    @else
                         <div class="single_post_title" style="text-align: center">{!!$blog_details->post_title_en!!}</div>
                     @endif
 					<div class="single_post_text">
                         @if ($language == 'bangla')
                             <div class="single_post_text">{!!$blog_details->details_bn!!}</div>
-                        @elseif($language == 'english')
+                        @else
                             <div class="single_post_text">{!!$blog_details->details_en!!}</div>
                         @endif
 
@@ -42,14 +44,14 @@
 							<div class="quote_text">
                                 @if ($language == 'bangla')
                                     {!!$blog_details->details_bn!!}
-                                @elseif($language == 'english')
+                                @else
                                     {!!$blog_details->details_en!!}
                                 @endif
                             </div>
 							<div class="quote_name">
                                 @if ($language == 'bangla')
                                     <h4>{!!$blog_details->author_bn!!}</h4>
-                                @elseif($language == 'english')
+                                @else
                                     <h4>{!!$blog_details->author_en!!}</h4>
                                 @endif
                             </div>
@@ -58,7 +60,7 @@
 						<p>
                         @if ($language == 'bangla')
                             <h6>{!!$blog_details->details_bn!!}</h6>
-                        @elseif($language == 'english')
+                        @else
                             <h6>{!!$blog_details->details_en!!}</h6>
                         @endif
                         </p>
@@ -99,9 +101,9 @@
                                 </div>
                             @endif
                             @if ($language == 'bangla')
-                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">আরো পড়ুন</a></div>
+                                <div class="blog_button"><a href="{{route('blog.details',[app()->getLocale(), $item->id])}}">আরো পড়ুন</a></div>
                             @else
-                                <div class="blog_button"><a href="{{route('blog.details',[$item->id])}}">Continue Reading</a></div>
+                                <div class="blog_button"><a href="{{route('blog.details',[app()->getLocale(), $item->id])}}">Continue Reading</a></div>
                             @endif
                         </div>
                         @endforeach
