@@ -7,7 +7,7 @@
             <div class="signin-logo tx-center tx-24 tx-bold tx-inverse"> Created By <span class="tx-info tx-normal">
                     Imon</span></div>
             <div class="tx-center mg-b-60">Admin Login Page</div>
-            <form action="{{ route('admin.login') }}" method="post">
+            <form action="{{ route('admin.process.login') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="email">E-mail</label>

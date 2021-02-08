@@ -44,19 +44,19 @@ class AdminController extends Controller
                       $user=Admin::find(Auth::id());
                       $user->password=Hash::make($request->password);
                       $user->save();
-                      Auth::logout();  
+                      Auth::logout();
                       $notification=array(
                         'messege'=>'Password Changed Successfully ! Now Login with Your New Password',
                         'alert-type'=>'success'
                          );
-                       return Redirect()->route('admin.login')->with($notification); 
+                       return Redirect()->route('admin.login')->with($notification);
                  }else{
                      $notification=array(
                         'messege'=>'New password and Confirm Password not matched!',
                         'alert-type'=>'error'
                          );
                        return Redirect()->back()->with($notification);
-                 }     
+                 }
       }else{
         $notification=array(
                 'messege'=>'Old Password not matched!',
