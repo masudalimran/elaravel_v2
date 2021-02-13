@@ -84,7 +84,7 @@ use Illuminate\Support\Facades\App;
 
 // });
 // Route::group(['prefix' => 'admin'], function () {
-    //admin=======
+    //admin1=======
     Route::get('admin/home', 'AdminController@index')->name('admin.home');
     Route::get('admin/', 'Admin\LoginController@showLoginForm')->name('admin.login');
     Route::post('admin/process/', 'Admin\LoginController@login')->name('admin.process.login');
