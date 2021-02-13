@@ -323,6 +323,7 @@ class ExpenseController extends Controller
                         ->leftjoin('expense_table','expense_category.id','=','expense_table.exp_category')
                         ->select('expense_category.id as category_id','expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
                         ->where('expense_category.id',$exp_category_id)
+                        ->orderBy('expense_table.exp_date','asc')
                         ->get();
         return view('admin.Expense_sheet.view_expense_category_details',compact('expense_category_data'));
     }
@@ -337,6 +338,7 @@ class ExpenseController extends Controller
                         ->select('expense_category.id as category_id','expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
                         ->where('expense_category.id',$exp_category_id)
                         ->whereBetween('expense_table.exp_date',[date($start_date),date($end_date)])
+                        ->orderBy('expense_table.exp_date','asc')
                         ->get();
                         // dd($expense_category_data);
         return view('admin.Expense_sheet.view_expense_category_details',compact('expense_category_data'));
@@ -374,6 +376,7 @@ class ExpenseController extends Controller
                         // ->whereBetween('expense_table.exp_date',[date('2021-01-01'),date('2021-01-31')])
                         ->whereMonth('expense_table.exp_date', $i)
                         ->whereYear('expense_table.exp_date', $year)
+                        ->orderBy('expense_table.exp_date','asc')
                         ->get();
             array_push($expense_table_data,$get_expense_data);
             $total = 0;
@@ -392,6 +395,7 @@ class ExpenseController extends Controller
                         ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
                         ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
                         ->whereMonth('expense_table.exp_date', $month+1)
+                        ->orderBy('expense_table.exp_date','asc')
                         ->get();
         $total = 0;
         foreach ($expense_table_data_month as $data){
