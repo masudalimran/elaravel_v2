@@ -102,10 +102,10 @@ tr:nth-child(even) {
   </tr>
 @foreach ($pdf_data[0] as $item)
 <tr style="background:white">
-    <td style="font-size: 14px; line-height:50%">{{YmdTodmY($item->exp_date)}}</td>
-    <td style="font-size: 14px; line-height:50%">{{$item->category_name}}</td>
-    <td style="font-size: 14px; line-height:50%">{{numberFormat($item->exp_amount)}}</td>
-    <td style="font-size: 14px; line-height:50%">{!!$item->exp_comment!!}</td>
+    <td style="font-size: 14px; line-height:75">{{YmdTodmY($item->exp_date)}}</td>
+    <td style="font-size: 14px; line-height:75">{{$item->category_name}}</td>
+    <td style="font-size: 14px; line-height:75">{{numberFormat($item->exp_amount)}}</td>
+    <td style="font-size: 14px; line-height:75">{!!$item->exp_comment!!}</td>
 </tr>
 @endforeach
 <tr style="background:#c8cde0">
