@@ -428,6 +428,7 @@ class ExpenseController extends Controller
                         ->leftjoin('expense_category','expense_table.exp_category','=','expense_category.id')
                         ->select('expense_category.exp_category AS category_name','expense_category.exp_category_details','expense_category.exp_category_image','expense_table.*')
                         ->whereMonth('expense_table.exp_date', $month)
+                        ->orderBy('expense_table.exp_date','asc')
                         ->get();
 
         $total = 0;
