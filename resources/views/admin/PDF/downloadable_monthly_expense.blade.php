@@ -109,7 +109,7 @@ tr:nth-child(even) {
     <tr class="rm_padding_margin" style="background:white;">
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
-        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}} BDT</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%; text-align: right;"> {{numberFormat($item->exp_amount)}} BDT</td>
         {{-- @if ({{$item->exp_comment}}) --}}
             <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
         {{-- @endif --}}
@@ -119,7 +119,7 @@ tr:nth-child(even) {
     <tr style="background:#c8cde0">
         <td style="font-size: 14px; line-height:50%"></td>
         <td style="font-size: 14px; line-height:50%">Total</td>
-        <td style="font-size: 14px; line-height:50%"> {{numberFormat($pdf_data[1])}} <span> BDT</span></td>
+        <td style="font-size: 14px; line-height:50%; text-align: right;"> {{numberFormat($pdf_data[1])}} <span> BDT</span></td>
         <td style="font-size: 14px; line-height:50%"></td>
     </tr>
 </table>
@@ -147,7 +147,7 @@ tr:nth-child(even) {
             @php
                 $sum_cat_counter = $sum_cat_counter + $pdf_data[4][$cat_counter]
             @endphp
-            <td style="font-size: 14px; line-height:10%"> {{numberFormat($pdf_data[5][$cat_counter])}} BDT</td>
+            <td style="font-size: 14px; line-height:10%; text-align: right;"> {{numberFormat($pdf_data[5][$cat_counter])}} BDT</td>
         </tr>
     @endif
     @endforeach
@@ -155,7 +155,7 @@ tr:nth-child(even) {
   <tr style="background:#c8cde0">
     <td style="font-size: 14px; line-height:40%">Total</td>
     <td style="font-size: 14px; line-height:40%">{{$sum_cat_counter}}</td>
-    <td style="font-size: 14px; line-height:40%">{{numberFormat($pdf_data[1])}} BDT</td>
+    <td style="font-size: 14px; line-height:40%; text-align: right;">{{numberFormat($pdf_data[1])}} BDT</td>
 </tr>
   </table>
   {{-- {{dd('asdadsads')}} --}}
