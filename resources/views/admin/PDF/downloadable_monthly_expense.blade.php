@@ -28,7 +28,7 @@ tr:nth-child(even) {
     @endphp
     <div style="line-height: 10%;">
         <div style="display:inline; float:left;">
-            <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 50xp; width: 50px;">
+            <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 150xp; width: 150px;">
         </div>
         <h1 style="text-align: center; line-height: 35%;"> <b style="color: blue; font-size: 20px;"> BISMIB TECHNOLOGY </b> </h1>
 
@@ -175,8 +175,8 @@ tr:nth-child(even) {
     }
 
     .rm_padding_margin{
-        margin-top: -1px !important;
-        margin-bottom: -1px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
         padding-top: 0px !important;
         padding-bottom: 0px !important;
         line-height: 100% !important;
