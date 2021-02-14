@@ -109,14 +109,14 @@ tr:nth-child(even) {
     <tr class="rm_padding_margin" style="background:white;">
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
-        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{numberFormat($item->exp_amount)}}</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">৳ {{numberFormat($item->exp_amount)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
     </tr>
     @endforeach
     <tr style="background:#c8cde0">
         <td style="font-size: 14px; line-height:50%"></td>
         <td style="font-size: 14px; line-height:50%">Total</td>
-        <td style="font-size: 14px; line-height:50%">{{numberFormat($pdf_data[1])}}</td>
+        <td style="font-size: 14px; line-height:50%">৳ {{numberFormat($pdf_data[1])}}</td>
         <td style="font-size: 14px; line-height:50%"></td>
     </tr>
 </table>
@@ -144,7 +144,7 @@ tr:nth-child(even) {
             @php
                 $sum_cat_counter = $sum_cat_counter + $pdf_data[4][$cat_counter]
             @endphp
-            <td style="font-size: 14px; line-height:10%">{{numberFormat($pdf_data[5][$cat_counter])}}</td>
+            <td style="font-size: 14px; line-height:10%">৳ {{numberFormat($pdf_data[5][$cat_counter])}}</td>
         </tr>
     @endif
     @endforeach
@@ -172,10 +172,10 @@ tr:nth-child(even) {
     }
 
     .rm_padding_margin{
-        margin-top: 1px !important;
-        margin-bottom: 1px !important;
-        padding-top: 1px !important;
-        padding-bottom: 1px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
         line-height: 125% !important;
 
     }
