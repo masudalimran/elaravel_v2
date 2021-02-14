@@ -30,11 +30,9 @@ tr:nth-child(even) {
         <div style="display:inline; float:left;">
             <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 50xp; width: 50px;">
         </div>
-        <h1 style="text-align: center; line-height: 35%; "> <b style="color: blue; font-size: 20px; margin-top: 0px !important; margin-bottom: 0px !important;
-            padding-top: 0px !important; padding-bottom: 0px !important; "> BISMIB TECHNOLOGY </b> </h1>
+        <h1 style="text-align: center; line-height: 10%;"> <b style="color: blue; font-size: 20px;"> BISMIB TECHNOLOGY </b> </h1>
 
-        <h3 style="text-align: center; text-decoration: underline; line-height: 25%;"> <b style="font-size: 16px; margin-top: 0px !important; margin-bottom: 0px !important;
-            padding-top: 0px !important; padding-bottom: 0px !important;"> Expense Sheet</b></h3>
+        <h3 style="text-align: center; text-decoration: underline; line-height: 10%;"> <b style="font-size: 16px;"> Expense Sheet</b></h3>
         @if ($pdf_data[2] == 0)
             <h3 style="text-align: center; color: red; line-height: 5%"> January</h3>
             @php
