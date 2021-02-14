@@ -177,8 +177,8 @@ tr:nth-child(even) {
     .rm_padding_margin{
         margin-top: -1px !important;
         margin-bottom: -1px !important;
-        padding-top: -1px !important;
-        padding-bottom: -1px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
         line-height: 100% !important;
     }
     .rm_padding_margin_without_comment{
