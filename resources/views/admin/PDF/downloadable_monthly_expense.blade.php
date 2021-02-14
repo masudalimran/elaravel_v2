@@ -21,6 +21,8 @@ tr:nth-child(even) {
 </head>
 <body>
     {{-- {{dd($pdf_data[2])}} --}}
+<img id="watermark" src="{{asset('public/backend/img/BISMIB B ICON_Master color.png')}}"/>
+
     @php
          $month_name = "";
     @endphp
@@ -167,7 +169,6 @@ tr:nth-child(even) {
         color:white;
     }
 </style>
-<img id="watermark" src="{{asset('public/backend/img/BISMIB B ICON_Master color.png')}}"/>
 
 {{-- {{dd()}} --}}
 
