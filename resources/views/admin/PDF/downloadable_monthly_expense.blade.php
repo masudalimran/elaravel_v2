@@ -111,7 +111,7 @@ tr:nth-child(even) {
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}} TK</td>
         @if ({{$item->exp_comment}} == null)
-            <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
+            <td class="rm_padding_margin_without_comment" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
         @endif
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
     </tr>
@@ -180,7 +180,13 @@ tr:nth-child(even) {
         padding-top: 0px !important;
         padding-bottom: 0px !important;
         line-height: 90% !important;
-
+    }
+    .rm_padding_margin_without_comment{
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        line-height: 100% !important;
     }
 </style>
 
