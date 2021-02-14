@@ -158,10 +158,10 @@ tr:nth-child(even) {
 <style>
     #watermark{
         position:fixed;
-        bottom:25%;
         top:25%;
+        /* top:25%; */
         left: 25%;
-        right:25%;
+        /* right:25%; */
         opacity:0.07;
         z-index:99;
         color:white;
