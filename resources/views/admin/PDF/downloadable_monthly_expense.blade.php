@@ -172,11 +172,11 @@ tr:nth-child(even) {
     }
 
     .rm_padding_margin{
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-        padding-top: 0px !important;
-        padding-bottom: 0px !important;
-        line-height: 80% !important;
+        margin-top: -2px !important;
+        margin-bottom: -2px !important;
+        padding-top: -2px !important;
+        padding-bottom: -2px !important;
+        line-height: 100% !important;
 
     }
 </style>
