@@ -176,7 +176,7 @@ tr:nth-child(even) {
         margin-bottom: 0px !important;
         padding-top: 0px !important;
         padding-bottom: 0px !important;
-        line-height: 125% !important;
+        line-height: 80% !important;
 
     }
 </style>
