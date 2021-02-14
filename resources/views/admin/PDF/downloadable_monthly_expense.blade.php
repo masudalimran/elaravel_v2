@@ -102,7 +102,7 @@ tr:nth-child(even) {
   <tr style="background:#c8cde0">
     <th style="width: 90px; font-size: 14px; line-height:50%">Date</th>
     <th style="width: 140px; font-size: 14px; line-height:50%">Title</th>
-    <th style="width: 60px; font-size: 14px; line-height:50%">Amount</th>
+    <th style="width: 80px; font-size: 14px; line-height:50%">Amount</th>
     <th style="line-height:50%"> In details</th>
   </tr>
     @foreach ($pdf_data[0] as $item)
@@ -110,6 +110,9 @@ tr:nth-child(even) {
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}} TK</td>
+        @if ({{$item->exp_comment}} == null)
+            <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
+        @endif
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
     </tr>
     @endforeach
@@ -126,7 +129,7 @@ tr:nth-child(even) {
     <tr style="background:#c8cde0">
       <th style="width: 150px; font-size: 14px; line-height:50%">Expense Title</th>
       <th style="width: 30px; font-size: 14px; line-height:50%">Qty</th>
-      <th style="width: 60px; font-size: 14px; line-height:50%">Total</th>
+      <th style="width: 80px; font-size: 14px; line-height:50%">Total</th>
     </tr>
     @php
         $cat_counter = -1;
