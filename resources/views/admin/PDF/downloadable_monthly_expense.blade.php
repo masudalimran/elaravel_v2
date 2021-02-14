@@ -179,7 +179,7 @@ tr:nth-child(even) {
         margin-bottom: 0px !important;
         padding-top: 0px !important;
         padding-bottom: 0px !important;
-        line-height: 95% !important;
+        line-height: 100% !important;
     }
     .rm_padding_margin_without_comment{
         margin-top: 0px !important;
