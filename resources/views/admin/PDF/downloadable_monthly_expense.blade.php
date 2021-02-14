@@ -102,7 +102,7 @@ tr:nth-child(even) {
   <tr style="background:#c8cde0">
     <th style="width: 90px; font-size: 14px; line-height:50%">Date</th>
     <th style="width: 140px; font-size: 14px; line-height:50%">Title</th>
-    <th style="width: 80px; font-size: 14px; line-height:50%">Amount</th>
+    <th style="width: 95px; font-size: 14px; line-height:50%">Amount</th>
     <th style="line-height:50%"> In details</th>
   </tr>
     @foreach ($pdf_data[0] as $item)
@@ -147,7 +147,7 @@ tr:nth-child(even) {
             @php
                 $sum_cat_counter = $sum_cat_counter + $pdf_data[4][$cat_counter]
             @endphp
-            <td style="font-size: 14px; line-height:10%"> {{numberFormat($pdf_data[5][$cat_counter])}} BDT</td>
+            <td style="font-size: 14px; line-height:10%"> {{numberFormat($pdf_data[5][$cat_counter])}}</td>
         </tr>
     @endif
     @endforeach
@@ -155,7 +155,7 @@ tr:nth-child(even) {
   <tr style="background:#c8cde0">
     <td style="font-size: 14px; line-height:40%">Total</td>
     <td style="font-size: 14px; line-height:40%">{{$sum_cat_counter}}</td>
-    <td style="font-size: 14px; line-height:40%">{{numberFormat($pdf_data[1])}}</td>
+    <td style="font-size: 14px; line-height:40%">{{numberFormat($pdf_data[1])}} BDT</td>
 </tr>
   </table>
   {{-- {{dd('asdadsads')}} --}}
