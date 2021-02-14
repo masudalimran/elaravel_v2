@@ -30,9 +30,11 @@ tr:nth-child(even) {
         <div style="display:inline; float:left;">
             <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 50xp; width: 50px;">
         </div>
-        <h1 style="text-align: center; line-height: 35%; "> <b style="color: blue; font-size: 20px "> BISMIB TECHNOLOGY </b> </h1>
+        <h1 style="text-align: center; line-height: 35%; "> <b style="color: blue; font-size: 20px; margin-top: 0px !important; margin-bottom: 0px !important;
+            padding-top: 0px !important; padding-bottom: 0px !important; "> BISMIB TECHNOLOGY </b> </h1>
 
-        <h3 style="text-align: center; text-decoration: underline; line-height: 25%;"> <b style="font-size: 16px"> Expense Sheet</b></h3>
+        <h3 style="text-align: center; text-decoration: underline; line-height: 25%;"> <b style="font-size: 16px; margin-top: 0px !important; margin-bottom: 0px !important;
+            padding-top: 0px !important; padding-bottom: 0px !important;"> Expense Sheet</b></h3>
         @if ($pdf_data[2] == 0)
             <h3 style="text-align: center; color: red; line-height: 5%"> January</h3>
             @php
@@ -109,7 +111,7 @@ tr:nth-child(even) {
     <tr class="rm_padding_margin" style="background:white;">
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
-        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}}</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}} BDT</td>
         {{-- @if ({{$item->exp_comment}}) --}}
             <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
         {{-- @endif --}}
@@ -147,7 +149,7 @@ tr:nth-child(even) {
             @php
                 $sum_cat_counter = $sum_cat_counter + $pdf_data[4][$cat_counter]
             @endphp
-            <td style="font-size: 14px; line-height:10%"> {{numberFormat($pdf_data[5][$cat_counter])}}</td>
+            <td style="font-size: 14px; line-height:10%"> {{numberFormat($pdf_data[5][$cat_counter])}} BDT</td>
         </tr>
     @endif
     @endforeach
