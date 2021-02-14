@@ -25,10 +25,10 @@ tr:nth-child(even) {
          $month_name = "";
     @endphp
     <div style="line-height: 10%;">
-    <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="">
-    <h1 style="text-align: center; line-height: 50%; "> <b style="border: solid#b3e9f5; background: #b3e9f5 "> BISMIB TECHNOLOGY </b> </h1>
+    <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 50xp; width: 50px;">
+    <h1 style="text-align: center; line-height: 50%; "> <b style="color: blue "> BISMIB TECHNOLOGY </b> </h1>
 
-    <h3 style="text-align: center; text-decoration: underline; "> <b style="border: solid#a0a6b0; background: #a0a6b0"> Expense Sheet</b></h3>
+    <h3 style="text-align: center; text-decoration: underline; "> <b style="font-size: 26px"> Expense Sheet</b></h3>
     @if ($pdf_data[2] == 0)
             <h3 style="text-align: center; color: red; line-height: 5%"> January</h3>
             @php
@@ -93,7 +93,7 @@ tr:nth-child(even) {
 
     {{-- <h4 style="text-align: center; color: blue"> Total: {{numberFormat($pdf_data[1])}}</h4> --}}
     {{-- <hr> --}}
-    <h3 style="text-align: center; text-decoration: underline">Expenses</h3>
+    <h3 style="text-align: left; text-decoration: underline">Expenses</h3>
 <table>
   <tr style="background:#c8cde0">
     <th style="width: 90px; font-size: 14px; line-height:50%">Date</th>
@@ -153,6 +153,22 @@ tr:nth-child(even) {
   </table>
   {{-- {{dd('asdadsads')}} --}}
 </div>
+
+
+<style>
+    #watermark{
+        position:fixed;
+        bottom:25%;
+        top:25%;
+        left: 25%;
+        right:25%;
+        opacity:0.07;
+        z-index:99;
+        color:white;
+    }
+</style>
+<img id="watermark" src="{{asset('public/backend/img/BISMIB B ICON_Master color.png')}}"/>
+
 {{-- {{dd()}} --}}
 
 </body>
