@@ -30,7 +30,7 @@ tr:nth-child(even) {
         <div style="display:inline; float:left;">
             <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 50xp; width: 50px;">
         </div>
-        <h1 style="text-align: center; line-height: 10%; "> <b style="color: blue "> BISMIB TECHNOLOGY </b> </h1>
+        <h1 style="text-align: center; line-height: 25%; "> <b style="color: blue "> BISMIB TECHNOLOGY </b> </h1>
 
         <h3 style="text-align: center; text-decoration: underline; "> <b style="font-size: 19px"> Expense Sheet</b></h3>
         @if ($pdf_data[2] == 0)
@@ -119,7 +119,7 @@ tr:nth-child(even) {
     <tr style="background:#c8cde0">
         <td style="font-size: 14px; line-height:50%"></td>
         <td style="font-size: 14px; line-height:50%">Total</td>
-        <td style="font-size: 14px; line-height:50%"> {{numberFormat($pdf_data[1])}} BDT</td>
+        <td style="font-size: 14px; line-height:50%"> {{numberFormat($pdf_data[1])}} <span> BDT</span></td>
         <td style="font-size: 14px; line-height:50%"></td>
     </tr>
 </table>
