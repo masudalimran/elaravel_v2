@@ -105,20 +105,20 @@ tr:nth-child(even) {
     <th style="width: 60px; font-size: 14px; line-height:50%">Amount</th>
     <th style="line-height:50%"> In details</th>
   </tr>
-@foreach ($pdf_data[0] as $item)
-<tr style="background:white">
-    <td style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
-    <td style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
-    <td style="font-size: 14px; line-height:80%">{{numberFormat($item->exp_amount)}}</td>
-    <td style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
-</tr>
-@endforeach
-<tr style="background:#c8cde0">
-    <td style="font-size: 14px; line-height:50%"></td>
-    <td style="font-size: 14px; line-height:50%">Total</td>
-    <td style="font-size: 14px; line-height:50%">{{numberFormat($pdf_data[1])}}</td>
-    <td style="font-size: 14px; line-height:50%"></td>
-</tr>
+    @foreach ($pdf_data[0] as $item)
+    <tr class="rm_padding_margin" style="background:white;">
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{numberFormat($item->exp_amount)}}</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
+    </tr>
+    @endforeach
+    <tr style="background:#c8cde0">
+        <td style="font-size: 14px; line-height:50%"></td>
+        <td style="font-size: 14px; line-height:50%">Total</td>
+        <td style="font-size: 14px; line-height:50%">{{numberFormat($pdf_data[1])}}</td>
+        <td style="font-size: 14px; line-height:50%"></td>
+    </tr>
 </table>
 <br>
 <h3 style="text-align: center; text-decoration: underline">Category</h3>
@@ -169,6 +169,15 @@ tr:nth-child(even) {
         opacity:0.07;
         z-index:99;
         color:white;
+    }
+
+    .rm_padding_margin{
+        margin-top: 1px !important;
+        margin-bottom: 1px !important;
+        padding-top: 1px !important;
+        padding-bottom: 1px !important;
+        line-height: 125% !important;
+
     }
 </style>
 
