@@ -110,10 +110,10 @@ tr:nth-child(even) {
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}}</td>
-        @if ({{$item->exp_comment}})
+        {{-- @if ({{$item->exp_comment}}) --}}
             <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
-        @endif
-        <td class="rm_padding_margin_without_comment" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
+        {{-- @endif --}}
+        {{-- <td class="rm_padding_margin_without_comment" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td> --}}
     </tr>
     @endforeach
     <tr style="background:#c8cde0">
