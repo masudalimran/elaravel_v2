@@ -21,17 +21,17 @@ tr:nth-child(even) {
 </head>
 <body>
     {{-- {{dd($pdf_data[2])}} --}}
-<img id="watermark" src="{{asset('public/backend/img/BISMIB B ICON_Master color.png')}}"/>
+    <img id="watermark" src="{{asset('public/backend/img/BISMIB B ICON_Master color.png')}}"/>
 
     @php
          $month_name = "";
     @endphp
     <div style="line-height: 10%;">
-    <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 50xp; width: 50px;">
-    <h1 style="text-align: center; line-height: 50%; "> <b style="color: blue "> BISMIB TECHNOLOGY </b> </h1>
+        <img style="inline-block" src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 50xp; width: 50px;">
+        <h1 style="text-align: center; line-height: 50%; "> <b style="color: blue "> BISMIB TECHNOLOGY </b> </h1>
 
-    <h3 style="text-align: center; text-decoration: underline; "> <b style="font-size: 22px"> Expense Sheet</b></h3>
-    @if ($pdf_data[2] == 0)
+        <h3 style="text-align: center; text-decoration: underline; "> <b style="font-size: 19px"> Expense Sheet</b></h3>
+        @if ($pdf_data[2] == 0)
             <h3 style="text-align: center; color: red; line-height: 5%"> January</h3>
             @php
                 $month_name = "January";
