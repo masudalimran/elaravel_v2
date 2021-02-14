@@ -109,7 +109,7 @@ tr:nth-child(even) {
     <tr class="rm_padding_margin" style="background:white;">
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
-        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}} TK</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%"> {{numberFormat($item->exp_amount)}}</td>
         @if ({{$item->exp_comment}} == null)
             <td class="rm_padding_margin_without_comment" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
         @endif
@@ -119,7 +119,7 @@ tr:nth-child(even) {
     <tr style="background:#c8cde0">
         <td style="font-size: 14px; line-height:50%"></td>
         <td style="font-size: 14px; line-height:50%">Total</td>
-        <td style="font-size: 14px; line-height:50%"> {{numberFormat($pdf_data[1])}} TK</td>
+        <td style="font-size: 14px; line-height:50%"> {{numberFormat($pdf_data[1])}} BDT</td>
         <td style="font-size: 14px; line-height:50%"></td>
     </tr>
 </table>
@@ -147,7 +147,7 @@ tr:nth-child(even) {
             @php
                 $sum_cat_counter = $sum_cat_counter + $pdf_data[4][$cat_counter]
             @endphp
-            <td style="font-size: 14px; line-height:10%"> {{numberFormat($pdf_data[5][$cat_counter])}} TK</td>
+            <td style="font-size: 14px; line-height:10%"> {{numberFormat($pdf_data[5][$cat_counter])}} BDT</td>
         </tr>
     @endif
     @endforeach
