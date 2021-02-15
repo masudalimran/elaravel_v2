@@ -27,7 +27,7 @@ tr:nth-child(even) {
          $month_name = "";
     @endphp
     <div style="line-height: 10%;">
-        <div style="display:inline; float:left;">
+        <div style="display:inline; float:left; margin-top: -10px;">
             <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.jpg')}}" alt="bismib_logo" style="height: 40xp; width: 80px;">
         </div>
         <h1 style="text-align: center; line-height: 35%; margin-top: -5px;"> <b style="color: blue; font-size: 20px; margin-left: -125px"> BISMIB TECHNOLOGY </b> </h1>
@@ -109,7 +109,7 @@ tr:nth-child(even) {
     <tr class="rm_padding_margin" style="background:white;">
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{YmdTodmY($item->exp_date)}}</td>
         <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{{$item->category_name}}</td>
-        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%; text-align: right;"> {{numberFormat($item->exp_amount)}} BDT</td>
+        <td class="rm_padding_margin" style="font-size: 14px; line-height:80%; text-align: right;"> {{numberFormat($item->exp_amount)}}</td>
         {{-- @if ({{$item->exp_comment}}) --}}
             <td class="rm_padding_margin" style="font-size: 14px; line-height:80%">{!!$item->exp_comment!!}</td>
         {{-- @endif --}}
@@ -147,7 +147,7 @@ tr:nth-child(even) {
             @php
                 $sum_cat_counter = $sum_cat_counter + $pdf_data[4][$cat_counter]
             @endphp
-            <td style="font-size: 14px; line-height:10%; text-align: right;"> {{numberFormat($pdf_data[5][$cat_counter])}} BDT</td>
+            <td style="font-size: 14px; line-height:10%; text-align: right;"> {{numberFormat($pdf_data[5][$cat_counter])}}</td>
         </tr>
     @endif
     @endforeach
