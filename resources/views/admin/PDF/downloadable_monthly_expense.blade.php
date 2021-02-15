@@ -30,7 +30,7 @@ tr:nth-child(even) {
         <div style="display:inline; float:left; margin-top: -10px;">
             <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.jpg')}}" alt="bismib_logo" style="height: 40xp; width: 80px;">
         </div>
-        <h1 style="text-align: center; line-height: 35%; margin-top: -5px;"> <b style="color: blue; font-size: 20px; margin-left: -125px"> BISMIB TECHNOLOGY </b> </h1>
+        <h1 style="text-align: center; line-height: 35%; margin-top: -5px;"> <b style="color: blue; font-size: 20px; margin-left: -105px"> BISMIB TECHNOLOGY </b> </h1>
 
         <h3 style="text-align: center; text-decoration: underline; margin-top: -5px;"> <b style="font-size: 16px;"> Expense Sheet</b></h3>
         @if ($pdf_data[2] == 0)
