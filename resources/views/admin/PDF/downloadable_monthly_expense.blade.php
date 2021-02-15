@@ -28,7 +28,7 @@ tr:nth-child(even) {
     @endphp
     <div style="line-height: 10%;">
         <div style="display:inline; float:left;">
-            <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.png')}}" alt="bismib_logo" style="height: 130xp; width: 130px;">
+            <img src="{{asset('public/backend/img/BISMIB TECHNOLOGY_Master color.jpg')}}" alt="bismib_logo" style="height: 130xp; width: 130px;">
         </div>
         <h1 style="text-align: center; line-height: 35%; margin-top: -5px;"> <b style="color: blue; font-size: 20px; margin-left: -125px"> BISMIB TECHNOLOGY </b> </h1>
 
@@ -89,7 +89,7 @@ tr:nth-child(even) {
                 $month_name = "November";
             @endphp
         @elseif($pdf_data[2] == 11)
-            <h3 style="text-align: center; color: red; line-height: 5%">  December</h3>
+            <h3 style="text-align: center; color: red; line-height: 5%"> December</h3>
             @php
                 $month_name = "December";
             @endphp
