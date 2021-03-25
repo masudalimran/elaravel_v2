@@ -18,9 +18,9 @@
             </div><!-- sl-page-title -->
 
             <div class="card pd-20 pd-sm-40">
-                <h6 class="card-body-title">Here you can find all Employee Attendance sheet</h6>
+                {{-- <h6 class="card-body-title">Here you can find all Employee Attendance sheet</h6>
                 <p class="mg-b-20 mg-sm-b-30">Searching, ordering and paging goodness will be immediately added to the
-                    table, as shown in this example.</p>
+                    table, as shown in this example.</p> --}}
                 @php
                     $exp_counter = -1;
                 @endphp
@@ -59,7 +59,7 @@
                         {{-- <h4 style="color:blue">Total: {{numberFormat($expense_total[$exp_counter])}} Taka</h4> --}}
                         {{-- <a href="{{route('view.before.download.pdf',[$exp_counter])}}"><button class="btn btn-success"> View As PDF </button></a> --}}
                         {{-- <hr> --}}
-                        <table id="datatable{{ $exp_counter + 1 }}" class="table display responsive nowrap">
+                        <table id="datatable{{ $exp_counter + 1 }}" class="table display responsive nowrap" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th style="text-align: center" class="wd-5p">Id</th>
@@ -75,66 +75,41 @@
                                     $month_counter= 0;
                                 @endphp
                                 @foreach ($perYear as $row)
+                                    @if ($row)
+                                        @php
+                                            $date=$row->attendance_date;
+                                            $exploded_attendance_date = explode('::::', $date);
+                                            $attendance_date_count = count($exploded_attendance_date);
+                                            // dd($exp_image_count)
+                                            $month_counter++;
+                                        @endphp
 
-                                @php
-                                    $date=$row->attendance_date;
-                                    $exploded_attendance_date = explode('::::', $date);
-                                    $attendance_date_count = count($exploded_attendance_date);
-                                    // dd($exp_image_count)
-                                    $month_counter++;
-                                @endphp
+                                        @php
+                                            $date_total=cal_days_in_month(CAL_GREGORIAN,$month_counter,2021);
+                                        @endphp
 
-                                @php
-                                    $date_total=cal_days_in_month(CAL_GREGORIAN,$month_counter,2021);
-                                @endphp
-                                {{-- {{dd($d)}} --}}
-                                {{-- {{dd(CarbonInterval::week())}} --}}
+                                            <tr>
+                                                <td style="text-align: center">{{ $row->id }}</td>
+                                                <td style="text-align: center">{{ $row->emp_name }}</td>
+                                                <td style="text-align: center">{{ $row->emp_designation }}</td>
+                                                <td style="text-align: center">
+                                                @if ($row->attendance_date)
+                                                    @foreach ($exploded_attendance_date as $v_date)
+                                                        {{ YmdTodmYPmdMyPM($v_date) }}
+                                                        <br>
+                                                    @endforeach
+                                                @endif
+                                            </td>
 
-                                    {{-- {{dd($row)}} --}}
-                                    {{-- @foreach ($row as $item)
-                                        {{dd($item->emp_name)}}
-                                    @endforeach --}}
-                                    {{-- <div class="accordion accordion-flush" id="accordionFlushExample">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="flush-headingOne">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-                                                    aria-expanded="false" aria-controls="flush-collapseOne">
-                                                    Accordion Item #1
-                                                </button>
-                                            </h2>
-                                            <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body">
-
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-                                    <tr>
-                                        <td style="text-align: center">{{ $row->id }}</td>
-                                        <td style="text-align: center">{{ $row->emp_name }}</td>
-                                        <td style="text-align: center">{{ $row->emp_designation }}</td>
-                                        <td style="text-align: center">
-                                        @if ($row->attendance_date)
-                                            @foreach ($exploded_attendance_date as $v_date)
-                                            {{-- {{dd($v_date)}} --}}
-                                                {{ YmdTodmYPmdMyPM($v_date) }}
-                                                <br>
-                                            @endforeach
-                                        @endif
-                                    </td>
-
-                                        <td style="text-align: center">{{ $attendance_date_count }} OUT OF {{$date_total}}</td>
-                                        <td style="white-space: nowrap;">
-                                            <a href="{{ URL::to('admin/delete/employee/' . $row->id) }}"
-                                                class="btn btn-sm btn-danger" id="delete"
-                                                style="margin-left:35%;">Delete</a>
-                                        </td>
-                                    </tr>
-
+                                                <td style="text-align: center">{{ $attendance_date_count }} OUT OF {{$date_total}}</td>
+                                                <td style="white-space: nowrap;">
+                                                    <a href="{{ URL::to('admin/delete/employee/' . $row->id) }}"
+                                                        class="btn btn-sm btn-danger" id="delete"
+                                                        style="margin-left:35%;">Delete</a>
+                                                </td>
+                                            </tr>
+                                            {{-- {{dd($row)}} --}}
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

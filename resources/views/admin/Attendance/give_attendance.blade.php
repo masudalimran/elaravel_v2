@@ -32,7 +32,7 @@
 
                         <div class="form-layout">
 
-                            <div class="col-md-6" style="margin-left:23%;">
+                            <div class="col-md-6" style="margin: auto; width: 80%; padding: 0px;">
                                 <div class="form-group">
                                     <label class="form-control-label">Who are you <span
                                             class="tx-danger">*</span></label>
