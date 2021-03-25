@@ -204,6 +204,27 @@
             <li class="nav-item"><a href="{{route('all.blogpost')}}" class="nav-link">All Post</a></li> --}}
         </ul>
     @endif
+
+    {{-- @if (Auth::user()->bismib_expense_manage == 1) --}}
+        <a href="#" class="sl-menu-link">
+            <div class="sl-menu-item">
+            <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+            <span class="menu-item-label">EMPLOYEE ATTENDANCE</span>
+
+            </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{url('admin/create/employee')}}" class="nav-link">Create Employee</a></li>
+            <li class="nav-item"><a href="{{url('admin/give_attendance')}}" class="nav-link">Give Attendance</a></li>
+            <li class="nav-item"><a href="{{url('admin/show_attendance')}}" class="nav-link">Show Attendance</a></li>
+            {{-- <li class="nav-item"><a href="{{url('admin/view/expense/category')}}" class="nav-link">View Expense Category</a></li>
+            <li class="nav-item"><a href="{{url('admin/view/expense')}}" class="nav-link">View Expense Sheet</a></li>
+            <li class="nav-item"><a href="{{url('admin/view/expense/by/year')}}" class="nav-link">View Expenses By Month</a></li> --}}
+            {{-- <li class="nav-item"><a href="#" class="nav-link">Show Expense</a></li> --}}
+            {{-- <li class="nav-item"><a href="{{route('add.blogpost')}}" class="nav-link">Add Post</a></li>
+            <li class="nav-item"><a href="{{route('all.blogpost')}}" class="nav-link">All Post</a></li> --}}
+        </ul>
+    {{-- @endif --}}
   </div><!-- sl-sideleft-menu -->
 
   <br>
